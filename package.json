@@ -1,0 +1,53 @@
+{
+  "name": "gring",
+  "version": "1.0.0",
+  "description": "Golden Ring Guide",
+  "main": "index.ts",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev-build": "cross-env NODE_ENV=development webpack",
+    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValyaBuldozer/gring.git"
+  },
+  "author": "vladislav.kotelnikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValyaBuldozer/gring/issues"
+  },
+  "homepage": "https://github.com/ValyaBuldozer/gring#readme",
+  "dependencies": {
+    "jss": "^10.0.0",
+    "jss-preset-default": "^10.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-jss": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.18",
+    "@types/jss": "^10.0.0",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-jss": "^10.0.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "cross-env": "^5.2.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "icon-font-loader": "^2.1.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.9.0",
+    "jest-enzyme": "^7.1.1",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0"
+  }
+}
