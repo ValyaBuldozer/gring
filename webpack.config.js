@@ -5,10 +5,13 @@ const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
 	devServer: {
-		historyApiFallback: true,
 		contentBase: [path.join(__dirname, 'src')],
 		port: 9000,
-		host: "localhost"
+		host: "localhost",
+		proxy: {
+			'/api': 'http://localhost:5000',
+			'/assets': 'http://localhost:5000'
+		}
 	},
 	output: {
 		path: path.resolve(__dirname, './build/out/'),

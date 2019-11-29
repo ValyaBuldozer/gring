@@ -8,13 +8,16 @@ import { Button, Paper } from '@material-ui/core';
 const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
 
-const styles: Record<string, React.CSSProperties> = {
+const styles: Record<string, any> = {
     root: {
         width: '100%',
         height: '100%',
         display: 'grid',
-        gridTemplate: '1fr 50px / 1fr',
-        gridTemplateAreas: '"panel" "navbar"'
+        gridTemplate: 'calc(100% - 50px) 50px / 100%',
+        gridTemplateAreas: '"panel" "navbar"',
+        '& div': {
+            boxSizing: 'border-box'
+        }
     },
     panel: {
         gridArea: 'panel',
@@ -37,18 +40,6 @@ export default function AppShell() {
     return (
         <Router>
             <div className={classes.root}>
-                <Paper className={classes.navbar} elevation={5}>
-                    <Link to='/'>
-                        <Button>
-                            <PlaceIcon />
-                        </Button>
-                    </Link>
-                    <Link to='/routes'>
-                        <Button>
-                            <ExploreIcon />
-                        </Button>
-                    </Link>
-                </Paper>
                 <div className={classes.panel}>
                     <React.Suspense fallback={'Loading'}>
                         <Switch>
@@ -61,6 +52,18 @@ export default function AppShell() {
                         </Switch>
                     </React.Suspense>
                 </div>
+                <Paper className={classes.navbar} elevation={5}>
+                    <Link to='/'>
+                        <Button>
+                            <PlaceIcon />
+                        </Button>
+                    </Link>
+                    <Link to='/routes'>
+                        <Button>
+                            <ExploreIcon />
+                        </Button>
+                    </Link>
+                </Paper>
             </div>
         </Router>
     )
