@@ -34,7 +34,7 @@ const useStyles = createUseStyles<keyof typeof styles>(styles);
 
 interface Props {
     obj: Obj;
-    onSelect: () => void;
+    onSelect?: () => void;
 }
 
 export default function ObjectCard({ obj, onSelect }: Props) {
@@ -45,7 +45,7 @@ export default function ObjectCard({ obj, onSelect }: Props) {
 
     return (
         <Paper className={classes.card} elevation={5} style={{ borderRadius: 10 }}>
-            <Typography>
+            <Typography component='div'>
                 <img className={classes.logo} src={'/assets/' + image} />
                 <div className={classes.info}>
                     <Box className={classes.name} fontWeight='fontWeightMedium'>

@@ -1,4 +1,7 @@
 import Category from "./Category";
+import Place from "./Place";
+import PublicPlace from "./PublicPlace";
+import HistoricalPerson from "./HistoricalPerson";
 
 export const enum ObjectType {
     PLACE = 'place',
@@ -6,15 +9,20 @@ export const enum ObjectType {
     HISTORICAL_PERSON = 'historical_person'
 }
 
-export default interface Obj {
+export interface ObjectBase {
     type: ObjectType;
     id: number;
     name: string;
     image: string;
     audioguide: string;
     categories: Category[];
+    description: string,
     rating: {
         average: number;
         count: number;
     }
 }
+
+type Obj = Place | PublicPlace | HistoricalPerson;
+
+export default Obj;

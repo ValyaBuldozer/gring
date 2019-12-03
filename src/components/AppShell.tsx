@@ -5,8 +5,9 @@ import PlaceIcon from '@material-ui/icons/Place';
 import ExploreIcon from '@material-ui/icons/Explore';
 import { Button, Paper } from '@material-ui/core';
 
-const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
+const ObjectsList = React.lazy(() => import('./ObjectsList'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
+const ObjectScreen = React.lazy(() => import('./ObjectScreen'));
 
 const styles: Record<string, any> = {
     root: {
@@ -17,12 +18,16 @@ const styles: Record<string, any> = {
         gridTemplateAreas: '"panel" "navbar"',
         '& div': {
             boxSizing: 'border-box'
+        },
+        '& a': {
+            textDecoration: 'none',
+            color: 'unset'
         }
     },
     panel: {
         gridArea: 'panel',
         height: '100%',
-        width: '100%',
+        width: '100%'
     },
     navbar: {
         gridArea: 'navbar',
@@ -43,12 +48,10 @@ export default function AppShell() {
                 <div className={classes.panel}>
                     <React.Suspense fallback={'Loading'}>
                         <Switch>
-                            <Route path='/routes'>
-                                <RoutesScreen />
-                            </Route>
-                            <Route path="/">
-                                <ObjectsScreen />
-                            </Route>
+                            <Route exact path='/routes' component={RoutesScreen}/>
+                            <Route exact path="/objects" component={ObjectsList}/>
+                            <Route exact path="/objects/:id" component={ObjectScreen}/>
+                            <Route path="/" component={ObjectsList}/>
                         </Switch>
                     </React.Suspense>
                 </div>

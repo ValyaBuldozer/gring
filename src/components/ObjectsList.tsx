@@ -2,22 +2,29 @@ import * as React from 'react';
 import { createUseStyles } from 'react-jss';
 import Obj from '../types/Object';
 import ObjectCard from './ObjectCard';
+import { Link } from 'react-router-dom';
+import Skeleton from '@material-ui/lab/Skeleton';
 
-const styles: Record<string, React.CSSProperties> = {
+const styles = {
     list: {
         height: '100%',
         width: '100%',
-        overflowY: 'auto',
-        padding: '0 7px'
+        padding: '0 7px',
+        overflowY: ({isLoading}: any) => isLoading ? 'hidden' : 'auto'
+    },
+    skeleton: {
+        margin: '15px 0',
+        borderRadius: 10
     }
 }
 
 const useStyles = createUseStyles<keyof typeof styles>(styles);
 
-export default function ObjectsScreen() {
-    const classes = useStyles();
-
+export default function ObjectsList() {
     const [objects, setObjects] = React.useState<Obj[]>([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+    
+    const classes = useStyles({ isLoading });
 
     React.useEffect(() => {
         fetch('/api/objects')
@@ -30,6 +37,7 @@ export default function ObjectsScreen() {
             })
             .then((objects: Obj[]) => {
                 setObjects(objects);
+                setIsLoading(false);
             })
             .catch(err => console.error(err));
     }, [])
@@ -37,8 +45,14 @@ export default function ObjectsScreen() {
     return (
         <div className={classes.list}>
             {
-                objects.map(obj => (
-                    <ObjectCard key={obj.id} obj={obj} onSelect={() => {}}/>
+                isLoading ? (
+                    Array(8).fill(
+                        <Skeleton variant='rect' className={classes.skeleton} height={200}/>
+                    )
+                ) : objects.map(obj => (
+                    <Link to={`/objects/${obj.id}`}>
+                        <ObjectCard key={obj.id} obj={obj} />
+                    </Link>
                 ))
             }
         </div>
