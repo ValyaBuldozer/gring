@@ -2,10 +2,11 @@ import * as React from 'react';
 import { createUseStyles } from 'react-jss';
 import Obj from '../types/Object';
 import { useParams } from 'react-router';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, Button } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import JssStyleSheet from '../util/types/JssStylesheet';
 import ObjectRoutesList from './ObjectRoutesList';
+import ReviewList from './ReviewList';
 
 interface State {
     showDescription: boolean;
@@ -15,10 +16,7 @@ const styles: JssStyleSheet<State> = {
     root: {
         height: '100%',
         width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        display: 'block',
         overflowY: 'auto'
     },
     logo: {
@@ -29,7 +27,8 @@ const styles: JssStyleSheet<State> = {
     name: {
         textTransform: 'uppercase',
         fontSize: 23,
-        fontWeight: "bolder"
+        fontWeight: "bolder",
+        textAlign: 'center'
     },
     rating: {
         padding: 5,
@@ -43,14 +42,16 @@ const styles: JssStyleSheet<State> = {
         width: '100%',
         padding: '0 13px',
         textAlign: 'justify',
-        boxShadow: ({ showDescription }) => showDescription ? undefined : 'inset 0 -8px 9px -6px grey',
+        boxShadow: ({ showDescription }) => showDescription ? 'unset' : 'inset 0 -8px 9px -6px grey',
         maxHeight: ({ showDescription }) => showDescription ? 'unset' : 200,
         overflowY: ({ showDescription }) => showDescription ? 'unset' : 'hidden'
     },
     title: {
+        textAlign: 'left',
+        width: '100%',
         textTransform: 'uppercase',
         fontSize: 23,
-        padding: 5
+        padding: '5px 15px'
     },
     routes: {
         width: '100%'
@@ -87,7 +88,9 @@ export default function ObjectScreen() {
                     'loading' : (
                         <>
                             <img src={`/assets/${object.image}`} className={classes.logo} />
-                            <Box className={classes.name}>{object.name}</Box>
+                            <Box className={classes.name}>
+                                {object.name}
+                            </Box>
                             <div className={classes.rating}>
                                 <Rating value={object.rating.average} size='large' />
                                 <Box>({object.rating.count})</Box>
@@ -95,7 +98,7 @@ export default function ObjectScreen() {
                             <Box className={classes.description}>
                                 {object.description}
                             </Box>
-                            <Box onClick={() => setShowDescription(!showDescription)}>
+                            <Box onClick={() => setShowDescription(!showDescription)} fontWeight="bolder" textAlign="center">
                                 {showDescription ? 'Скрыть' : 'Показать полностью'}
                             </Box>
                             <Box className={classes.title} fontWeight='bolder'>
@@ -104,6 +107,10 @@ export default function ObjectScreen() {
                             <div className={classes.routes}>
                                 <ObjectRoutesList objectId={object.id} />
                             </div>
+                            <Box className={classes.title} fontWeight='bolder'>
+                                ОТЗЫВЫ
+                            </Box>
+                            <ReviewList objectId={object.id} limit={2}/>
                         </>
                     )
             }

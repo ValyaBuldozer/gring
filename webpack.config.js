@@ -16,6 +16,7 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, './build/out/'),
+		publicPath: '/',
 		filename: 'bundle.js'
 	},
 	entry: path.resolve("./src/index.tsx"),
@@ -45,7 +46,8 @@ module.exports = {
 	plugins: [
 		new HtmlWebPackPlugin({
 			title: "GRing",
-			template: "src/index.html"
+			template: "src/index.html",
+			
 		})
 	],
 	optimization: {
