@@ -31,9 +31,8 @@ export default function ObjectRoutesList({ objectId }: Props) {
 
     return (
         <React.Fragment>
-            {routes.map((route, index) => (
+            {routes.map(route => (
                 <>
-                    {index == 0 ? <Divider/> : null}
                     <RouteCard key={route.id} route={route}/>
                     <Divider/>
                 </>

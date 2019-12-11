@@ -1,10 +1,12 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
 const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
 	devServer: {
+		writeToDisk: true,
 		historyApiFallback: true,
 		contentBase: [path.join(__dirname, 'src')],
 		port: 9000,
@@ -46,8 +48,19 @@ module.exports = {
 	plugins: [
 		new HtmlWebPackPlugin({
 			title: "GRing",
-			template: "src/index.html",
-			
+			template: "src/index.html"
+		}),
+		new WorkboxPlugin.GenerateSW({
+			clientsClaim: true,
+			skipWaiting: true,
+			runtimeCaching: [{
+				urlPattern: new RegExp('/api'),
+				handler: 'StaleWhileRevalidate'
+			}, {
+				urlPattern: new RegExp('/assets'),
+				handler: 'CacheFirst'
+			}],
+			navigateFallback: '/index.html'
 		})
 	],
 	optimization: {

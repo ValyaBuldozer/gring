@@ -65,7 +65,6 @@ export default function ReviewList({ objectId, limit = null }: Props) {
             {
                 reviews.slice(0, limit ?? 0).map((review, index) => (
                     <>
-                        {index == 0 ? <Divider /> : null}
                         <ReviewCard review={review} key={index} />
                         <Divider />
                     </>

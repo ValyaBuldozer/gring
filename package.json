@@ -7,7 +7,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "dev-build": "cross-env NODE_ENV=development webpack",
     "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rimraf build"
   },
   "repository": {
     "type": "git",
@@ -53,10 +54,12 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.1",
+    "rimraf": "^3.0.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "workbox-webpack-plugin": "^4.3.1"
   }
 }

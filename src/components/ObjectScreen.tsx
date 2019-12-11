@@ -98,9 +98,16 @@ export default function ObjectScreen() {
                             <Box className={classes.description}>
                                 {object.description}
                             </Box>
-                            <Box onClick={() => setShowDescription(!showDescription)} fontWeight="bolder" textAlign="center">
-                                {showDescription ? 'Скрыть' : 'Показать полностью'}
-                            </Box>
+                            {
+                                !showDescription ? (
+                                    <Box 
+                                        fontWeight="bolder"
+                                        textAlign='center'
+                                        onClick={() => setShowDescription(!showDescription)}>
+                                        Показать полностью
+                                    </Box>
+                                ) : null
+                            }
                             <Box className={classes.title} fontWeight='bolder'>
                                 МАРШРУТЫ
                             </Box>
