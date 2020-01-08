@@ -1,9 +1,7 @@
 import * as React from 'react';
 import JssStyleSheet from '../util/types/JssStylesheet';
 import { createUseStyles } from 'react-jss';
-import { RouteBase } from '../types/Route';
-import { Home } from '@material-ui/icons';
-import { Box, Hidden } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import Review from '../types/Review';
 

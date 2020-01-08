@@ -4,34 +4,31 @@ import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import PlaceIcon from '@material-ui/icons/Place';
 import ExploreIcon from '@material-ui/icons/Explore';
 import { Button, Paper } from '@material-ui/core';
+import JssStyleSheet from '../util/types/JssStylesheet';
 
 const ObjectsList = React.lazy(() => import('./ObjectsList'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
 const ObjectScreen = React.lazy(() => import('./ObjectScreen'));
 
-const styles: Record<string, any> = {
-    root: {
+const styles: JssStyleSheet = {
+    appShell: {
         width: '100%',
         height: '100%',
-        display: 'grid',
-        gridTemplate: 'calc(100% - 50px) 50px / 100%',
-        gridTemplateAreas: '"panel" "navbar"',
-        '& div': {
-            boxSizing: 'border-box'
-        },
-        '& a': {
-            textDecoration: 'none',
-            color: 'unset'
-        }
     },
     panel: {
-        gridArea: 'panel',
-        height: '100%',
-        width: '100%'
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 50
     },
     navbar: {
-        gridArea: 'navbar',
         display: 'flex',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: 50,
         justifyContent: 'space-around',
         alignItems: 'center'
     }
@@ -44,7 +41,7 @@ export default function AppShell() {
 
     return (
         <Router>
-            <div className={classes.root}>
+            <div className={classes.appShell}>
                 <div className={classes.panel}>
                     <React.Suspense fallback={'Loading'}>
                         <Switch>
@@ -53,6 +50,7 @@ export default function AppShell() {
                             <Route exact path="/objects/:id" component={ObjectScreen}/>
                             <Route path="/" component={ObjectsList}/>
                         </Switch>
+
                     </React.Suspense>
                 </div>
                 <Paper className={classes.navbar} elevation={5}>

@@ -10,7 +10,7 @@ module.exports = {
 		historyApiFallback: true,
 		contentBase: [path.join(__dirname, 'src')],
 		port: 9000,
-		host: "localhost",
+		host: "0.0.0.0",
 		proxy: {
 			'/api': 'http://localhost:5000',
 			'/assets': 'http://localhost:5000'

@@ -32,7 +32,7 @@ export default function ObjectsList() {
                 if (res.ok) {
                     return res.json();
                 } else {
-                    throw new Error('Can\t fetch objects list');
+                    throw new Error('Can\'t fetch objects list');
                 }
             })
             .then((objects: Obj[]) => {
