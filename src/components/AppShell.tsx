@@ -4,7 +4,7 @@ import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import PlaceIcon from '@material-ui/icons/Place';
 import ExploreIcon from '@material-ui/icons/Explore';
 import { Button, Paper } from '@material-ui/core';
-import JssStyleSheet from '../util/types/JssStylesheet';
+import JssStyleSheet from '../util/types/JssStyleSheet';
 
 const ObjectsList = React.lazy(() => import('./ObjectsList'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));

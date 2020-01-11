@@ -1,5 +1,5 @@
 import * as React from 'react';
-import JssStyleSheet from '../util/types/JssStylesheet';
+import JssStyleSheet from '../util/types/JssStyleSheet';
 import { createUseStyles } from 'react-jss';
 import { RouteBase } from '../types/Route';
 import RouteCard from './RouteCard';
