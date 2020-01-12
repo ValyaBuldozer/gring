@@ -4,8 +4,11 @@ import Obj from '../types/Object';
 import ObjectCard from './ObjectCard';
 import { Link } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
+import useStore from '../stores/useStore';
+import { observer } from 'mobx-react-lite';
+import JssStyleSheet from '../util/types/JssStyleSheet';
 
-const styles = {
+const styles: JssStyleSheet = {
     list: {
         height: '100%',
         width: '100%',
@@ -18,38 +21,20 @@ const styles = {
     }
 }
 
-const useStyles = createUseStyles<keyof typeof styles>(styles);
+const useStyles = createUseStyles(styles);
 
-export default function ObjectsList() {
-    const [objects, setObjects] = React.useState<Obj[]>([]);
-    const [isLoading, setIsLoading] = React.useState(true);
-    
-    const classes = useStyles({ isLoading });
-
-    React.useEffect(() => {
-        fetch('/api/objects')
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    throw new Error('Can\'t fetch objects list');
-                }
-            })
-            .then((objects: Obj[]) => {
-                setObjects(objects);
-                setIsLoading(false);
-            })
-            .catch(err => console.error(err));
-    }, [])
+const ObjectsList = observer(() => {   
+    const { objects: store } = useStore();
+    const classes = useStyles({ isLoading: store.isLoading });
 
     return (
         <div className={classes.list}>
             {
-                isLoading ? (
+                store.isLoading ? (
                     Array(8).fill(
                         <Skeleton variant='rect' className={classes.skeleton} height={200}/>
                     )
-                ) : objects.map(obj => (
+                ) : store.objectsList.map(obj => (
                     <Link to={`/objects/${obj.id}`}>
                         <ObjectCard key={obj.id} obj={obj} />
                     </Link>
@@ -57,4 +42,6 @@ export default function ObjectsList() {
             }
         </div>
     )
-}
+});
+
+export default ObjectsList;

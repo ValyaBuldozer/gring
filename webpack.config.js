@@ -74,10 +74,10 @@ module.exports = {
 				handler: 'CacheFirst'
 			}, {
 				urlPattern: new RegExp('bundle.js'),
-				handler: 'StaleWhileRevalidate'
+				handler: mode == 'production' ? 'StaleWhileRevalidate' : 'NetworkFirst'
 			}, {
 				urlPattern: new RegExp('index.html'),
-				handler: 'StaleWhileRevalidate'
+				handler: mode == 'production' ? 'StaleWhileRevalidate' : 'NetworkFirst'
 			}],
 			navigateFallback: '/index.html'
 		})
