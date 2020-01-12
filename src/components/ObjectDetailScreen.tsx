@@ -60,7 +60,7 @@ const styles: JssStyleSheet<State> = {
 
 const useStyles = createUseStyles(styles);
 
-export default function ObjectScreen() {
+export default function ObjectDetailScreen() {
 
     const { id } = useParams();
     const [object, setObject] = React.useState<Obj | null>(null);

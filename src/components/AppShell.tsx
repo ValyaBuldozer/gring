@@ -8,7 +8,7 @@ import JssStyleSheet from '../util/types/JssStyleSheet';
 
 const ObjectsList = React.lazy(() => import('./ObjectsList'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
-const ObjectScreen = React.lazy(() => import('./ObjectScreen'));
+const ObjectScreen = React.lazy(() => import('./ObjectDetailScreen'));
 
 const styles: JssStyleSheet = {
     appShell: {

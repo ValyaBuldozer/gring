@@ -3,9 +3,10 @@ import { createUseStyles } from 'react-jss';
 import Obj from '../types/Object';
 import { Paper, Typography, Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import JssStyleSheet from '../util/types/JssStyleSheet';
 
 
-const styles: Record<string, React.CSSProperties> = {
+const styles: JssStyleSheet = {
     card: {
         width: '100%',
         borderRadius: 5,
