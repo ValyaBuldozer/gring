@@ -6,7 +6,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev-build": "cross-env NODE_ENV=development webpack",
-    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "start": "cross-env NODE_ENV=development SW_DISABLED=true webpack-dev-server",
+    "start:sw": "cross-env NODE_ENV=development webpack-dev-server",
     "test": "jest",
     "clean": "rimraf build"
   },

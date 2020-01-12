@@ -34,7 +34,7 @@ const ObjectsList = observer(() => {
                     Array(8).fill(
                         <Skeleton variant='rect' className={classes.skeleton} height={200}/>
                     )
-                ) : store.objectsList.map(obj => (
+                ) : store.filtredList.map(obj => (
                     <Link to={`/objects/${obj.id}`}>
                         <ObjectCard key={obj.id} obj={obj} />
                     </Link>

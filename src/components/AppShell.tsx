@@ -6,9 +6,9 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import { Button, Paper } from '@material-ui/core';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 
-const ObjectsList = React.lazy(() => import('./ObjectsList'));
+const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
-const ObjectScreen = React.lazy(() => import('./ObjectDetailScreen'));
+const ObjectDetailScreen = React.lazy(() => import('./ObjectDetailScreen'));
 
 const styles: JssStyleSheet = {
     appShell: {
@@ -46,9 +46,9 @@ export default function AppShell() {
                     <React.Suspense fallback={'Loading'}>
                         <Switch>
                             <Route exact path='/routes' component={RoutesScreen}/>
-                            <Route exact path="/objects" component={ObjectsList}/>
-                            <Route exact path="/objects/:id" component={ObjectScreen}/>
-                            <Route path="/" component={ObjectsList}/>
+                            <Route exact path="/objects" component={ObjectsScreen}/>
+                            <Route exact path="/objects/:id" component={ObjectDetailScreen}/>
+                            <Route path="/" component={ObjectsScreen}/>
                         </Switch>
 
                     </React.Suspense>

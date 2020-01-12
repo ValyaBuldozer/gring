@@ -4,6 +4,7 @@ const WorkboxPlugin = require("workbox-webpack-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 
 const mode = process.env.NODE_ENV || 'production';
+const swEnabled = process.env.SW_DISABLED == null;
 
 module.exports = {
 	devServer: {
@@ -63,7 +64,7 @@ module.exports = {
 			}],
 			prefer_related_applications: false
 		}),
-		new WorkboxPlugin.GenerateSW({
+		swEnabled ? new WorkboxPlugin.GenerateSW({
 			clientsClaim: true,
 			skipWaiting: true,
 			runtimeCaching: [{
@@ -74,14 +75,14 @@ module.exports = {
 				handler: 'CacheFirst'
 			}, {
 				urlPattern: new RegExp('bundle.js'),
-				handler: mode == 'production' ? 'StaleWhileRevalidate' : 'NetworkFirst'
+				handler: 'StaleWhileRevalidate'
 			}, {
 				urlPattern: new RegExp('index.html'),
-				handler: mode == 'production' ? 'StaleWhileRevalidate' : 'NetworkFirst'
+				handler: 'StaleWhileRevalidate'
 			}],
 			navigateFallback: '/index.html'
-		})
-	],
+		}) : undefined
+	].filter(Boolean),
 	optimization: {
 		usedExports: mode == 'production'
 	},

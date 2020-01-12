@@ -7,7 +7,7 @@ export default class ObjectsStore {
     private objects: Obj[] = [];
 
     @observable
-    private searchString: string | null = null;
+    public searchString: string | null = null;
 
     @observable
     public isLoading: boolean = true;
@@ -24,7 +24,7 @@ export default class ObjectsStore {
         }
 
         return this.objects.filter(
-            obj => obj.name.split(this.searchString!!).length > 1
+            obj => obj.name.split(new RegExp(this.searchString!!, 'gi')).length > 1
         );
     }
 
