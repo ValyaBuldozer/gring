@@ -46,18 +46,16 @@ export default function ObjectCard({ obj, onSelect }: Props) {
 
     return (
         <Paper className={classes.card} elevation={5} style={{ borderRadius: 10 }}>
-            <Typography component='div'>
-                <img 
-                    className={classes.logo} 
-                    src={'/assets/' + image} 
-                    {...{loading: 'lazy'}} />
-                <div className={classes.info}>
-                    <Box className={classes.name} fontWeight='fontWeightMedium'>
-                        {name}
-                    </Box>
-                    <Rating value={rating.average} size='small' readOnly precision={0.5}/>
-                </div>
-            </Typography>
+            <img 
+                className={classes.logo} 
+                src={'/assets/' + image} 
+                {...{loading: 'lazy'}} />
+            <div className={classes.info}>
+                <Box className={classes.name} fontWeight='fontWeightMedium'>
+                    {name}
+                </Box>
+                <Rating value={rating.average} size='small' readOnly precision={0.5}/>
+            </div>
         </Paper>
     )
 }

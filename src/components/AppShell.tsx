@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import PlaceIcon from '@material-ui/icons/Place';
 import ExploreIcon from '@material-ui/icons/Explore';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Paper, Typography } from '@material-ui/core';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 
 const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
@@ -14,6 +14,7 @@ const styles: JssStyleSheet = {
     appShell: {
         width: '100%',
         height: '100%',
+        position: 'relative'
     },
     panel: {
         position: 'absolute',
@@ -42,29 +43,31 @@ export default function AppShell() {
     return (
         <Router>
             <div className={classes.appShell}>
-                <div className={classes.panel}>
-                    <React.Suspense fallback={'Loading'}>
-                        <Switch>
-                            <Route exact path='/routes' component={RoutesScreen}/>
-                            <Route exact path="/objects" component={ObjectsScreen}/>
-                            <Route exact path="/objects/:id" component={ObjectDetailScreen}/>
-                            <Route path="/" component={ObjectsScreen}/>
-                        </Switch>
+                <Typography component='div'>
+                    <div className={classes.panel}>
+                        <React.Suspense fallback={'Loading'}>
+                            <Switch>
+                                <Route exact path='/routes' component={RoutesScreen} />
+                                <Route exact path="/objects" component={ObjectsScreen} />
+                                <Route exact path="/objects/:id" component={ObjectDetailScreen} />
+                                <Route path="/" component={ObjectsScreen} />
+                            </Switch>
 
-                    </React.Suspense>
-                </div>
-                <Paper className={classes.navbar} elevation={5}>
-                    <Link to='/'>
-                        <Button>
-                            <PlaceIcon />
-                        </Button>
-                    </Link>
-                    <Link to='/routes'>
-                        <Button>
-                            <ExploreIcon />
-                        </Button>
-                    </Link>
-                </Paper>
+                        </React.Suspense>
+                    </div>
+                    <Paper className={classes.navbar} elevation={5}>
+                        <Link to='/'>
+                            <Button>
+                                <PlaceIcon />
+                            </Button>
+                        </Link>
+                        <Link to='/routes'>
+                            <Button>
+                                <ExploreIcon />
+                            </Button>
+                        </Link>
+                    </Paper>
+                </Typography>
             </div>
         </Router>
     )

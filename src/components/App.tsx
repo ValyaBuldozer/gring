@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
     appRoot: {
         height: '100vh',
         width: '100vw',
+        boxSizing: 'border-box',
         '& div': {
             boxSizing: 'border-box'
         },

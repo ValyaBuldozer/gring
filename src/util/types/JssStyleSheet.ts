@@ -7,7 +7,7 @@ type CSSProps<S> = {
 type PseudoElementsList = '&:after' | '&:before' | '&:hover';
 
 type PseudoElements<S> = {
-    [key in PseudoElementsList]: CSSProperties
+    [key in PseudoElementsList]?: CSSProperties
 }
 
 type JssStyleSheet<S extends {} = {}> = {

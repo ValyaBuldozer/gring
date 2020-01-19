@@ -10,8 +10,7 @@ import JssStyleSheet from '../util/types/JssStyleSheet';
 
 const styles: JssStyleSheet = {
     list: {
-        height: '100%',
-        width: '100%',
+        height: 'calc(100% - 70px)',
         padding: '0 7px',
         overflowY: ({isLoading}: any) => isLoading ? 'hidden' : 'auto'
     },

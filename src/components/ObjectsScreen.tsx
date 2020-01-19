@@ -5,11 +5,13 @@ import { observer } from 'mobx-react-lite';
 import useStore from '../stores/useStore';
 import ObjectsList from './ObjectsList';
 import { TextField } from '@material-ui/core';
+import CategoriesFilter from './CategoriesFilter';
 
 const styles: JssStyleSheet = {
     screen: {
         height: '100%',
-        width: '100%'
+        width: '100%',
+        overflow: 'hidden'
     },
     appBar: {
         height: 70,
@@ -18,14 +20,10 @@ const styles: JssStyleSheet = {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: '5px 10px',
-        borderBottom: '1px solid slategray'
+        padding: '5px 10px 0 10px'
     },
     searchInput: {
         width: '100%'
-    },
-    list: {
-        height: '100%'
     }
 }
 
@@ -46,10 +44,9 @@ const ObjectsScreen = observer(() => {
                     size="small"
                     value={store.searchString ?? ''}
                     onChange={({target}) => store.setSearchString(target.value)}/>
+                <CategoriesFilter/>
             </div>
-            <div className={classes.list}>
-                <ObjectsList/>
-            </div>
+            <ObjectsList/>
         </div>
     )
 });

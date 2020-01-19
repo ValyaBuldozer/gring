@@ -1,10 +1,17 @@
 import { observable, action, computed, runInAction } from 'mobx';
 import Obj from '../types/Object';
+import Category from '../types/Category';
 
 export default class ObjectsStore {
 
     @observable
     private objects: Obj[] = [];
+
+    @observable
+    public categories: Category[] | null = null;
+
+    @observable 
+    public selectedCategory: Category | null = null;
 
     @observable
     public searchString: string | null = null;
@@ -18,14 +25,14 @@ export default class ObjectsStore {
     }
 
     @computed
-    get filtredList() {      
-        if (this.searchString == null) {
-            return this.objects;
-        }
+    get filtredList() {  
+        const currentObjects = this.selectedCategory != null ? 
+            this.objects.filter(obj => obj.categories.some(cat => cat.id == this.selectedCategory?.id)) : 
+            this.objects;
 
-        return this.objects.filter(
+        return this.searchString != null ? currentObjects.filter(
             obj => obj.name.split(new RegExp(this.searchString!!, 'gi')).length > 1
-        );
+        ) : currentObjects;
     }
 
     @action
@@ -34,7 +41,12 @@ export default class ObjectsStore {
     }
 
     @action
-    async fetchList() {
+    selectCategory(category: Category | null) {
+        this.selectedCategory = category;
+    }
+
+    @action
+    async fetchObjects() {
         this.isLoading = true;
 
         const res = await fetch('/api/objects');
@@ -55,7 +67,27 @@ export default class ObjectsStore {
         });
     }
 
+    @action
+    async fetchCategories() {
+        const res = await fetch('/api/categories');
+
+        if (!res.ok) {
+            runInAction(() => {
+                this.categories = null;
+            });
+
+            return;
+        }
+
+        const categories: Category[] = await res.json();
+
+        runInAction(() => {
+            this.categories = categories;
+        })
+    }
+
     init() {
-        this.fetchList();
+        this.fetchObjects();
+        this.fetchCategories();
     }
 }
