@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
 import Obj from '../types/Object';
-import { useParams } from 'react-router';
+import {RouterProps, useParams, withRouter} from 'react-router';
 import { Typography, Box, Button } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 import ObjectRoutesList from './ObjectRoutesList';
 import ReviewList from './ReviewList';
+import {observer} from "mobx-react-lite";
+import useStore from "../stores/useStore";
 
 interface State {
     showDescription: boolean;
@@ -60,9 +62,13 @@ const styles: JssStyleSheet<State> = {
 
 const useStyles = createUseStyles(styles);
 
-export default function ObjectDetailScreen() {
+interface Props extends RouterProps {}
+
+
+const ObjectDetailScreen = withRouter(observer(({history}: Props) => {
 
     const { id } = useParams();
+
     const [object, setObject] = React.useState<Obj | null>(null);
     const [showDescription, setShowDescription] = React.useState(false);
 
@@ -73,9 +79,11 @@ export default function ObjectDetailScreen() {
             .then(res => {
                 if (res.ok) {
                     return res.json();
-                } else {
-                    throw new Error(`Error: ${res.status}`)
+                } else if (res.status == 404) {
+                    history.push('/404');
                 }
+
+                throw new Error(`Error: ${res.status}`);
             })
             .then((obj: Obj) => setObject(obj))
             .catch(err => console.log(err))
@@ -123,4 +131,6 @@ export default function ObjectDetailScreen() {
             }
         </Typography>
     )
-}
+}));
+
+export default ObjectDetailScreen;

@@ -50,9 +50,9 @@ export default function AppShell() {
                                 <Route exact path='/routes' component={RoutesScreen} />
                                 <Route exact path="/objects" component={ObjectsScreen} />
                                 <Route exact path="/objects/:id" component={ObjectDetailScreen} />
+                                <Route exact path="/404" render={() => '404'}/>
                                 <Route path="/" component={ObjectsScreen} />
                             </Switch>
-
                         </React.Suspense>
                     </div>
                     <Paper className={classes.navbar} elevation={5}>
