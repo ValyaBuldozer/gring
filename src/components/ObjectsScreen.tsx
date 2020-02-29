@@ -10,13 +10,10 @@ import CategoriesFilter from './CategoriesFilter';
 import Button from "@material-ui/core/Button";
 import SelectDialog from "./SelectDialog";
 import SortBy from "../util/types/SortBy";
+import SearchBar from "./SearchBar";
 
-const SORT_OPTIONS: [SortBy, string][] = [
-    [SortBy.DEFAULT, 'По умолчанию'],
-    [SortBy.NAME, 'По имени'],
-    [SortBy.DISTANCE, 'По расстоянию'],
-    [SortBy.RATING_COUNT, 'По количеству отзывов'],
-    [SortBy.RATING_AVG, 'По средней оценке']
+const SORT_OPTIONS: SortBy[] = [
+    SortBy.DEFAULT, SortBy.NAME, SortBy.DISTANCE, SortBy.RATING_COUNT, SortBy.RATING_AVG
 ];
 
 const styles: JssStyleSheet = {
@@ -31,26 +28,15 @@ const styles: JssStyleSheet = {
         padding: '5px 10px 0 10px',
         display: 'grid',
         gridTemplate: `
-            "input sort" 40px
-            "categories categories" 30px / 1fr 35px
+            "search-bar" 40px
+            "categories" 30px / 100%
         `
     },
     searchInput: {
-        gridArea: 'input',
-        width: '100%'
-    },
-    sort: {
-        gridArea: 'sort',
-        alignSelf: 'center',
-        justifySelf: 'center'
+        gridArea: 'search-bar'
     },
     categories: {
         gridArea: "categories"
-    },
-    btn: {
-        height: '100%',
-        width: '100%',
-        minWidth: 0
     }
 };
 
@@ -60,40 +46,21 @@ const ObjectsScreen = observer(() => {
     const { objects: store } = useStore();
     const classes = useStyles();
 
-    const [sortOpen, setSortOpen] = React.useState(false);
-
-    const sortDialogOnClose = (variant: SortBy) => {
-        store.setSortBy(variant);
-        setSortOpen(false);
-    };
-
     return (
         <div className={classes.screen}>
             <div className={classes.appBar}>
-                <TextField
+                <SearchBar
                     className={classes.searchInput}
-                    variant="outlined"
-                    type="search"
-                    placeholder="Поиск"
-                    size="small"
-                    value={store.searchString ?? ''}
-                    onChange={({target}) => store.setSearchString(target.value)}/>
+                    sortBy={store.sortBy}
+                    sortByOptions={SORT_OPTIONS}
+                    searchString={store.searchString}
+                    onSearchStringChange={store.setSearchString}
+                    onSortByChange={store.setSortBy}/>
                 <div className={classes.categories}>
                     <CategoriesFilter/>
                 </div>
-                <Button style={{minWidth: 0}}
-                    className={`${classes.sort} ${classes.btn}`}
-                    onClick={() => setSortOpen(true)}>
-                    <SortIcon/>
-                </Button>
             </div>
             <ObjectsList/>
-            <SelectDialog
-                variants={SORT_OPTIONS}
-                selectedVariant={store.sortBy}
-                title={'Сортировка'}
-                open={sortOpen}
-                onClose={sortDialogOnClose}/>
         </div>
     )
 });

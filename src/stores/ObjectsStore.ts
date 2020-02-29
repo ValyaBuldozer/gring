@@ -2,6 +2,7 @@ import {action, computed, observable, runInAction} from 'mobx';
 import Obj from '../types/Object';
 import Category from '../types/Category';
 import SortBy from "../util/types/SortBy";
+import BaseEntityStore from "./BaseEntityStore";
 
 const sortRules = new Map<SortBy, (a: Obj, b: Obj) => number>([
     [SortBy.DEFAULT, () => 0],
@@ -11,7 +12,7 @@ const sortRules = new Map<SortBy, (a: Obj, b: Obj) => number>([
     [SortBy.DISTANCE, () => 0]
 ]);
 
-export default class ObjectsStore {
+export default class ObjectsStore extends BaseEntityStore {
 
     @observable
     private objectsList: Obj[] = [];
@@ -26,12 +27,6 @@ export default class ObjectsStore {
     public selectedCategory: Category | null = null;
 
     @observable
-    public sortBy: SortBy = SortBy.DEFAULT;
-
-    @observable
-    public searchString: string | null = null;
-
-    @observable
     public isLoading: boolean = true;
 
     @computed
@@ -41,25 +36,15 @@ export default class ObjectsStore {
             this.objectsList;
 
         const searchFiltered =  this.searchString != null ? categoryFiltered.filter(
-            obj => obj.name.match(new RegExp(this.searchString!!, 'gi'))
+            obj => obj.name.match(new RegExp(this.searchString, 'gi'))
         ) : categoryFiltered;
 
         return searchFiltered.sort(sortRules.get(this.sortBy));
     }
 
     @action
-    setSearchString(str: string) {
-        this.searchString = str !== '' ? str : null;
-    }
-
-    @action
     selectCategory(category: Category | null) {
         this.selectedCategory = category;
-    }
-
-    @action
-    setSortBy(sortBy: SortBy) {
-        this.sortBy = sortBy;
     }
 
     @action

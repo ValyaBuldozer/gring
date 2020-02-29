@@ -6,8 +6,13 @@ import { observer } from 'mobx-react-lite';
 import RoutesListCard from './RouteListCard';
 
 const styles: JssStyleSheet = {
+    list: {
+        height: '100%',
+        width: '100%',
+        overflowY: 'auto'
+    },
 
-}
+};
 
 const useStyles = createUseStyles(styles);
 
@@ -16,9 +21,8 @@ function RoutesList() {
     const { routes: store } = useStore();
     const classes = useStyles();
 
-
     return (
-        <div>
+        <div className={classes.list}>
             {
                 store.routes.map(route => (
                     <RoutesListCard route={route} key={route.id}/>

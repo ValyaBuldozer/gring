@@ -1,26 +1,22 @@
-import {action, observable, runInAction, computed} from "mobx";
+import {action, computed, observable, runInAction} from "mobx";
 import Route from "../types/Route";
 import SortBy from "../util/types/SortBy";
+import BaseEntityStore from "./BaseEntityStore";
 
 const sortRules = new Map<SortBy, (a: Route, b: Route) => number>([
     [SortBy.DEFAULT, () => 0],
 	[SortBy.NAME, (a, b) => a.name.localeCompare(b.name)],
-	// todo: use reviews
-    [SortBy.RATING_AVG, (a, b) => a.placesCount < b.placesCount ? 1 : -1],
-    [SortBy.RATING_COUNT, (a, b) => a.placesCount < b.placesCount ? 1 : -1],
-    [SortBy.DISTANCE, () => 0]
+	[SortBy.RATING_AVG, (a, b) => a.rating.average < b.rating.average ? 1 : -1],
+	[SortBy.RATING_COUNT, (a, b) => a.rating.count < b.rating.count ? 1 : -1],
+    [SortBy.ROUTE_DISTANCE, (a, b) => a.distance < b.distance ? 1 : -1],
+	[SortBy.TIME, (a, b) => a.duration < b.duration ? 1 : -1],
+	[SortBy.OBJECTS_COUNT, (a, b) => a.placesCount < b.placesCount ? 1 : -1]
 ]);
 
-export default class RoutesStore {
+export default class RoutesStore extends BaseEntityStore {
 
 	@observable
 	private list: Route[] = [];
-	
-	@observable
-	private sortBy: SortBy = SortBy.DEFAULT;
-
-	@observable
-	private searchString: string = '';
 
 	@action
 	async fetchList() {
