@@ -67,7 +67,7 @@ export default function AppShell() {
                             </Button>
                         </Link>
                     </Paper>
-                </Typography>
+                </Typography    >
             </div>
         </Router>
     )

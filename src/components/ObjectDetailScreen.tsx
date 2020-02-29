@@ -44,6 +44,7 @@ const styles: JssStyleSheet<State> = {
         width: '100%',
         padding: '0 13px',
         textAlign: 'justify',
+        whiteSpace: 'pre-wrap',
         boxShadow: ({ showDescription }) => showDescription ? 'unset' : 'inset 0 -8px 9px -6px grey',
         maxHeight: ({ showDescription }) => showDescription ? 'unset' : 200,
         overflowY: ({ showDescription }) => showDescription ? 'unset' : 'hidden'
@@ -65,7 +66,7 @@ const useStyles = createUseStyles(styles);
 interface Props extends RouterProps {}
 
 
-const ObjectDetailScreen = withRouter(observer(({history}: Props) => {
+function ObjectDetailScreen({history}: Props) {
 
     const { id } = useParams();
 
@@ -131,6 +132,6 @@ const ObjectDetailScreen = withRouter(observer(({history}: Props) => {
             }
         </Typography>
     )
-}));
+}
 
-export default ObjectDetailScreen;
+export default withRouter(observer(ObjectDetailScreen));

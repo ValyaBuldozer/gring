@@ -22,7 +22,7 @@ const styles: JssStyleSheet = {
 
 const useStyles = createUseStyles(styles);
 
-const ObjectsList = observer(() => {   
+function ObjectsList() {   
     const { objects: store } = useStore();
     const classes = useStyles({ isLoading: store.isLoading });
 
@@ -41,6 +41,6 @@ const ObjectsList = observer(() => {
             }
         </div>
     )
-});
+}
 
-export default ObjectsList;
+export default observer(ObjectsList);

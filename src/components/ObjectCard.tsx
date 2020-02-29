@@ -31,7 +31,7 @@ const styles: JssStyleSheet = {
     }
 }
 
-const useStyles = createUseStyles<keyof typeof styles>(styles);
+const useStyles = createUseStyles(styles);
 
 interface Props {
     obj: Obj;

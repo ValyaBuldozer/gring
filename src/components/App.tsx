@@ -20,10 +20,11 @@ const useStyles = createUseStyles({
 
 export default function App() {
     const classes = useStyles();
-    const { objects: objectsStore } = useStore();
+    const { objects: objectsStore, routes: routesStore } = useStore();
 
     React.useEffect(() => {
         objectsStore.init();
+        routesStore.init();
     }, []);
 
     return (

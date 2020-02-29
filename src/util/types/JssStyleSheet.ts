@@ -4,7 +4,7 @@ type CSSProps<S> = {
     [key in keyof CSSProperties]: CSSProperties[key] | ((state: S) => CSSProperties[key])
 }
 
-type PseudoElementsList = '&:after' | '&:before' | '&:hover';
+type PseudoElementsList = '&:after' | '&:before' | '&:hover' | '&:first-of-type';
 
 type PseudoElements<S> = {
     [key in PseudoElementsList]?: CSSProperties
