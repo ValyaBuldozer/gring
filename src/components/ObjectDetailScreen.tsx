@@ -14,7 +14,7 @@ interface State {
     showDescription: boolean;
 }
 
-const styles: JssStyleSheet<State> = {
+const styles: JssStyleSheet<State> = theme => ({
     root: {
         height: '100%',
         width: '100%',
@@ -22,13 +22,13 @@ const styles: JssStyleSheet<State> = {
         overflowY: 'auto'
     },
     logo: {
-        height: 190,
+        height: theme.dimensions.detail.logoHeight,
         width: '100%',
         objectFit: 'cover'
     },
     name: {
         textTransform: 'uppercase',
-        fontSize: 23,
+        fontSize: theme.dimensions.detail.titleFontSize,
         fontWeight: "bolder",
         textAlign: 'center'
     },
@@ -59,7 +59,7 @@ const styles: JssStyleSheet<State> = {
     routes: {
         width: '100%'
     }
-}
+});
 
 const useStyles = createUseStyles(styles);
 
@@ -69,6 +69,7 @@ interface Props extends RouterProps {}
 function ObjectDetailScreen({history}: Props) {
 
     const { id } = useParams();
+    const { objects: store } = useStore();
 
     const [object, setObject] = React.useState<Obj | null>(null);
     const [showDescription, setShowDescription] = React.useState(false);
@@ -76,18 +77,14 @@ function ObjectDetailScreen({history}: Props) {
     const classes = useStyles({ showDescription } as State);
 
     React.useEffect(() => {
-        fetch(`/api/objects/${id}`)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else if (res.status == 404) {
+        store.fetchDetailEntity(parseInt(id ?? ''))
+            .then(obj => {
+                if (obj != null) {
+                    setObject(obj);
+                } else {
                     history.push('/404');
                 }
-
-                throw new Error(`Error: ${res.status}`);
             })
-            .then((obj: Obj) => setObject(obj))
-            .catch(err => console.log(err))
     }, []);
 
     return (
@@ -109,7 +106,7 @@ function ObjectDetailScreen({history}: Props) {
                             </Box>
                             {
                                 !showDescription ? (
-                                    <Box 
+                                    <Box
                                         fontWeight="bolder"
                                         textAlign='center'
                                         onClick={() => setShowDescription(!showDescription)}>

@@ -1,24 +1,27 @@
 import {action, computed, observable, runInAction} from 'mobx';
-import Obj from '../types/Object';
+import Obj, {ObjectBase} from '../types/Object';
 import Category from '../types/Category';
 import SortBy from "../util/types/SortBy";
 import BaseEntityStore from "./BaseEntityStore";
 
-const sortRules = new Map<SortBy, (a: Obj, b: Obj) => number>([
+const sortRules = new Map<SortBy, (a: ObjectBase, b: ObjectBase) => number>([
     [SortBy.DEFAULT, () => 0],
     [SortBy.NAME, (a, b) => a.name.localeCompare(b.name)],
     [SortBy.RATING_AVG, (a, b) => a.rating.average < b.rating.average ? 1 : -1],
     [SortBy.RATING_COUNT, (a, b) => a.rating.count < b.rating.count ? 1 : -1],
+    // todo: implement using distance info
     [SortBy.DISTANCE, () => 0]
 ]);
 
-export default class ObjectsStore extends BaseEntityStore {
+export default class ObjectsStore extends BaseEntityStore<Obj> {
 
     @observable
-    private objectsList: Obj[] = [];
+    private objectsList: ObjectBase[] = [];
 
-    @observable
-    private objectsCache: Map<number, Obj> = new Map<number, Obj>();
+    constructor() {
+        super();
+        this.apiPath = '/api/objects';
+    }
 
     @observable
     public categories: Category[] | null = null;
@@ -51,7 +54,7 @@ export default class ObjectsStore extends BaseEntityStore {
     async fetchObjects() {
         this.isLoading = true;
 
-        const res = await fetch('/api/objects');
+        const res = await fetch(this.apiPath);
 
         if (!res.ok) {
             runInAction(() => {
@@ -86,28 +89,6 @@ export default class ObjectsStore extends BaseEntityStore {
         runInAction(() => {
             this.categories = categories;
         })
-    }
-
-    getObjectById(id: number): Obj | Promise<boolean> {
-        if (this.objectsCache.has(id)) {
-            return this.objectsCache.get(id)!;
-        } else {
-            return fetch(`/api/objects/${id}`)
-                .then(res => {
-                    if (res.ok) {
-                        res.json()
-                            .then((obj: Obj) => runInAction(() => {
-                                this.objectsCache.set(obj.id, obj);
-                            }));
-
-                        return true;
-                    } else if (res.status == 404) {
-                        return false;
-                    } else {
-                        throw new Error(`Error trying to fetch object - ${res.statusText}`);
-                    }
-                });
-        }
     }
 
     init() {

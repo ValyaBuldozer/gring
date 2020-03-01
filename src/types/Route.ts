@@ -15,5 +15,7 @@ export interface RouteBase {
 
 export default interface Route extends RouteBase {
     description: string;
-    objects: Obj[];
+    objects: (Obj & {
+        description: string;
+    })[];
 }

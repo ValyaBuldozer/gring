@@ -18,7 +18,7 @@ const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {
 	[SortBy.ROUTE_DISTANCE]: 'По протяженности'
 } as const;
 
-const styles: JssStyleSheet = {
+const styles: JssStyleSheet = theme => ({
 	root: {
 		height: '40px',
 		width: '100%',
@@ -26,9 +26,14 @@ const styles: JssStyleSheet = {
 		alignItems: 'center'
 	},
 	input: {
-		width: '100%'
+		width: '100%',
+		height: 30,
+		border: `1px solid ${theme.color.secondary}`,
+		borderRadius: 20,
+		color: theme.color.primary,
+		padding: '0 10px'
 	}
-};
+});
 
 const useStyles = createUseStyles(styles);
 
@@ -62,12 +67,10 @@ export default function SearchBar(props: Props) {
 
 	return (
 		<div className={`${classes.root} ${className}`}>
-			<TextField
+			<input
 				className={classes.input}
-				variant="outlined"
 				type="search"
-				placeholder="Поиск"
-				size="small"
+				placeholder="Поиск..."
 				value={searchString ?? ''}
 				onChange={({target}) => onSearchStringChange(target.value)}/>
 			<Button style={{minWidth: 0}}

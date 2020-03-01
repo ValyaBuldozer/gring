@@ -1,9 +1,9 @@
 import {action, computed, observable, runInAction} from "mobx";
-import Route from "../types/Route";
+import Route, {RouteBase} from "../types/Route";
 import SortBy from "../util/types/SortBy";
 import BaseEntityStore from "./BaseEntityStore";
 
-const sortRules = new Map<SortBy, (a: Route, b: Route) => number>([
+const sortRules = new Map<SortBy, (a: RouteBase, b: RouteBase) => number>([
     [SortBy.DEFAULT, () => 0],
 	[SortBy.NAME, (a, b) => a.name.localeCompare(b.name)],
 	[SortBy.RATING_AVG, (a, b) => a.rating.average < b.rating.average ? 1 : -1],
@@ -13,17 +13,22 @@ const sortRules = new Map<SortBy, (a: Route, b: Route) => number>([
 	[SortBy.OBJECTS_COUNT, (a, b) => a.placesCount < b.placesCount ? 1 : -1]
 ]);
 
-export default class RoutesStore extends BaseEntityStore {
+export default class RoutesStore extends BaseEntityStore<Route> {
 
 	@observable
-	private list: Route[] = [];
+	private list: RouteBase[] = [];
+
+	constructor() {
+		super();
+		this.apiPath = '/api/routes';
+	}
 
 	@action
 	async fetchList() {
-		const res = await fetch('/api/routes');
+		const res = await fetch(this.apiPath);
 
 		if (res.ok) {
-			const nextList: Route[] = await res.json();
+			const nextList: RouteBase[] = await res.json();
 
 			runInAction(() => {
 				this.list = nextList;

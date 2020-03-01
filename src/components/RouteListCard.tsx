@@ -1,7 +1,7 @@
 import * as React from 'react';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 import {createUseStyles} from 'react-jss';
-import Route from '../types/Route';
+import Route, {RouteBase} from '../types/Route';
 import {Avatar, Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
@@ -9,7 +9,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PlaceIcon from '@material-ui/icons/Place';
 import {formatMeters, formatTimeToMinutes} from "../util/formatter";
 
-const styles: JssStyleSheet = {
+const styles: JssStyleSheet = theme => ({
 	cardRoot: {
 		minHeight: 100,
 		display: 'grid',
@@ -18,10 +18,11 @@ const styles: JssStyleSheet = {
             "avatar rating" auto
             "controls controls" 30px / 70px 1fr
         `,
-		borderBottom: '1px solid #d4d4d4',
+		borderBottom: `1px solid ${theme.color.secondary}`,
 		padding: ' 0 10px',
+		color: theme.color.primary,
 		'&:first-of-type': {
-			borderTop: '1px solid #d4d4d4'
+			borderTop: `1px solid ${theme.color.secondary}`
 		}
 	},
 	avatar: {
@@ -56,13 +57,16 @@ const styles: JssStyleSheet = {
 		alignItems: 'center',
 		fontSize: 13,
 		whiteSpace: 'nowrap'
+	},
+	controlTitle: {
+		paddingLeft: 5
 	}
-};
+});
 
 const useStyles = createUseStyles(styles);
 
 interface Props {
-	route: Route;
+	route: RouteBase;
 }
 
 export default function RoutesListCard({route}: Props) {
@@ -83,15 +87,21 @@ export default function RoutesListCard({route}: Props) {
 			<div className={classes.controls}>
 				<div className={classes.control}>
 					<QueryBuilderIcon/>
-					<Box>{formatTimeToMinutes(route.duration)}</Box>
+					<Box className={classes.controlTitle}>
+						{formatTimeToMinutes(route.duration)}
+					</Box>
 				</div>
 				<div className={classes.control}>
 					<PlaceIcon/>
-					<Box>{formatMeters(route.distance)}</Box>
+					<Box className={classes.controlTitle}>
+						{formatMeters(route.distance)}
+					</Box>
 				</div>
 				<div className={classes.control}>
 					<HomeIcon/>
-					<Box>{route.placesCount} объектов</Box>
+					<Box className={classes.controlTitle}>
+						{route.placesCount} объектов
+					</Box>
 				</div>
 			</div>
 		</div>

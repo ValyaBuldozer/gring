@@ -5,7 +5,7 @@ import useStore from '../stores/useStore';
 import { observer } from 'mobx-react-lite';
 import { Box } from '@material-ui/core';
 
-const styles: JssStyleSheet = {
+const styles: JssStyleSheet = theme => ({
     categoryList: {
         height: '100%',
         width: '100%',
@@ -22,6 +22,7 @@ const styles: JssStyleSheet = {
         paddingTop: 5,
         fontWeight: 'bold',
         position: 'relative',
+        color: theme.color.primary,
 
         '&:after': {
             content: '""',
@@ -29,7 +30,7 @@ const styles: JssStyleSheet = {
             bottom: 0,
             left: '50%',
             right: '50%',
-            borderBottom: '2px solid black',
+            borderBottom: `2px solid ${theme.color.primary}`,
             transition: 'left 0.3s ease, right 0.3s ease'
         }
     },
@@ -39,7 +40,7 @@ const styles: JssStyleSheet = {
             right: 4,
         }
     }
-}
+});
 
 const useStyles = createUseStyles(styles);
 

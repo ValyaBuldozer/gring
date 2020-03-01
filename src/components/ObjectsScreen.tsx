@@ -23,13 +23,13 @@ const styles: JssStyleSheet = {
         overflow: 'hidden'
     },
     appBar: {
-        height: 75,
+        height: 70,
         width: '100%',
         padding: '5px 10px 0 10px',
         display: 'grid',
         gridTemplate: `
             "search-bar" 40px
-            "categories" 30px / 100%
+            "categories" 25px / 100%
         `
     },
     searchInput: {

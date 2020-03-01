@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
-import Obj from '../types/Object';
+import Obj, {ObjectBase} from '../types/Object';
 import { Paper, Typography, Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 
 
-const styles: JssStyleSheet = {
+const styles: JssStyleSheet = theme => ({
     card: {
         width: '100%',
         borderRadius: 5,
@@ -27,18 +27,18 @@ const styles: JssStyleSheet = {
         justifyContent: 'flex-start'
     },
     name: {
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        color: theme.color.primary
     }
-}
+});
 
 const useStyles = createUseStyles(styles);
 
 interface Props {
-    obj: Obj;
-    onSelect?: () => void;
+    obj: ObjectBase;
 }
 
-export default function ObjectCard({ obj, onSelect }: Props) {
+export default function ObjectCard({ obj }: Props) {
 
     const { name, rating, image } = obj;
 

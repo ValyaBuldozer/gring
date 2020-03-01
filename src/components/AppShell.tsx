@@ -8,6 +8,7 @@ import JssStyleSheet from '../util/types/JssStyleSheet';
 
 const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
 const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
+const RoutesDetailScreen = React.lazy(() => import('./RouteDetailScreen'));
 const ObjectDetailScreen = React.lazy(() => import('./ObjectDetailScreen'));
 
 const styles: JssStyleSheet = {
@@ -48,6 +49,7 @@ export default function AppShell() {
                         <React.Suspense fallback={'Loading'}>
                             <Switch>
                                 <Route exact path='/routes' component={RoutesScreen} />
+                                <Route exact path='/routes/:id' component={RoutesDetailScreen}/>
                                 <Route exact path="/objects" component={ObjectsScreen} />
                                 <Route exact path="/objects/:id" component={ObjectDetailScreen} />
                                 <Route exact path="/404" render={() => '404'}/>
