@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
-import Obj, {ObjectBase} from '../types/Object';
+import Obj, {ObjectBase} from '../../types/Object';
 import { Paper, Typography, Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 
 
 const styles: JssStyleSheet = theme => ({

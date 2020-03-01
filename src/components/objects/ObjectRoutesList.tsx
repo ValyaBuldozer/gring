@@ -1,8 +1,8 @@
 import * as React from 'react';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import { createUseStyles } from 'react-jss';
-import { RouteBase } from '../types/Route';
-import RouteCard from './RouteCard';
+import { RouteBase } from '../../types/Route';
+import RouteCard from '../routes/RouteCard';
 import { Divider } from '@material-ui/core';
 
 interface Props {
@@ -22,8 +22,8 @@ export default function ObjectRoutesList({ objectId }: Props) {
                     throw new Error(res.status.toString());
                 }
             })
-            .then((recievedRoutes: RouteBase[]) => {
-                setRoutes(recievedRoutes);
+            .then((receivedRoutes: RouteBase[]) => {
+                setRoutes(receivedRoutes);
             })
             .catch(err => console.error(err));
     }, []);

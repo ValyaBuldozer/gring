@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
-import Obj from '../types/Object';
+import Obj from '../../types/Object';
 import ObjectCard from './ObjectCard';
 import { Link } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
-import useStore from '../stores/useStore';
+import useStore from '../../stores/useStore';
 import { observer } from 'mobx-react-lite';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 
 const styles: JssStyleSheet = {
     list: {

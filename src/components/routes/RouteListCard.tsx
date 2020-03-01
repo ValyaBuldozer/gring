@@ -1,13 +1,10 @@
 import * as React from 'react';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import {createUseStyles} from 'react-jss';
-import Route, {RouteBase} from '../types/Route';
+import {RouteBase} from '../../types/Route';
 import {Avatar, Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
-import HomeIcon from '@material-ui/icons/Home';
-import PlaceIcon from '@material-ui/icons/Place';
-import {formatMeters, formatTimeToMinutes} from "../util/formatter";
+import RouteInfo from "./RouteInfo";
 
 const styles: JssStyleSheet = theme => ({
 	cardRoot: {
@@ -35,7 +32,7 @@ const styles: JssStyleSheet = theme => ({
 	name: {
 		gridArea: 'name',
 		alignSelf: 'flex-end',
-        fontWeight: 'bold'
+		fontWeight: 'bold'
 	},
 	rating: {
 		gridArea: 'rating',
@@ -43,23 +40,7 @@ const styles: JssStyleSheet = theme => ({
 	},
 	controls: {
 		gridArea: 'controls',
-		height: 30,
-		width: '100%',
-		display: 'flex',
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	},
-	control: {
-		height: 20,
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-around',
-		alignItems: 'center',
-		fontSize: 13,
-		whiteSpace: 'nowrap'
-	},
-	controlTitle: {
-		paddingLeft: 5
+		height: 30
 	}
 });
 
@@ -84,26 +65,7 @@ export default function RoutesListCard({route}: Props) {
 			<div className={classes.rating}>
 				<Rating value={route.rating.average} precision={0.5} readOnly={true}/>
 			</div>
-			<div className={classes.controls}>
-				<div className={classes.control}>
-					<QueryBuilderIcon/>
-					<Box className={classes.controlTitle}>
-						{formatTimeToMinutes(route.duration)}
-					</Box>
-				</div>
-				<div className={classes.control}>
-					<PlaceIcon/>
-					<Box className={classes.controlTitle}>
-						{formatMeters(route.distance)}
-					</Box>
-				</div>
-				<div className={classes.control}>
-					<HomeIcon/>
-					<Box className={classes.controlTitle}>
-						{route.placesCount} объектов
-					</Box>
-				</div>
-			</div>
+			<RouteInfo route={route} className={classes.controls}/>
 		</div>
 	)
 }

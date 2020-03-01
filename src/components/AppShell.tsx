@@ -6,10 +6,10 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import { Button, Paper, Typography } from '@material-ui/core';
 import JssStyleSheet from '../util/types/JssStyleSheet';
 
-const ObjectsScreen = React.lazy(() => import('./ObjectsScreen'));
-const RoutesScreen = React.lazy(() => import('./RoutesScreen'));
-const RoutesDetailScreen = React.lazy(() => import('./RouteDetailScreen'));
-const ObjectDetailScreen = React.lazy(() => import('./ObjectDetailScreen'));
+const ObjectsScreen = React.lazy(() => import('./objects/ObjectsScreen'));
+const RoutesScreen = React.lazy(() => import('./routes/RoutesScreen'));
+const RoutesDetailScreen = React.lazy(() => import('./routes/RouteDetailScreen'));
+const ObjectDetailScreen = React.lazy(() => import('./objects/ObjectDetailScreen'));
 
 const styles: JssStyleSheet = {
     appShell: {

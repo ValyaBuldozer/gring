@@ -1,16 +1,16 @@
 import React from 'react';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import {createUseStyles} from 'react-jss';
 import {observer} from 'mobx-react-lite';
-import useStore from '../stores/useStore';
+import useStore from '../../stores/useStore';
 import ObjectsList from './ObjectsList';
 import {TextField} from '@material-ui/core';
 import SortIcon from '@material-ui/icons/Sort';
 import CategoriesFilter from './CategoriesFilter';
 import Button from "@material-ui/core/Button";
-import SelectDialog from "./SelectDialog";
-import SortBy from "../util/types/SortBy";
-import SearchBar from "./SearchBar";
+import SelectDialog from "../SelectDialog";
+import SortBy from "../../util/types/SortBy";
+import SearchBar from "../SearchBar";
 
 const SORT_OPTIONS: SortBy[] = [
     SortBy.DEFAULT, SortBy.NAME, SortBy.DISTANCE, SortBy.RATING_COUNT, SortBy.RATING_AVG

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {observer} from 'mobx-react-lite';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import {createUseStyles} from 'react-jss';
-import useStore from '../stores/useStore';
+import useStore from '../../stores/useStore';
 import RoutesList from './RoutesList';
-import SearchBar from "./SearchBar";
-import SortBy from "../util/types/SortBy";
+import SearchBar from "../SearchBar";
+import SortBy from "../../util/types/SortBy";
 
 const SORT_OPTIONS: SortBy[] = [
     SortBy.DEFAULT,

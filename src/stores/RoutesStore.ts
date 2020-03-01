@@ -44,12 +44,12 @@ export default class RoutesStore extends BaseEntityStore<Route> {
 	}
 
 	@action
-	public updateSearch(searchString: string) {
+	updateSearch(searchString: string) {
 		this.searchString = searchString;
 	}
 
 	@computed
-	public get routes() {
+	get routes() {
 		return this.list
 			.filter(({ name }) => name.match(new RegExp(this.searchString, 'gi')))
 			.sort(sortRules.get(this.sortBy));

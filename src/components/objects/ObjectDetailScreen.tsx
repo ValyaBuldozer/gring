@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
-import Obj from '../types/Object';
+import Obj from '../../types/Object';
 import {RouterProps, useParams, withRouter} from 'react-router';
 import { Typography, Box, Button } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import ObjectRoutesList from './ObjectRoutesList';
-import ReviewList from './ReviewList';
+import ReviewList from '../ReviewList';
 import {observer} from "mobx-react-lite";
-import useStore from "../stores/useStore";
+import useStore from "../../stores/useStore";
 
 interface State {
     showDescription: boolean;

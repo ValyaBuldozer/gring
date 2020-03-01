@@ -1,7 +1,7 @@
 import * as React from 'react';
-import JssStyleSheet from '../util/types/JssStyleSheet';
+import JssStyleSheet from '../../util/types/JssStyleSheet';
 import { createUseStyles } from 'react-jss';
-import { RouteBase } from '../types/Route';
+import { RouteBase } from '../../types/Route';
 import { Home } from '@material-ui/icons';
 import { Box } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
@@ -37,7 +37,7 @@ export default function RouteCard({ route }: Props) {
     return (
         <div className={classes.root}>
             <Box className={classes.name}>{ route.name }</Box>
-            <Rating readOnly value={3} size="medium"></Rating>
+            <Rating readOnly value={3} size="medium"/>
         </div>
     )
 }

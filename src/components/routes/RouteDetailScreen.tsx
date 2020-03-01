@@ -1,12 +1,13 @@
 import * as React from "react";
-import JssStyleSheet from "../util/types/JssStyleSheet";
+import JssStyleSheet from "../../util/types/JssStyleSheet";
 import {createUseStyles} from 'react-jss';
 import {RouterProps, useParams, withRouter} from "react-router";
-import useStore from "../stores/useStore";
-import Route from "../types/Route";
+import useStore from "../../stores/useStore";
+import Route from "../../types/Route";
 import {observer} from "mobx-react-lite";
 import {Box} from "@material-ui/core";
 import {Rating} from "@material-ui/lab";
+import RouteInfo from "./RouteInfo";
 
 const styles: JssStyleSheet = theme => ({
 	root: {
@@ -32,6 +33,10 @@ const styles: JssStyleSheet = theme => ({
 		display: "flex",
 		alignItems: 'center',
 		padding: '5px 0'
+	},
+	controls: {
+		padding: '5px 0',
+		justifyContent: 'space-between'
 	}
 });
 
@@ -76,6 +81,7 @@ function RouteDetailScreen({history}: Props) {
 						value={route.rating.average}/>
 					<span>({route.rating.count})</span>
 				</div>
+				<RouteInfo route={route} className={classes.controls}/>
 				<Box className={classes.description}>
 					{route.description}
 				</Box>
