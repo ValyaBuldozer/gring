@@ -8,6 +8,8 @@ import {observer} from "mobx-react-lite";
 import {Box} from "@material-ui/core";
 import {Rating} from "@material-ui/lab";
 import RouteInfo from "./RouteInfo";
+import RouteObjectListCard from "./RouteObjectListCard";
+import {Link} from "react-router-dom";
 
 const styles: JssStyleSheet = theme => ({
 	root: {
@@ -86,6 +88,15 @@ function RouteDetailScreen({history}: Props) {
 					{route.description}
 				</Box>
 			</div>
+			{
+				route.places.map((place, idx) => (
+					<Link to={`/objects/${place.id}`} key={place.id}>
+						<RouteObjectListCard
+							obj={place}
+							index={idx + 1}/>
+					</Link>
+				))
+			}
 		</div>
 	)
 }
