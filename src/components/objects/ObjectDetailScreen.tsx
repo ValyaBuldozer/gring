@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createUseStyles } from 'react-jss';
 import Obj from '../../types/Object';
-import {RouterProps, useParams, withRouter} from 'react-router';
+import {RouteComponentProps, useParams, withRouter} from 'react-router';
 import { Typography, Box, Button } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import JssStyleSheet from '../../util/types/JssStyleSheet';
@@ -9,18 +9,13 @@ import ObjectRoutesList from './ObjectRoutesList';
 import ReviewList from '../review/ReviewList';
 import {observer} from "mobx-react-lite";
 import useStore from "../../stores/useStore";
+import DetailScreenWrapper from "../DetailScreenWrapper";
 
 interface State {
     showDescription: boolean;
 }
 
 const styles: JssStyleSheet<State> = theme => ({
-    root: {
-        height: '100%',
-        width: '100%',
-        display: 'block',
-        overflowY: 'auto'
-    },
     logo: {
         height: theme.dimensions.detail.logoHeight,
         width: '100%',
@@ -63,7 +58,7 @@ const styles: JssStyleSheet<State> = theme => ({
 
 const useStyles = createUseStyles(styles);
 
-interface Props extends RouterProps {}
+interface Props extends RouteComponentProps {}
 
 
 function ObjectDetailScreen({history}: Props) {
@@ -88,7 +83,7 @@ function ObjectDetailScreen({history}: Props) {
     }, []);
 
     return (
-        <Typography className={classes.root} component='div'>
+        <DetailScreenWrapper title={object?.name ?? ''}>
             {
                 object == null ?
                     'loading' : (
@@ -127,7 +122,7 @@ function ObjectDetailScreen({history}: Props) {
                         </>
                     )
             }
-        </Typography>
+        </DetailScreenWrapper>
     )
 }
 

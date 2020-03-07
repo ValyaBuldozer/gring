@@ -1,7 +1,7 @@
 import * as React from "react";
 import JssStyleSheet from "../../util/types/JssStyleSheet";
 import {createUseStyles} from 'react-jss';
-import {RouterProps, useParams, withRouter} from "react-router";
+import {RouteComponentProps, useParams, withRouter} from "react-router";
 import useStore from "../../stores/useStore";
 import Route from "../../types/Route";
 import {observer} from "mobx-react-lite";
@@ -11,13 +11,9 @@ import RouteInfo from "./RouteInfo";
 import RouteObjectListCard from "./RouteObjectListCard";
 import {Link} from "react-router-dom";
 import ReviewList from "../review/ReviewList";
+import DetailScreenWrapper from "../DetailScreenWrapper";
 
 const styles: JssStyleSheet = theme => ({
-	root: {
-		height: '100%',
-		width: '100%',
-		overflowY: 'auto'
-	},
 	logo: {
 		height: theme.dimensions.detail.logoHeight,
 		width: '100%',
@@ -51,7 +47,7 @@ const styles: JssStyleSheet = theme => ({
 
 const useStyles = createUseStyles(styles);
 
-interface Props extends RouterProps {
+interface Props extends RouteComponentProps {
 }
 
 function RouteDetailScreen({history}: Props) {
@@ -78,7 +74,7 @@ function RouteDetailScreen({history}: Props) {
 	}
 
 	return (
-		<div className={classes.root}>
+		<DetailScreenWrapper title={route.name}>
 			<img className={classes.logo} src={`/assets/${route.image}`}/>
 			<div className={classes.info}>
 				<Box className={classes.name}>{route.name}</Box>
@@ -108,7 +104,7 @@ function RouteDetailScreen({history}: Props) {
 				Отзывы
 			</Box>
 			<ReviewList entityId={route.id} limit={2}/>
-		</div>
+		</DetailScreenWrapper>
 	)
 }
 

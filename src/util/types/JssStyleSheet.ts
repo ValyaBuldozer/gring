@@ -12,7 +12,7 @@ type PseudoElements<S> = {
 }
 
 type StyleSheet<S> = {
-    [className: string]: CSSProps<S> | PseudoElements<S>  
+    [className: string]: CSSProps<S> & PseudoElements<S>
 }
 
 export type ThemedStyleSheet<S extends {} = {}> = (rootTheme: typeof theme) => StyleSheet<S>;

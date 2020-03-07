@@ -3,6 +3,7 @@ import {createUseStyles, ThemeProvider} from 'react-jss'
 import AppShell from './AppShell';
 import useStore from '../stores/useStore';
 import theme from "../styles/theme";
+import {SnackbarProvider} from "notistack";
 
 const useStyles = createUseStyles({
 	appRoot: {
@@ -31,7 +32,9 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.appRoot}>
-				<AppShell/>
+				<SnackbarProvider maxSnack={3}>
+					<AppShell/>
+				</SnackbarProvider>
 			</div>
 		</ThemeProvider>
 	)

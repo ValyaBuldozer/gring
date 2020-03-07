@@ -1,19 +1,12 @@
 import * as React from "react";
 import {createUseStyles} from 'react-jss';
 import JssStyleSheet from "../../util/types/JssStyleSheet";
-import {RouterProps, useParams, withRouter} from "react-router";
+import {RouteComponentProps, useParams, withRouter} from "react-router";
 import Review from "../../types/Review";
 import ReviewCard from "./ReviewCard";
+import DetailScreenWrapper from "../DetailScreenWrapper";
 
 const styles: JssStyleSheet = theme => ({
-	root: {
-		height: '100%',
-		width: '100%'
-	},
-	appbar: {
-		height: 40,
-		width: '100%'
-	},
 	list: {
 		height: "auto",
 		width: "100%",
@@ -32,7 +25,7 @@ const styles: JssStyleSheet = theme => ({
 
 const useStyles = createUseStyles(styles);
 
-interface Props extends RouterProps {
+interface Props extends RouteComponentProps {
 }
 
 function ReviewDetailScreen({history}: Props) {
@@ -59,8 +52,10 @@ function ReviewDetailScreen({history}: Props) {
 	}
 
 	return (
-		<div className={classes.root}>
-			<div className={classes.list}>
+		<DetailScreenWrapper
+			title='Отзывы'
+			shareEnabled={false}
+			showAlways>
 			{
 				reviews.map(review => (
 					<ReviewCard
@@ -69,8 +64,7 @@ function ReviewDetailScreen({history}: Props) {
 						review={review}/>
 				))
 			}
-			</div>
-		</div>
+		</DetailScreenWrapper>
 	)
 }
 
