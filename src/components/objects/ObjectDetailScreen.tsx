@@ -6,7 +6,7 @@ import { Typography, Box, Button } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import JssStyleSheet from '../../util/types/JssStyleSheet';
 import ObjectRoutesList from './ObjectRoutesList';
-import ReviewList from '../ReviewList';
+import ReviewList from '../review/ReviewList';
 import {observer} from "mobx-react-lite";
 import useStore from "../../stores/useStore";
 
@@ -123,7 +123,7 @@ function ObjectDetailScreen({history}: Props) {
                             <Box className={classes.title} fontWeight='bolder'>
                                 ОТЗЫВЫ
                             </Box>
-                            <ReviewList objectId={object.id} limit={2}/>
+                            <ReviewList entityId={object.id} limit={2}/>
                         </>
                     )
             }

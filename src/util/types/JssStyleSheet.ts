@@ -15,6 +15,8 @@ type StyleSheet<S> = {
     [className: string]: CSSProps<S> | PseudoElements<S>  
 }
 
-type JssStyleSheet<S extends {} = {}> = StyleSheet<S> | ((rootTheme: typeof theme) => StyleSheet<S>);
+export type ThemedStyleSheet<S extends {} = {}> = (rootTheme: typeof theme) => StyleSheet<S>;
+
+type JssStyleSheet<S extends {} = {}> = StyleSheet<S> | ThemedStyleSheet<S>;
 
 export default JssStyleSheet;

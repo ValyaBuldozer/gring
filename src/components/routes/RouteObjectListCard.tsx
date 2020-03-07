@@ -3,6 +3,7 @@ import JssStyleSheet from "../../util/types/JssStyleSheet";
 import {createUseStyles} from 'react-jss';
 import {ObjectBase} from "../../types/Object";
 import {Avatar, Box} from "@material-ui/core";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const styles: JssStyleSheet = theme => ({
 	root: {
@@ -13,13 +14,14 @@ const styles: JssStyleSheet = theme => ({
 		borderTopWidth: 1,
 		display: 'grid',
 		gridTemplate: `
-			"index avatar info arrow" auto / 15px 60px 1fr 10px
+			"index avatar info arrow" auto / 20px 60px 1fr 10px
 		`,
 		padding: '5px 20px'
 	},
 	index: {
 		gridArea: 'index',
-		color: theme.color.secondary
+		color: theme.color.secondary,
+		fontSize: 14
 	},
 	avatar: {
 		gridArea: 'avatar',
@@ -58,14 +60,19 @@ export default function RouteObjectListCard({obj, index}: Props) {
 
 	return (
 		<div className={classes.root}>
-			<div className={classes.index}>{index}</div>
-			<Avatar src={`/assets/${obj.image}`} className={classes.avatar} style={{height: 50, width: 50}}/>
+			<div className={classes.index}>
+				{index.toString().padStart(2, '0')}
+			</div>
+			<Avatar
+				src={`/assets/${obj.image}`}
+				className={classes.avatar}
+				style={{height: 50, width: 50}}/>
 			<div className={classes.info}>
 				<Box className={classes.name}>{obj.name}</Box>
 				<Box>Address</Box>
 			</div>
 			<div className={classes.arrow}>
-				>
+				<ChevronRightIcon/>
 			</div>
 		</div>
 	)

@@ -5,6 +5,7 @@ import {RouteBase} from '../../types/Route';
 import {Avatar, Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import RouteInfo from "./RouteInfo";
+import {Link} from "react-router-dom";
 
 const styles: JssStyleSheet = theme => ({
 	cardRoot: {
@@ -54,7 +55,7 @@ export default function RoutesListCard({route}: Props) {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.cardRoot}>
+		<Link to={`/routes/${route.id}`} key={route.id} className={classes.cardRoot}>
 			<Avatar
 				className={classes.avatar}
 				src={'/assets/' + route.image}
@@ -66,6 +67,6 @@ export default function RoutesListCard({route}: Props) {
 				<Rating value={route.rating.average} precision={0.5} readOnly={true}/>
 			</div>
 			<RouteInfo route={route} className={classes.controls}/>
-		</div>
+		</Link>
 	)
 }

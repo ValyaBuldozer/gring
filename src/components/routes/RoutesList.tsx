@@ -26,9 +26,7 @@ function RoutesList() {
 		<div className={classes.list}>
 			{
 				store.routes.map(route => (
-					<Link to={`/routes/${route.id}`} key={route.id}>
-						<RoutesListCard route={route}/>
-					</Link>
+					<RoutesListCard route={route}/>
 				))
 			}
 		</div>

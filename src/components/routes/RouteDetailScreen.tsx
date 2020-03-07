@@ -10,6 +10,7 @@ import {Rating} from "@material-ui/lab";
 import RouteInfo from "./RouteInfo";
 import RouteObjectListCard from "./RouteObjectListCard";
 import {Link} from "react-router-dom";
+import ReviewList from "../review/ReviewList";
 
 const styles: JssStyleSheet = theme => ({
 	root: {
@@ -39,6 +40,12 @@ const styles: JssStyleSheet = theme => ({
 	controls: {
 		padding: '5px 0',
 		justifyContent: 'space-between'
+	},
+	secondaryTitle: {
+		fontSize: theme.dimensions.detail.secondaryTitleFontSize,
+		color: theme.color.primary,
+		fontWeight: 'bold',
+		padding: '10px 15px'
 	}
 });
 
@@ -97,6 +104,10 @@ function RouteDetailScreen({history}: Props) {
 					</Link>
 				))
 			}
+			<Box className={classes.secondaryTitle}>
+				Отзывы
+			</Box>
+			<ReviewList entityId={route.id} limit={2}/>
 		</div>
 	)
 }
