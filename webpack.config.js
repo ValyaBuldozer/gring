@@ -21,9 +21,12 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, './build/out/'),
 		publicPath: '/',
-		filename: 'bundle.js'
+		filename: '[name].bundle.js',
+		chunkFilename: '[name].bundle.js'
 	},
-	entry: path.resolve("./src/index.tsx"),
+	entry: {
+		index: path.resolve("./src/index.tsx")
+	},
 	mode: mode,
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx']
@@ -74,8 +77,8 @@ module.exports = {
 				urlPattern: new RegExp('/assets'),
 				handler: 'CacheFirst'
 			}, {
-				urlPattern: new RegExp('bundle.js'),
-				handler: 'StaleWhileRevalidate'
+				urlPattern: / *\.js/,
+				handler: 'NetworkFirst'
 			}, {
 				urlPattern: new RegExp('index.html'),
 				handler: 'StaleWhileRevalidate'

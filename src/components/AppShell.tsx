@@ -2,15 +2,27 @@ import * as React from 'react';
 import {createUseStyles} from 'react-jss'
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import PlaceIcon from '@material-ui/icons/Place';
-import ExploreIcon from '@material-ui/icons/Explore';
-import {Button, Paper, Typography} from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import JssStyleSheet from '../util/types/JssStyleSheet';
+import RouteIcon from "./icons/RouteIcon";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
-const ObjectsScreen = React.lazy(() => import('./objects/ObjectsScreen'));
-const RoutesScreen = React.lazy(() => import('./routes/RoutesScreen'));
-const RoutesDetailScreen = React.lazy(() => import('./routes/RouteDetailScreen'));
-const ObjectDetailScreen = React.lazy(() => import('./objects/ObjectDetailScreen'));
-const ReviewsDetailScreen = React.lazy(() => import('./review/ReviewDetailScreen'));
+const ObjectsScreen = React.lazy(() =>
+	import(/* webpackChunkName: "ObjectsScreen" */ './objects/ObjectsScreen')
+);
+const RoutesScreen = React.lazy(() =>
+	import(/* webpackChunkName: "RoutesScreen" */ './routes/RoutesScreen')
+);
+const RoutesDetailScreen = React.lazy(() =>
+	import(/* webpackChunkName: "RouteDetailScreen" */ './routes/RouteDetailScreen')
+);
+const ObjectDetailScreen = React.lazy(() =>
+	import(/* webpackChunkName: "ObjectDetailScreen" */ './objects/ObjectDetailScreen')
+);
+const ReviewsDetailScreen = React.lazy(() =>
+	import(/* webpackChunkName: "ReviewDetailScreen" */ './review/ReviewDetailScreen')
+);
 
 const styles: JssStyleSheet = {
 	appShell: {
@@ -35,7 +47,7 @@ const styles: JssStyleSheet = {
 		justifyContent: 'space-around',
 		alignItems: 'center'
 	}
-}
+};
 
 const useStyles = createUseStyles(styles);
 
@@ -59,18 +71,14 @@ export default function AppShell() {
 							</Switch>
 						</React.Suspense>
 					</div>
-					<Paper className={classes.navbar} elevation={5}>
+					<BottomNavigation className={classes.navbar}>
 						<Link to='/'>
-							<Button>
-								<PlaceIcon/>
-							</Button>
+							<BottomNavigationAction label="Места" icon={<PlaceIcon/>}/>
 						</Link>
 						<Link to='/routes'>
-							<Button>
-								<ExploreIcon/>
-							</Button>
+							<BottomNavigationAction label="Маршруты" icon={<RouteIcon fontSize='large'/>}/>
 						</Link>
-					</Paper>
+					</BottomNavigation>
 				</Typography>
 			</div>
 		</Router>
