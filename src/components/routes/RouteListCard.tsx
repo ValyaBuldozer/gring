@@ -1,13 +1,12 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import {createUseStyles} from 'react-jss';
 import {RouteBase} from '../../types/Route';
 import {Avatar, Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import RouteInfo from "./RouteInfo";
 import {Link} from "react-router-dom";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	cardRoot: {
 		minHeight: 100,
 		display: 'grid',
@@ -16,11 +15,11 @@ const styles: JssStyleSheet = theme => ({
             "avatar rating" auto
             "controls controls" 30px / 70px 1fr
         `,
-		borderBottom: `1px solid ${theme.color.secondary}`,
+		borderBottom: `1px solid ${theme.palette.divider}`,
 		padding: ' 0 10px',
-		color: theme.color.primary,
+		color: theme.palette.text.primary,
 		'&:first-of-type': {
-			borderTop: `1px solid ${theme.color.secondary}`
+			borderTop: `1px solid ${theme.palette.divider}`
 		}
 	},
 	avatar: {
@@ -43,9 +42,7 @@ const styles: JssStyleSheet = theme => ({
 		gridArea: 'controls',
 		height: 30
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	route: RouteBase;

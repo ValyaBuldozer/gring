@@ -1,21 +1,16 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import {createUseStyles} from 'react-jss';
 import useStore from '../../stores/useStore';
 import {observer} from 'mobx-react-lite';
 import RoutesListCard from './RouteListCard';
-import {Link} from "react-router-dom";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = {
+const useStyles = makeStyles({
 	list: {
 		height: '100%',
 		width: '100%',
 		overflowY: 'auto'
-	},
-
-};
-
-const useStyles = createUseStyles(styles);
+	}
+});
 
 function RoutesList() {
 

@@ -1,11 +1,9 @@
 import * as React from 'react';
 import SortBy from "../util/types/SortBy";
-import JssStyleSheet from "../util/types/JssStyleSheet";
-import {createUseStyles} from 'react-jss';
-import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import SortIcon from "@material-ui/icons/Sort";
 import SelectDialog from "./SelectDialog";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {
 	[SortBy.DEFAULT]: 'По умолчанию',
@@ -18,7 +16,7 @@ const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {
 	[SortBy.ROUTE_DISTANCE]: 'По протяженности'
 } as const;
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		height: '40px',
 		width: '100%',
@@ -28,14 +26,12 @@ const styles: JssStyleSheet = theme => ({
 	input: {
 		width: '100%',
 		height: 30,
-		border: `1px solid ${theme.color.secondary}`,
+		border: `1px solid ${theme.palette.divider}`,
 		borderRadius: 20,
-		color: theme.color.primary,
+		color: theme.palette.text.primary,
 		padding: '0 10px'
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	className?: string;
@@ -74,8 +70,7 @@ export default function SearchBar(props: Props) {
 				value={searchString ?? ''}
 				onChange={({target}) => onSearchStringChange(target.value)}/>
 			<Button style={{minWidth: 0}}
-					className={`${classes.sort} ${classes.btn}`}
-					onClick={() => setSortOpen(true)}>
+				onClick={() => setSortOpen(true)}>
 				<SortIcon/>
 			</Button>
 			<SelectDialog

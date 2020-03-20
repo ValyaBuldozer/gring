@@ -1,11 +1,10 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import { createUseStyles } from 'react-jss';
 import useStore from '../../stores/useStore';
-import { observer } from 'mobx-react-lite';
-import { Box } from '@material-ui/core';
+import {observer} from 'mobx-react-lite';
+import {Box} from '@material-ui/core';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
     categoryList: {
         height: '100%',
         width: '100%',
@@ -22,7 +21,7 @@ const styles: JssStyleSheet = theme => ({
         paddingTop: 5,
         fontWeight: 'bold',
         position: 'relative',
-        color: theme.color.primary,
+        color: theme.palette.text.primary,
 
         '&:after': {
             content: '""',
@@ -30,7 +29,7 @@ const styles: JssStyleSheet = theme => ({
             bottom: 0,
             left: '50%',
             right: '50%',
-            borderBottom: `2px solid ${theme.color.primary}`,
+            borderBottom: `2px solid ${theme.palette.text.primary}`,
             transition: 'left 0.3s ease, right 0.3s ease'
         }
     },
@@ -40,9 +39,7 @@ const styles: JssStyleSheet = theme => ({
             right: 4,
         }
     }
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 const CategoriesFilter = observer(() => {
     const { objects: store } = useStore();

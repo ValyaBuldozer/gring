@@ -1,14 +1,13 @@
 import * as React from 'react';
-import JssStyleSheet from "../../util/types/JssStyleSheet";
-import {createUseStyles} from 'react-jss'
 import {RouteBase} from "../../types/Route";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import {Box} from "@material-ui/core";
 import {formatMeters, formatTimeToMinutes} from "../../util/formatter";
 import PlaceIcon from "@material-ui/icons/Place";
 import HomeIcon from "@material-ui/icons/Home";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		width: '100%',
 		display: 'flex',
@@ -26,9 +25,7 @@ const styles: JssStyleSheet = theme => ({
 	controlTitle: {
 		paddingLeft: 5
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	route: RouteBase;

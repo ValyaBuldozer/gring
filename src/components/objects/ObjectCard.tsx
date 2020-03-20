@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { createUseStyles } from 'react-jss';
-import Obj, {ObjectBase} from '../../types/Object';
-import { Paper, Typography, Box } from '@material-ui/core';
+import {ObjectBase} from '../../types/Object';
+import {Box, Paper} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
     card: {
         width: '100%',
         borderRadius: 5,
@@ -28,11 +27,9 @@ const styles: JssStyleSheet = theme => ({
     },
     name: {
         textTransform: 'uppercase',
-        color: theme.color.primary
+        color: theme.palette.text.primary
     }
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
     obj: ObjectBase;

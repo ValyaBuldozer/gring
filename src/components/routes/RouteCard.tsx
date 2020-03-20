@@ -1,12 +1,10 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import { createUseStyles } from 'react-jss';
-import { RouteBase } from '../../types/Route';
-import { Home } from '@material-ui/icons';
-import { Box } from '@material-ui/core';
+import {RouteBase} from '../../types/Route';
+import {Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = {
+const useStyles = makeStyles({
     root: {
         width: '100%',
         position: 'relative',
@@ -22,9 +20,7 @@ const styles: JssStyleSheet = {
         // TODO: move into theme
         fontSize: 18
     }
-}
-
-const useStyles = createUseStyles(styles);
+});
 
 interface Props {
     route: RouteBase;

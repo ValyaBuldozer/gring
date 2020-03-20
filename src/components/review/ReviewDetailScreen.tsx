@@ -1,12 +1,11 @@
 import * as React from "react";
-import {createUseStyles} from 'react-jss';
-import JssStyleSheet from "../../util/types/JssStyleSheet";
 import {RouteComponentProps, useParams, withRouter} from "react-router";
 import Review from "../../types/Review";
 import ReviewCard from "./ReviewCard";
 import DetailScreenWrapper from "../DetailScreenWrapper";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	list: {
 		height: "auto",
 		width: "100%",
@@ -15,15 +14,13 @@ const styles: JssStyleSheet = theme => ({
 	},
 	item: {
 		borderStyle: 'solid',
-		borderColor: theme.color.secondary,
+		borderColor: theme.palette.divider,
 		borderBottomWidth: 1,
 		'&:first-of-type': {
 			borderTopWidth: 1
 		}
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props extends RouteComponentProps {
 }

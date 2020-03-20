@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {ThemedStyleSheet} from '../../util/types/JssStyleSheet';
-import {createUseStyles} from 'react-jss';
 import {Avatar, Box} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import Review from '../../types/Review';
 import SkeletonBaseProps from "../../util/types/SkeletonBaseProps";
 import {Skeleton} from "@material-ui/lab";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: ThemedStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		width: '100%',
 		minHeight: 50,
@@ -29,7 +28,7 @@ const styles: ThemedStyleSheet = theme => ({
 		alignSelf: 'center',
 		justifySelf: 'flex-start',
 		paddingLeft: 5,
-		fontSize: theme.dimensions.detail.secondaryTitleFontSize
+		fontSize: 16
 	},
 	text: {
 		gridArea: 'text',
@@ -49,14 +48,12 @@ const styles: ThemedStyleSheet = theme => ({
 		marginLeft: 7
 	},
 	date: {
-		color: theme.color.secondary,
+		color: theme.palette.text.secondary,
 		fontSize: 13,
 		padding: '1px 0 0 10px'
 	},
 
-} as const);
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	review: Review;
@@ -65,7 +62,7 @@ interface Props {
 
 export default function ReviewCard({review, className = ''}: Props) {
 
-	const classes: Record<keyof ReturnType<typeof styles>, string> = useStyles();
+	const classes = useStyles();
 
 	return (
 		<div className={`${classes.root} ${className}`}>

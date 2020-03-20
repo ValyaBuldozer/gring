@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {observer} from 'mobx-react-lite';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import {createUseStyles} from 'react-jss';
 import useStore from '../../stores/useStore';
 import RoutesList from './RoutesList';
 import SearchBar from "../SearchBar";
 import SortBy from "../../util/types/SortBy";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const SORT_OPTIONS: SortBy[] = [
     SortBy.DEFAULT,
@@ -17,7 +16,7 @@ const SORT_OPTIONS: SortBy[] = [
     SortBy.RATING_COUNT
 ];
 
-const styles: JssStyleSheet = {
+const useStyles = makeStyles({
     root: {
         height: '100%',
         width: '100%',
@@ -27,9 +26,7 @@ const styles: JssStyleSheet = {
         height: '50px',
         padding: '5px 10px'
     }
-};
-
-const useStyles = createUseStyles(styles);
+});
 
 function RoutesScreen() {
     const classes = useStyles();

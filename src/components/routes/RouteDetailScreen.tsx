@@ -1,6 +1,4 @@
 import * as React from "react";
-import JssStyleSheet from "../../util/types/JssStyleSheet";
-import {createUseStyles} from 'react-jss';
 import {RouteComponentProps, useParams, withRouter} from "react-router";
 import useStore from "../../stores/useStore";
 import Route from "../../types/Route";
@@ -12,10 +10,11 @@ import RouteObjectListCard from "./RouteObjectListCard";
 import {Link} from "react-router-dom";
 import ReviewList from "../review/ReviewList";
 import DetailScreenWrapper from "../DetailScreenWrapper";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	logo: {
-		height: theme.dimensions.detail.logoHeight,
+		height: 190,
 		width: '100%',
 		objectFit: 'cover'
 	},
@@ -23,12 +22,12 @@ const styles: JssStyleSheet = theme => ({
 		padding: '5px 15px'
 	},
 	name: {
-		color: theme.color.primary,
-		fontSize: theme.dimensions.detail.titleFontSize,
+		color: theme.palette.text.primary,
+		fontSize: 26,
 		fontWeight: 'bold',
 	},
 	rating: {
-		color: theme.color.secondary,
+		color: theme.palette.text.secondary,
 		display: "flex",
 		alignItems: 'center',
 		padding: '5px 0'
@@ -38,21 +37,19 @@ const styles: JssStyleSheet = theme => ({
 		justifyContent: 'space-between'
 	},
 	secondaryTitle: {
-		fontSize: theme.dimensions.detail.secondaryTitleFontSize,
-		color: theme.color.primary,
+		fontSize: 16,
+		color: theme.palette.text.secondary,
 		fontWeight: 'bold',
 		padding: '10px 15px'
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props extends RouteComponentProps {
 }
 
-function RouteDetailScreen({history}: Props) {
-	const {id} = useParams();
-	const {routes: store} = useStore();
+function RouteDetailScreen({ history }: Props) {
+	const { id } = useParams();
+	const { routes: store } = useStore();
 
 	const [route, setRoute] = React.useState<Route | null>();
 	React.useEffect(() => {
@@ -87,7 +84,7 @@ function RouteDetailScreen({history}: Props) {
 					<span>({route.rating.count})</span>
 				</div>
 				<RouteInfo route={route} className={classes.controls}/>
-				<Box className={classes.description}>
+				<Box>
 					{route.description}
 				</Box>
 			</div>

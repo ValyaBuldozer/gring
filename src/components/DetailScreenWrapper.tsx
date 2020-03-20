@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {createUseStyles} from 'react-jss';
-import JssStyleSheet from "../util/types/JssStyleSheet";
 import {RouteComponentProps, withRouter} from "react-router";
 import {hsl, rgba} from "../util/color";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -9,8 +7,9 @@ import IconButton from "@material-ui/core/IconButton";
 import {useSnackbar} from "notistack";
 import {Navigator} from "../types/Navigator";
 import copyToClipboard from "../util/copyToClipboard";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		height: '100%',
 		width: '100%',
@@ -35,19 +34,18 @@ const styles: JssStyleSheet = theme => ({
 	title: {
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
-		fontSize: theme.dimensions.detail.secondaryTitleFontSize,
+		fontSize: 16,
 		overflow: 'hidden',
 		padding: '0 10px',
 		fontWeight: 'bold'
 	}
-});
-
-const useStyle = createUseStyles(styles);
+}));
 
 interface Props extends React.PropsWithChildren<{}>, RouteComponentProps {
 	title: string;
 	shareEnabled?: boolean;
 	showAlways?: boolean;
+	className?: string;
 }
 
 function DetailScreenWrapper(props: Props) {
@@ -56,10 +54,11 @@ function DetailScreenWrapper(props: Props) {
 		history,
 		title = '',
 		shareEnabled = true,
-		showAlways = false
+		showAlways = false,
+		className = ''
 	} = props;
 
-	const classes = useStyle();
+	const classes = useStyles();
 	const wrapper = React.useRef<HTMLDivElement>(null);
 	const [scrollState, setScrollState] = React.useState(showAlways ? 1 : 0);
 	const {enqueueSnackbar, closeSnackbar} = useSnackbar();
@@ -102,7 +101,7 @@ function DetailScreenWrapper(props: Props) {
 		backgroundColor = rgba(255, 255, 255, scrollState);
 
 	return (
-		<div className={classes.root}>
+		<div className={`${classes.root} ${className}`}>
 			<div className={classes.appBar} style={{backgroundColor}}>
 				<IconButton onClick={onGoBackClick}>
 					<ArrowBackIcon style={{color: titleColor}}/>

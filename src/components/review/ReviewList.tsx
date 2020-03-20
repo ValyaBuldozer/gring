@@ -1,13 +1,12 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import {createUseStyles} from 'react-jss';
 import Review from '../../types/Review';
 import ReviewCard, {ReviewCardSkeleton} from './ReviewCard';
 import {getFetchPath} from '../../util/fetch';
 import {Button} from '@material-ui/core';
 import {Link} from "react-router-dom";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		width: '100%'
 	},
@@ -18,13 +17,13 @@ const styles: JssStyleSheet = theme => ({
 		padding: '10px 0'
 	},
 	item: {
-		borderBottom: `1px solid ${theme.color.secondary}`
+		borderBottom: `1px solid ${theme.palette.divider}`
 	},
 	placeholder: {
 		width: '100%',
 		textAlign: 'center',
-		color: theme.color.primary,
-		fontSize: theme.dimensions.detail.secondaryTitleFontSize
+		color: theme.palette.text.secondary,
+		fontSize: 16
 	},
 	controls: {
 		height: 50,
@@ -32,20 +31,8 @@ const styles: JssStyleSheet = theme => ({
 		display: 'flex',
 		justifyContent: 'space-around',
 		alignItems: 'center'
-	},
-	addReview: {
-		// todo: move to MUI theme
-		backgroundColor: `${theme.color.accent} !important`,
-		color: '#FFF !important',
-		fontWeight: 'bold'
-	},
-	showAll: {
-		// todo: move to MUI theme
-		color: `${theme.color.accent} !important`
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	entityId: number;
@@ -87,7 +74,7 @@ export default function ReviewList({entityId, limit = null}: Props) {
 					Отзывов пока нет. Станьте первым!
 				</div>
 				<div className={classes.controls}>
-					<Button variant="contained" className={classes.addReview} size='small'>
+					<Button variant="contained" size='small' color="primary">
 						Добавить отзыв
 					</Button>
 				</div>
@@ -104,11 +91,11 @@ export default function ReviewList({entityId, limit = null}: Props) {
 			}
 			<div className={classes.controls}>
 				<Link to={`/reviews/${entityId}`}>
-					<Button variant="text" className={classes.showAll} size='small'>
+					<Button variant="text" size='small' color="primary">
 						Показать все
 					</Button>
 				</Link>
-				<Button variant="contained" className={classes.addReview} size='small'>
+				<Button variant="contained" size='small' color="primary">
 					Добавить отзыв
 				</Button>
 			</div>

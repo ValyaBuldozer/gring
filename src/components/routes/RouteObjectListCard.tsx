@@ -1,15 +1,14 @@
 import * as React from 'react';
-import JssStyleSheet from "../../util/types/JssStyleSheet";
-import {createUseStyles} from 'react-jss';
 import {ObjectBase} from "../../types/Object";
 import {Avatar, Box} from "@material-ui/core";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles: JssStyleSheet = theme => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		minHeight: 80,
 		borderStyle: 'solid',
-		borderColor: theme.color.secondary,
+		borderColor: theme.palette.divider,
 		borderBottomWidth: 1,
 		borderTopWidth: 1,
 		display: 'grid',
@@ -20,7 +19,7 @@ const styles: JssStyleSheet = theme => ({
 	},
 	index: {
 		gridArea: 'index',
-		color: theme.color.secondary,
+		color: theme.palette.text.secondary,
 		fontSize: 14
 	},
 	avatar: {
@@ -34,7 +33,7 @@ const styles: JssStyleSheet = theme => ({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		color: theme.color.primary,
+		color: theme.palette.text.primary,
 		paddingLeft: 5
 	},
 	arrow: {
@@ -46,9 +45,7 @@ const styles: JssStyleSheet = theme => ({
 		fontWeight: 'bold',
 		fontSize: 14
 	}
-});
-
-const useStyles = createUseStyles(styles);
+}));
 
 interface Props {
 	obj: ObjectBase;

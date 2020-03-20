@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {createUseStyles, ThemeProvider} from 'react-jss'
 import AppShell from './AppShell';
 import useStore from '../stores/useStore';
 import theme from "../styles/theme";
 import {SnackbarProvider} from "notistack";
+import {ThemeProvider} from '@material-ui/core/styles';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import {CssBaseline} from "@material-ui/core";
 
-const useStyles = createUseStyles({
+const useStyles = makeStyles({
 	appRoot: {
 		height: '100vh',
 		width: '100vw',
@@ -31,6 +33,7 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
+			<CssBaseline/>
 			<div className={classes.appRoot}>
 				<SnackbarProvider maxSnack={3}>
 					<AppShell/>

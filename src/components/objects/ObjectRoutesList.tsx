@@ -1,9 +1,7 @@
 import * as React from 'react';
-import JssStyleSheet from '../../util/types/JssStyleSheet';
-import { createUseStyles } from 'react-jss';
-import { RouteBase } from '../../types/Route';
+import {RouteBase} from '../../types/Route';
 import RouteCard from '../routes/RouteCard';
-import { Divider } from '@material-ui/core';
+import {Divider} from '@material-ui/core';
 
 interface Props {
     objectId: number;

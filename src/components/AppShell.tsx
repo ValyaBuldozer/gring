@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {createUseStyles} from 'react-jss'
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import PlaceIcon from '@material-ui/icons/Place';
 import {Typography} from '@material-ui/core';
-import JssStyleSheet from '../util/types/JssStyleSheet';
 import RouteIcon from "./icons/RouteIcon";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const ObjectsScreen = React.lazy(() =>
 	import(/* webpackChunkName: "ObjectsScreen" */ './objects/ObjectsScreen')
@@ -24,7 +23,7 @@ const ReviewsDetailScreen = React.lazy(() =>
 	import(/* webpackChunkName: "ReviewDetailScreen" */ './review/ReviewDetailScreen')
 );
 
-const styles: JssStyleSheet = {
+const useStyles = makeStyles({
 	appShell: {
 		width: '100%',
 		height: '100%',
@@ -43,13 +42,10 @@ const styles: JssStyleSheet = {
 		left: 0,
 		right: 0,
 		bottom: 0,
-		height: 50,
 		justifyContent: 'space-around',
 		alignItems: 'center'
 	}
-};
-
-const useStyles = createUseStyles(styles);
+});
 
 export default function AppShell() {
 	const classes = useStyles();
@@ -72,7 +68,7 @@ export default function AppShell() {
 						</React.Suspense>
 					</div>
 					<BottomNavigation className={classes.navbar}>
-						<Link to='/'>
+						<Link to='/objects'>
 							<BottomNavigationAction label="Места" icon={<PlaceIcon/>}/>
 						</Link>
 						<Link to='/routes'>
