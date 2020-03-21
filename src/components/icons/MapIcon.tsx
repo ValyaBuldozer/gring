@@ -6,8 +6,8 @@ export default function MapIcon(props: SvgIconProps) {
 		<SvgIcon
 			viewBox='0 0 81.000000 85.000000'
 			{...props}>
-			<g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,85.000000) scale(0.100000,-0.100000)"
-			   fill="#000000" stroke="none">
+			<g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,85.000000) scale(0.105000,-0.105000)"
+			   stroke="none">
 				<path d="M495 763 c-96 -50 -133 -148 -91 -237 20 -42 122 -181 154 -209 20 -19 21 -18 89 75 93 127 93 128
 				 	93 211 0 86 -21 127 -80 158 -43 23 -124 24 -165 2z m127 -97 c47 -35 39 -116 -15 -145 -32 -17 -64 -9
 				 	 -99 24 -35 32 -35 65 -2 104 20 24 34 31 62 31 21 0 45 -6 54 -14z"/>

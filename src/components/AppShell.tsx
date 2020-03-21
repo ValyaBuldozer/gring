@@ -1,11 +1,8 @@
 import * as React from 'react';
-import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
-import PlaceIcon from '@material-ui/icons/Place';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Typography} from '@material-ui/core';
-import RouteIcon from "./icons/RouteIcon";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import NavBar from "./NavBar";
 
 const ObjectsScreen = React.lazy(() =>
 	import(/* webpackChunkName: "ObjectsScreen" */ './objects/ObjectsScreen')
@@ -22,6 +19,12 @@ const ObjectDetailScreen = React.lazy(() =>
 const ReviewsDetailScreen = React.lazy(() =>
 	import(/* webpackChunkName: "ReviewDetailScreen" */ './review/ReviewDetailScreen')
 );
+const MapScreen = React.lazy(() =>
+	import(/* webpackChunkName: "MapScreen" */ './map/MapScreen')
+);
+const UserScreen = React.lazy(() =>
+	import(/* webpackChunkName: "UserScreen" */ './user/UserScreen')
+);
 
 const useStyles = makeStyles({
 	appShell: {
@@ -34,7 +37,7 @@ const useStyles = makeStyles({
 		top: 0,
 		left: 0,
 		right: 0,
-		bottom: 50
+		bottom: 65
 	},
 	navbar: {
 		display: 'flex',
@@ -42,8 +45,11 @@ const useStyles = makeStyles({
 		left: 0,
 		right: 0,
 		bottom: 0,
+		paddingTop: 8,
 		justifyContent: 'space-around',
-		alignItems: 'center'
+		alignItems: 'center',
+		height: 65,
+		overflow: 'hidden'
 	}
 });
 
@@ -62,19 +68,14 @@ export default function AppShell() {
 								<Route exact path="/objects" component={ObjectsScreen}/>
 								<Route exact path="/objects/:id" component={ObjectDetailScreen}/>
 								<Route exact path='/reviews/:id' component={ReviewsDetailScreen}/>
+								<Route exact path='/map' component={MapScreen}/>
+								<Route exact path='/user' component={UserScreen}/>
 								<Route exact path="/404" render={() => '404'}/>
 								<Route path="/" component={ObjectsScreen}/>
 							</Switch>
 						</React.Suspense>
 					</div>
-					<BottomNavigation className={classes.navbar}>
-						<Link to='/objects'>
-							<BottomNavigationAction label="Места" icon={<PlaceIcon/>}/>
-						</Link>
-						<Link to='/routes'>
-							<BottomNavigationAction label="Маршруты" icon={<RouteIcon fontSize='large'/>}/>
-						</Link>
-					</BottomNavigation>
+					<NavBar className={classes.navbar}/>
 				</Typography>
 			</div>
 		</Router>

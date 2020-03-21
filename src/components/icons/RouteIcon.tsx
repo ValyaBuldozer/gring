@@ -19,7 +19,7 @@ export default function RouteIcon(props: SvgIconProps) {
 		<SvgIcon
 			viewBox='0 0 190.000000 188.000000'
 			{...props}>
-			<g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,188.000000) scale(0.100000,-0.100000)"
+			<g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,188.000000) scale(0.115000,-0.115000)"
 			   stroke="none">
 				<path
 					d={path}/>

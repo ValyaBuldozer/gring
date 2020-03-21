@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'space-around',
 		alignItems: 'center'
+	},
+	btn: {
+		fontWeight: 'bold'
 	}
 }));
 
@@ -39,14 +42,14 @@ interface Props {
 	limit?: number | null;
 }
 
-export default function ReviewList({entityId, limit = null}: Props) {
+export default function ReviewList({ entityId, limit = null }: Props) {
 
 	const classes = useStyles();
 
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
 
 	React.useEffect(() => {
-		fetch(getFetchPath('/api/reviews', {object: entityId, limit}))
+		fetch(getFetchPath('/api/reviews', { object: entityId, limit }))
 			.then(res => {
 				if (res.ok) {
 					return res.json();
@@ -74,7 +77,12 @@ export default function ReviewList({entityId, limit = null}: Props) {
 					Отзывов пока нет. Станьте первым!
 				</div>
 				<div className={classes.controls}>
-					<Button variant="contained" size='small' color="primary">
+					<Button
+						className={classes.btn}
+						variant="contained"
+						size='small'
+						color="primary"
+						style={{ color: '#FFF' }}>
 						Добавить отзыв
 					</Button>
 				</div>
@@ -91,11 +99,20 @@ export default function ReviewList({entityId, limit = null}: Props) {
 			}
 			<div className={classes.controls}>
 				<Link to={`/reviews/${entityId}`}>
-					<Button variant="text" size='small' color="primary">
+					<Button
+						className={classes.btn}
+						variant="text"
+						size='small'
+						color="primary">
 						Показать все
 					</Button>
 				</Link>
-				<Button variant="contained" size='small' color="primary">
+				<Button
+					className={classes.btn}
+					variant="contained"
+					size='small'
+					color="primary"
+					style={{ color: '#FFF' }}>
 					Добавить отзыв
 				</Button>
 			</div>
