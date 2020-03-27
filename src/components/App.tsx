@@ -1,11 +1,9 @@
 import * as React from 'react';
 import AppShell from './AppShell';
 import useStore from '../stores/useStore';
-import theme from "../styles/theme";
-import {SnackbarProvider} from "notistack";
-import {ThemeProvider} from '@material-ui/core/styles';
+import { SnackbarProvider } from "notistack";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {CssBaseline} from "@material-ui/core";
+import ThemeWrapper from "./ThemeWrapper";
 
 const useStyles = makeStyles({
 	appRoot: {
@@ -32,13 +30,12 @@ export default function App() {
 	}, []);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline/>
+		<ThemeWrapper>
 			<div className={classes.appRoot}>
 				<SnackbarProvider maxSnack={3}>
 					<AppShell/>
 				</SnackbarProvider>
 			</div>
-		</ThemeProvider>
+		</ThemeWrapper>
 	)
 }

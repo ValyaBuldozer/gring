@@ -6,6 +6,7 @@ import {formatMeters, formatTimeToMinutes} from "../../util/formatter";
 import PlaceIcon from "@material-ui/icons/Place";
 import HomeIcon from "@material-ui/icons/Home";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import DoublePlaceIcon from "../icons/DoublePlaceIcon";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -44,7 +45,7 @@ export default function RouteInfo({route, className = ''}: Props) {
 				</Box>
 			</div>
 			<div className={classes.control}>
-				<PlaceIcon/>
+				<DoublePlaceIcon/>
 				<Box className={classes.controlTitle}>
 					{formatMeters(route.distance)}
 				</Box>

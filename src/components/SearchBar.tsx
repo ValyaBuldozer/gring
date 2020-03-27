@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme => ({
 		border: `1px solid ${theme.palette.divider}`,
 		borderRadius: 20,
 		color: theme.palette.text.primary,
-		padding: '0 10px'
+		padding: '0 10px',
+		backgroundColor: theme.palette.background.paper
 	}
 }));
 

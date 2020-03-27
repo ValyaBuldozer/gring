@@ -1,10 +1,8 @@
 import Obj from "./Object";
+import Entity from "./Entity";
 
-export interface RouteBase {
-    id: number;
-    name: string;
+export interface RouteBase extends Entity {
     placesCount: number;
-    image: string;
     distance: number,
     duration: number;
     rating: {

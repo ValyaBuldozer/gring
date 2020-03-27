@@ -8,6 +8,7 @@ import {useSnackbar} from "notistack";
 import {Navigator} from "../types/Navigator";
 import copyToClipboard from "../util/copyToClipboard";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -97,8 +98,15 @@ function DetailScreenWrapper(props: Props) {
 		}
 	};
 
-	const titleColor = hsl(0, 0, (1 - scrollState) * 100),
-		backgroundColor = rgba(255, 255, 255, scrollState);
+	const theme = useTheme();
+
+
+	const titleColor = theme.palette.type == 'light' ?
+			hsl(0, 0, (1 - scrollState) * 100) :
+			rgba(255, 255, 255, 1),
+		backgroundColor = theme.palette.type == 'light' ?
+			rgba(255, 255, 255, scrollState) :
+			rgba(66, 66, 66, scrollState);
 
 	return (
 		<div className={`${classes.root} ${className}`}>
