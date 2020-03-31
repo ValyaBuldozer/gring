@@ -1,15 +1,15 @@
 import * as React from 'react';
-import useStore from "../../stores/useStore";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Dialog } from "@material-ui/core";
+import { observer } from "mobx-react-lite";
+import useStore from "../../stores/useStore";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from '@material-ui/core/Button';
-import { observer } from "mobx-react-lite";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 const ERROR_DELAY = 3000;
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     },
     fields: {
-        minHeight: 192,
+        minHeight: 266,
         minWidth: '80vw',
         display: 'grid'
     },
@@ -38,9 +38,10 @@ interface Props {
     handleClose: () => void;
 }
 
-function SignInDialog({ open, handleClose }: Props) {
-    const [username, setUsername] = React.useState<string>('');
-    const [password, setPassword] = React.useState<string>('');
+function SignOnDialog({ open, handleClose }: Props) {
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
     const { user: store } = useStore();
@@ -49,6 +50,7 @@ function SignInDialog({ open, handleClose }: Props) {
     React.useEffect(() => {
         setUsername('');
         setPassword('');
+        setEmail('');
         setIsLoading(false);
         setError(null);
     }, [open]);
@@ -63,18 +65,18 @@ function SignInDialog({ open, handleClose }: Props) {
         }, ERROR_DELAY);
     };
 
-    const onSignInClick = async () => {
+    const onSignOnClick = async () => {
         if (isLoading) {
             return;
         }
 
-        if (!username || !password) {
-            updateError('Введите имя и пароль');
+        if (!username || !password || !email) {
+            updateError('Заполните все поля');
             return;
         }
 
         setIsLoading(true);
-        const err = await store.signIn(username, password);
+        const err = await store.signOn(username, password, email);
 
         if (err == null) {
             handleClose();
@@ -85,10 +87,11 @@ function SignInDialog({ open, handleClose }: Props) {
         setIsLoading(false);
     };
 
+
     return (
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={handleClose}>
             <DialogTitle id="form-dialog-title" className={classes.title}>
-                Вход
+                Регистрация
             </DialogTitle>
             <DialogContent className={classes.fields}>
                 {
@@ -103,6 +106,13 @@ function SignInDialog({ open, handleClose }: Props) {
                                 variant='outlined'
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}/>
+                            <TextField
+                                className={classes.input}
+                                type='email'
+                                label='Почта'
+                                variant='outlined'
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}/>
                             <TextField
                                 className={classes.input}
                                 type='password'
@@ -120,12 +130,12 @@ function SignInDialog({ open, handleClose }: Props) {
                 }
             </DialogContent>
             <DialogActions className={classes.title}>
-                <Button variant="outlined" onClick={onSignInClick} color="primary">
-                    Войти
+                <Button variant="contained" onClick={onSignOnClick} color="primary">
+                    Зарегестрировать
                 </Button>
             </DialogActions>
         </Dialog>
     )
 }
 
-export default observer(SignInDialog);
+export default observer(SignOnDialog);

@@ -54,7 +54,7 @@ export default class UserStore {
     }
 
     async signIn(username: string, password: string): Promise<string | null> {
-        const res = await fetch('/api/token/auth', {
+        const res = await fetch('/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export default class UserStore {
             body: JSON.stringify({ username, password })
         });
 
-        if (res.status == 401) {
+        if (res.status == 400) {
             return 'Invalid username or password';
         }
 
@@ -79,9 +79,60 @@ export default class UserStore {
         return null;
     }
 
+    async signOn(username: string, password: string, email: string): Promise<string | null> {
+        const res = await fetch('/api/user/registration', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, email })
+        });
+
+        if (res.ok) {
+            this.signIn(username, password);
+            return null;
+        }
+
+        if (res.status == 400) {
+            return await res.text();
+        }
+
+        console.error(`Can't sign on user - ${res.status}`);
+
+        return 'Internal error';
+    }
+
+    async signOut() {
+        if (!this.isAuthorized) {
+            throw new Error('User not authorized');
+        }
+
+        const res = await fetch('/api/auth', {
+            method: 'DELETE'
+        });
+
+        if (!res.ok) {
+            console.error(`Can't logout - ${res.status}`);
+        }
+    }
+
+    async refreshToken() {
+        const res = await fetch('/api/auth/refresh', {
+            method: 'POST'
+        });
+
+        if (!res.ok) {
+            console.error(`Can't refresh current token - ${res.status}`);
+        }
+    }
+
     async init() {
         await this.fetchUser();
-        await this.fetchFavorites();
+
+        if (this.isAuthorized) {
+            await this.fetchFavorites();
+            await this.refreshToken();
+        }
     }
 
 }

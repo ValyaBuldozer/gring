@@ -91,8 +91,8 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
         })
     }
 
-    init() {
-        this.fetchObjects();
-        this.fetchCategories();
+    async init() {
+        await this.fetchCategories();
+        await this.fetchObjects();
     }
 }

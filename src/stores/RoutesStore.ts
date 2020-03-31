@@ -55,8 +55,8 @@ export default class RoutesStore extends BaseEntityStore<Route> {
 			.sort(sortRules.get(this.sortBy));
 	}
 
-	init() {
-		this.fetchList();
+	async init() {
+		await this.fetchList();
 	}
 
 }

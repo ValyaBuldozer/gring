@@ -1,6 +1,5 @@
 import {action, observable} from "mobx";
 import SortBy from "../util/types/SortBy";
-import Obj from "../types/Object";
 
 
 export default abstract class BaseEntityStore<T> {

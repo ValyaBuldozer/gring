@@ -22,11 +22,12 @@ const useStyles = makeStyles({
 
 export default function App() {
 	const classes = useStyles();
-	const {objects: objectsStore, routes: routesStore} = useStore();
+	const {objects: objectsStore, routes: routesStore, user: userStore} = useStore();
 
 	React.useEffect(() => {
 		objectsStore.init();
 		routesStore.init();
+		userStore.init();
 	}, []);
 
 	return (
