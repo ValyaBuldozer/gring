@@ -2,7 +2,7 @@ import * as React from "react";
 import {RouteComponentProps, useParams, withRouter} from "react-router";
 import Review from "../../types/Review";
 import ReviewCard from "./ReviewCard";
-import DetailScreenWrapper from "../DetailScreenWrapper";
+import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles(theme => ({

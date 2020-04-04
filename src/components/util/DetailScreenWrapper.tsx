@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from "react-router";
-import { hsl, rgba } from "../util/color";
+import { hsl, rgba } from "../../util/color";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ShareIcon from '@material-ui/icons/Share';
 import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
-import useShare from "../hooks/useShare";
+import useShare from "../../hooks/useShare";
 
 const useStyles = makeStyles(theme => ({
     root: {

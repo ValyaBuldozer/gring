@@ -7,7 +7,7 @@ import ObjectRoutesList from './ObjectRoutesList';
 import ReviewList from '../review/ReviewList';
 import {observer} from "mobx-react-lite";
 import useStore from "../../stores/useStore";
-import DetailScreenWrapper from "../DetailScreenWrapper";
+import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import {Skeleton} from "@material-ui/lab";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import theme from "../../styles/theme";

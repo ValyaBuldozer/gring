@@ -2,7 +2,7 @@ import * as React from 'react';
 import SortBy from "../util/types/SortBy";
 import Button from "@material-ui/core/Button";
 import SortIcon from "@material-ui/icons/Sort";
-import SelectDialog from "./SelectDialog";
+import SelectDialog from "./util/dialogs/SelectDialog";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {

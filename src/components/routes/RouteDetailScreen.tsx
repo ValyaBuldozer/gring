@@ -9,7 +9,7 @@ import RouteInfo from "./RouteInfo";
 import RouteObjectListCard from "./RouteObjectListCard";
 import {Link} from "react-router-dom";
 import ReviewList from "../review/ReviewList";
-import DetailScreenWrapper from "../DetailScreenWrapper";
+import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles(theme => ({

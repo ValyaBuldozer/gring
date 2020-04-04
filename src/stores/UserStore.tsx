@@ -1,4 +1,4 @@
-import { computed, observable } from "mobx";
+import { action, computed, observable } from "mobx";
 import User from "../types/User";
 import Entity from "../types/Entity";
 
@@ -10,6 +10,9 @@ export default class UserStore {
 
     @observable
     private favoritesList: Entity[] | null = null;
+
+    @observable
+    private initialized: boolean = false;
 
     @computed
     get user() {
@@ -24,6 +27,11 @@ export default class UserStore {
     @computed
     get favorites() {
         return this.favoritesList;
+    }
+
+    @computed
+    get isInitialized() {
+        return this.initialized;
     }
 
     async fetchUser() {
@@ -102,6 +110,7 @@ export default class UserStore {
         return 'Internal error';
     }
 
+    @action
     async signOut() {
         if (!this.isAuthorized) {
             throw new Error('User not authorized');
@@ -114,6 +123,9 @@ export default class UserStore {
         if (!res.ok) {
             console.error(`Can't logout - ${res.status}`);
         }
+
+        this.currentUser = null;
+        this.favoritesList = null;
     }
 
     async refreshToken() {
@@ -133,6 +145,8 @@ export default class UserStore {
             await this.fetchFavorites();
             await this.refreshToken();
         }
+
+        this.initialized = true;
     }
 
 }
