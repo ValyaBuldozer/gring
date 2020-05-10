@@ -3,6 +3,7 @@ import Obj, {ObjectBase} from '../types/Object';
 import Category from '../types/Category';
 import SortBy from "../util/types/SortBy";
 import BaseEntityStore from "./BaseEntityStore";
+import Api from '../api/Api';
 
 const sortRules = new Map<SortBy, (a: ObjectBase, b: ObjectBase) => number>([
     [SortBy.DEFAULT, () => 0],
@@ -18,9 +19,8 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
     @observable
     private objectsList: ObjectBase[] = [];
 
-    constructor() {
+    constructor(private api: Api) {
         super();
-        this.apiPath = '/api/objects';
     }
 
     @observable
@@ -53,42 +53,27 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
     @action
     async fetchObjects() {
         this.isLoading = true;
-
-        const res = await fetch(this.apiPath);
-
-        if (!res.ok) {
-            runInAction(() => {
-                this.objectsList = [];
-                this.isLoading = false;
-            });
-            return;
-        }
-
-        const objects: Obj[] = await res.json();
-
-        runInAction(() => {
-            this.objectsList = objects;
-            this.isLoading = false;
-        });
+        this.objectsList  = await this.api.fetchObjects();
+        this.isLoading = false;
     }
 
     @action
     async fetchCategories() {
-        const res = await fetch('/api/categories');
+        this.categories = await this.api.fetchCategories();
+    }
 
-        if (!res.ok) {
-            runInAction(() => {
-                this.categories = null;
-            });
-
-            return;
+    async fetchDetailEntity(id: number): Promise<Obj | null> {
+        if (this.detailEntityCache.has(id)) {
+            return this.detailEntityCache.get(id)!;
         }
 
-        const categories: Category[] = await res.json();
+        const obj = await this.api.fetchDetailObject(id);
 
-        runInAction(() => {
-            this.categories = categories;
-        })
+        if (obj != null) {
+            this.detailEntityCache.set(id, obj);
+        }
+
+        return obj;
     }
 
     async init() {

@@ -4,6 +4,7 @@ import Review from "../../types/Review";
 import ReviewCard from "./ReviewCard";
 import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useStore from '../../stores/useStore';
 
 const useStyles = makeStyles(theme => ({
 	list: {
@@ -27,6 +28,7 @@ interface Props extends RouteComponentProps {
 
 function ReviewDetailScreen({history}: Props) {
 	const {id} = useParams();
+	const {api} = useStore();
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
 	const classes = useStyles();
 

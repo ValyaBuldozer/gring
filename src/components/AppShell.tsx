@@ -28,6 +28,9 @@ const UserScreen = React.lazy(() =>
 const FavoritesScreen = React.lazy(() =>
 	import(/* webpackChunkName: "UserScreen" */ './user/FavoritesDetailScreen')
 );
+const SettingsScreen = React.lazy(() =>
+	import(/* webpackChunkName: "SettingsScreen" */ './settings/SettingsScreen')
+);
 
 const useStyles = makeStyles({
 	appShell: {
@@ -74,6 +77,7 @@ export default function AppShell() {
 								<Route exact path='/map' component={MapScreen}/>
 								<Route exact path='/user' component={UserScreen}/>
 								<Route exact path='/favorites' component={FavoritesScreen}/>
+								<Route exact path='/settings' component={SettingsScreen}/>
 								<Route exact path="/404" render={() => '404'}/>
 								<Route path="/" component={ObjectsScreen}/>
 							</Switch>

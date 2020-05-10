@@ -7,8 +7,11 @@ import IconButton from "@material-ui/core/IconButton";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useShare from "../../hooks/useShare";
+import { Theme } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+type StylesProps = { showAlways: boolean };
+
+const useStyles = makeStyles<Theme, StylesProps>(theme => ({
     root: {
         height: '100%',
         width: '100%',
@@ -19,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         overflowY: 'auto'
     },
-    appBar: {
+    appBar: ({ showAlways }) => ({
         position: 'absolute',
         top: 0,
         left: 0,
@@ -28,8 +31,9 @@ const useStyles = makeStyles(theme => ({
         zIndex: 10,
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
-    },
+        alignItems: 'center',
+        borderBottom: showAlways ? `1px solid ${theme.palette.divider}` : undefined
+    }),
     title: {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -57,7 +61,7 @@ function DetailScreenWrapper(props: Props) {
         className = ''
     } = props;
 
-    const classes = useStyles();
+    const classes = useStyles({ showAlways });
     const wrapper = React.useRef<HTMLDivElement>(null);
     const [scrollState, setScrollState] = React.useState(showAlways ? 1 : 0);
     const share = useShare();

@@ -1,39 +1,38 @@
 import * as React from 'react';
 import {RouteBase} from '../../types/Route';
-import RouteCard from '../routes/RouteCard';
 import {Divider} from '@material-ui/core';
+import useStore from '../../stores/useStore';
+import RouteListCard, { RouteListCardSkeleton } from '../routes/RouteListCard';
 
 interface Props {
     objectId: number;
 }
 
 export default function ObjectRoutesList({ objectId }: Props) {
-
-    const [routes, setRoutes] = React.useState<RouteBase[]>([]);
+    const [routes, setRoutes] = React.useState<RouteBase[] | null>(null);
+    const {api} = useStore();
 
     React.useEffect(() => {
-        fetch(`/api/routes?object=${objectId}`)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    throw new Error(res.status.toString());
-                }
-            })
+        api.fetchRoutesByObjectId(objectId)
             .then((receivedRoutes: RouteBase[]) => {
                 setRoutes(receivedRoutes);
             })
             .catch(err => console.error(err));
     }, []);
 
+    if (routes == null) {
+        return (
+            <React.Fragment>
+                <RouteListCardSkeleton/>
+                <RouteListCardSkeleton/>
+            </React.Fragment>
+        )
+    }
 
     return (
         <React.Fragment>
             {routes.map(route => (
-                <>
-                    <RouteCard key={route.id} route={route}/>
-                    <Divider/>
-                </>
+                <RouteListCard route={route} key={route.id}/>
             ))}
         </React.Fragment>
     )

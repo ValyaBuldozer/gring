@@ -2,6 +2,7 @@ import {action, computed, observable, runInAction} from "mobx";
 import Route, {RouteBase} from "../types/Route";
 import SortBy from "../util/types/SortBy";
 import BaseEntityStore from "./BaseEntityStore";
+import Api from '../api/Api';
 
 const sortRules = new Map<SortBy, (a: RouteBase, b: RouteBase) => number>([
     [SortBy.DEFAULT, () => 0],
@@ -18,29 +19,13 @@ export default class RoutesStore extends BaseEntityStore<Route> {
 	@observable
 	private list: RouteBase[] = [];
 
-	constructor() {
+	constructor(private api: Api) {
 		super();
-		this.apiPath = '/api/routes';
 	}
 
 	@action
 	async fetchList() {
-		const res = await fetch(this.apiPath);
-
-		if (res.ok) {
-			const nextList: RouteBase[] = await res.json();
-
-			runInAction(() => {
-				this.list = nextList;
-			});
-			return;
-		}
-
-		console.error(`Can't fetch routes list - server respond with a status ${res.status}`);
-
-		runInAction(() => {
-			this.list = [];
-		});
+		this.list = await this.api.fetchRoutes();
 	}
 
 	@action
@@ -53,6 +38,20 @@ export default class RoutesStore extends BaseEntityStore<Route> {
 		return this.list
 			.filter(({ name }) => name.match(new RegExp(this.searchString, 'gi')))
 			.sort(sortRules.get(this.sortBy));
+	}
+
+	async fetchDetailEntity(id: number): Promise<Route | null> {
+		if (this.detailEntityCache.has(id)) {
+			return this.detailEntityCache.get(id)!;
+		}
+
+		const route = await this.api.fetchDetailRoute(id);
+
+		if (route != null) {
+			this.detailEntityCache.set(id, route);
+		}
+
+		return route;
 	}
 
 	async init() {

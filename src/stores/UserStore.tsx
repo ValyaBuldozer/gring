@@ -1,9 +1,13 @@
 import { action, computed, observable } from "mobx";
 import User from "../types/User";
 import Entity from "../types/Entity";
+import Api from '../api/Api';
 
 
 export default class UserStore {
+
+    constructor(private api: Api) {
+    }
 
     @observable
     private currentUser: User | null = null;
@@ -35,16 +39,7 @@ export default class UserStore {
     }
 
     async fetchUser() {
-        const res = await fetch('/api/user');
-
-        if (res.ok) {
-            this.currentUser = await res.json();
-        } else if (res.status == 401) {
-            console.log('Unauthorized');
-            this.currentUser = null;
-        } else {
-            console.error(`Can't receive current user - ${res.status}`);
-        }
+        this.currentUser = await this.api.fetchUser();
     }
 
     async fetchFavorites() {
@@ -52,23 +47,11 @@ export default class UserStore {
             return;
         }
 
-        const res = await fetch(`/api/user/favorite`);
-
-        if (res.ok) {
-            this.favoritesList = await res.json();
-        } else {
-            console.error(`Can't receive favorites - ${res.status}`);
-        }
+        this.favoritesList = await this.api.fetchUserFavorites();
     }
 
     async signIn(username: string, password: string): Promise<string | null> {
-        const res = await fetch('/api/auth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
+        const res = await this.api.auth(username, password);
 
         if (res.status == 400) {
             return 'Invalid username or password';
@@ -88,13 +71,7 @@ export default class UserStore {
     }
 
     async signOn(username: string, password: string, email: string): Promise<string | null> {
-        const res = await fetch('/api/user/registration', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password, email })
-        });
+        const res = await this.api.register(username, password, email);
 
         if (res.ok) {
             this.signIn(username, password);
@@ -116,9 +93,7 @@ export default class UserStore {
             throw new Error('User not authorized');
         }
 
-        const res = await fetch('/api/auth', {
-            method: 'DELETE'
-        });
+        const res = await this.api.signOut();
 
         if (!res.ok) {
             console.error(`Can't logout - ${res.status}`);
@@ -129,9 +104,7 @@ export default class UserStore {
     }
 
     async refreshToken() {
-        const res = await fetch('/api/auth/refresh', {
-            method: 'POST'
-        });
+        const res = await this.api.refreshToken();
 
         if (!res.ok) {
             console.error(`Can't refresh current token - ${res.status}`);

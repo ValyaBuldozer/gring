@@ -3,4 +3,6 @@ const enum Locale {
 	EN = 'en'
 }
 
+export const LOCALES: Locale[] = [Locale.RU, Locale.EN];
+
 export default Locale;

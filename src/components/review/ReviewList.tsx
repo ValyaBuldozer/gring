@@ -5,6 +5,7 @@ import {getFetchPath} from '../../util/fetch';
 import {Button} from '@material-ui/core';
 import {Link} from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useStore from '../../stores/useStore';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -45,20 +46,13 @@ interface Props {
 export default function ReviewList({ entityId, limit = null }: Props) {
 
 	const classes = useStyles();
+	const { api } = useStore();
 
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
 
 	React.useEffect(() => {
-		fetch(getFetchPath('/api/reviews', { object: entityId, limit }))
-			.then(res => {
-				if (res.ok) {
-					return res.json();
-				} else {
-					throw new Error(`${res.status}`);
-				}
-			})
-			.then((rev) => setReviews(rev))
-			.catch(err => console.error(err));
+		api.fetchReviews(entityId, limit)
+			.then(reviews => setReviews(reviews));
 	}, []);
 
 	if (reviews == null) {
