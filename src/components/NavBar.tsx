@@ -6,6 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import MapIcon from "./icons/MapIcon";
 import RouteIcon from "./icons/RouteIcon";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
+import useLocaleString from '../hooks/useLocaleString';
 
 interface Props {
 	className?: string;
@@ -31,6 +32,7 @@ function getValueByLocation(location: string): number | null {
 
 export default function NavBar({ className = '' }: Props) {
 	const { pathname } = useLocation();
+	const localeString = useLocaleString();
 
 	React.useEffect(() => {
 		setValue(getValueByLocation(pathname));
@@ -47,22 +49,22 @@ export default function NavBar({ className = '' }: Props) {
 			<BottomNavigationAction
 				component={Link}
 				to={'/objects'}
-				label="Места"
+				label={localeString.PLACES}
 				icon={<PlaceIcon/>}/>
 			<BottomNavigationAction
 				component={Link}
 				to={'/routes'}
-				label="Маршруты"
+				label={localeString.ROUTES}
 				icon={<RouteIcon/>}/>
 			<BottomNavigationAction
 				component={Link}
 				to={'/map'}
-				label="Карта"
+				label={localeString.MAP}
 				icon={<MapIcon/>}/>
 			<BottomNavigationAction
 				component={Link}
 				to={'/user'}
-				label="Кабинет"
+				label={localeString.CABINET}
 				icon={<PersonIcon/>}/>
 		</BottomNavigation>
 	)

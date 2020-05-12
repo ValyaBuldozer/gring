@@ -1,16 +1,18 @@
 import * as React from "react";
-import {RouteComponentProps, useParams, withRouter} from "react-router";
+import { RouteComponentProps, useParams, withRouter } from "react-router";
 import useStore from "../../stores/useStore";
 import Route from "../../types/Route";
-import {observer} from "mobx-react-lite";
-import {Box} from "@material-ui/core";
-import {Rating} from "@material-ui/lab";
+import { observer } from "mobx-react-lite";
+import { Box } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
 import RouteInfo from "./RouteInfo";
 import RouteObjectListCard from "./RouteObjectListCard";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReviewList from "../review/ReviewList";
 import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import SplashScreen from '../SplashScreen';
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
 	logo: {
@@ -50,6 +52,7 @@ interface Props extends RouteComponentProps {
 function RouteDetailScreen({ history }: Props) {
 	const { id } = useParams();
 	const { routes: store } = useStore();
+	const localeString = useLocaleString();
 
 	const [route, setRoute] = React.useState<Route | null>();
 	React.useEffect(() => {
@@ -67,7 +70,7 @@ function RouteDetailScreen({ history }: Props) {
 
 	if (route == null) {
 		// todo : skeleton
-		return <>loading...</>;
+		return <SplashScreen/>;
 	}
 
 	return (
@@ -98,7 +101,7 @@ function RouteDetailScreen({ history }: Props) {
 				))
 			}
 			<Box className={classes.secondaryTitle}>
-				Отзывы
+				{localeString.REVIEWS}
 			</Box>
 			<ReviewList entityId={route.id} limit={2}/>
 		</DetailScreenWrapper>

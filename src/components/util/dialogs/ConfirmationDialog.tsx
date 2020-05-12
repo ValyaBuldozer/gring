@@ -3,6 +3,7 @@ import { Dialog } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import useLocaleString from '../../../hooks/useLocaleString';
 
 interface Props {
     open: boolean;
@@ -11,15 +12,17 @@ interface Props {
 }
 
 export default function ConfirmationDialog({open, title, onClose}: Props) {
+    const localeString = useLocaleString();
+
     return (
         <Dialog open={open} onClose={() => onClose(false)}>
             <DialogTitle>{title}</DialogTitle>
             <DialogActions>
                 <Button onClick={() => onClose(false)} variant="text" color="primary">
-                    Нет
+                    {localeString.NO}
                 </Button>
                 <Button onClick={() => onClose(true)} variant="contained" color="primary">
-                    Да
+                    {localeString.YES}
                 </Button>
             </DialogActions>
         </Dialog>

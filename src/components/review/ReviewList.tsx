@@ -6,6 +6,7 @@ import {Button} from '@material-ui/core';
 import {Link} from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useStore from '../../stores/useStore';
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -47,6 +48,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 
 	const classes = useStyles();
 	const { api } = useStore();
+	const localeString = useLocaleString();
 
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
 
@@ -68,7 +70,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 		return (
 			<div className={classes.root}>
 				<div className={classes.placeholder}>
-					Отзывов пока нет. Станьте первым!
+					{localeString.NO_REVIEWS_PLACEHOLDER}
 				</div>
 				<div className={classes.controls}>
 					<Button
@@ -77,7 +79,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 						size='small'
 						color="primary"
 						style={{ color: '#FFF' }}>
-						Добавить отзыв
+						{localeString.ADD_REVIEW}
 					</Button>
 				</div>
 			</div>
@@ -98,7 +100,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 						variant="text"
 						size='small'
 						color="primary">
-						Показать все
+						{localeString.SHOW_ALL}
 					</Button>
 				</Link>
 				<Button
@@ -107,7 +109,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 					size='small'
 					color="primary"
 					style={{ color: '#FFF' }}>
-					Добавить отзыв
+					{localeString.ADD_REVIEW}
 				</Button>
 			</div>
 		</div>

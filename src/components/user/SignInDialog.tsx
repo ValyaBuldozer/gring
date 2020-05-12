@@ -10,6 +10,8 @@ import { observer } from "mobx-react-lite";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import useLocaleString from '../../hooks/useLocaleString';
+import SplashScreen from '../SplashScreen';
 
 const ERROR_DELAY = 3000;
 
@@ -26,10 +28,6 @@ const useStyles = makeStyles(theme => ({
     input: {
         margin: '10px 0',
         width: '-webkit-fill-available'
-    },
-    spinner: {
-        justifySelf: 'center',
-        alignSelf: 'center'
     }
 }));
 
@@ -45,6 +43,7 @@ function SignInDialog({ open, handleClose }: Props) {
     const [error, setError] = React.useState<string | null>(null);
     const { user: store } = useStore();
     const classes = useStyles();
+    const localeString = useLocaleString();
 
     React.useEffect(() => {
         setUsername('');
@@ -88,25 +87,25 @@ function SignInDialog({ open, handleClose }: Props) {
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.title}>
-                Вход
+                {localeString.SIGN_IN}
             </DialogTitle>
             <DialogContent className={classes.fields}>
                 {
                     isLoading ? (
-                        <CircularProgress color={'secondary'} className={classes.spinner}/>
+                        <SplashScreen/>
                     ) : (
                         <React.Fragment>
                             <TextField
                                 className={classes.input}
                                 type='text'
-                                label='Имя'
+                                label={localeString.NAME}
                                 variant='outlined'
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}/>
                             <TextField
                                 className={classes.input}
                                 type='password'
-                                label='Пароль'
+                                label={localeString.PASSWORD}
                                 variant='outlined'
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}/>
@@ -121,7 +120,7 @@ function SignInDialog({ open, handleClose }: Props) {
             </DialogContent>
             <DialogActions className={classes.title}>
                 <Button variant="outlined" onClick={onSignInClick} color="primary">
-                    Войти
+                    {localeString.SIGN_IN}
                 </Button>
             </DialogActions>
         </Dialog>

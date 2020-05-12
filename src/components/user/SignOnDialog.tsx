@@ -10,6 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import useLocaleString from '../../hooks/useLocaleString';
+import SplashScreen from '../SplashScreen';
 
 const ERROR_DELAY = 3000;
 
@@ -46,6 +48,7 @@ function SignOnDialog({ open, handleClose }: Props) {
     const [error, setError] = React.useState<string | null>(null);
     const { user: store } = useStore();
     const classes = useStyles();
+    const localeString = useLocaleString();
 
     React.useEffect(() => {
         setUsername('');
@@ -91,32 +94,32 @@ function SignOnDialog({ open, handleClose }: Props) {
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle id="form-dialog-title" className={classes.title}>
-                Регистрация
+                {localeString.SIGN_ON}
             </DialogTitle>
             <DialogContent className={classes.fields}>
                 {
                     isLoading ? (
-                        <CircularProgress color={'secondary'} className={classes.spinner}/>
+                        <SplashScreen/>
                     ) : (
                         <React.Fragment>
                             <TextField
                                 className={classes.input}
                                 type='text'
-                                label='Имя'
+                                label={localeString.NAME}
                                 variant='outlined'
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}/>
                             <TextField
                                 className={classes.input}
                                 type='email'
-                                label='Почта'
+                                label={localeString.EMAIl}
                                 variant='outlined'
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}/>
                             <TextField
                                 className={classes.input}
                                 type='password'
-                                label='Пароль'
+                                label={localeString.PASSWORD}
                                 variant='outlined'
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}/>
@@ -131,7 +134,7 @@ function SignOnDialog({ open, handleClose }: Props) {
             </DialogContent>
             <DialogActions className={classes.title}>
                 <Button variant="contained" onClick={onSignOnClick} color="primary">
-                    Зарегестрировать
+                    {localeString.SIGN_ON}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -5,6 +5,7 @@ import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import useStore from "../../stores/useStore";
 import EntitiesList, { SkeletonEntitiesList } from "../EntitiesList";
 import { observer } from "mobx-react-lite";
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -16,6 +17,7 @@ function FavoritesDetailScreen() {
     const history = useHistory();
     const classes = useStyles();
     const {user: store} = useStore();
+    const localeString = useLocaleString();
 
     React.useEffect(() => {
         if (store.isInitialized && !store.isAuthorized) {
@@ -26,7 +28,7 @@ function FavoritesDetailScreen() {
     return (
         <DetailScreenWrapper
             className={classes.list}
-            title='Избранное'
+            title={localeString.FAVORITES}
             shareEnabled={false}
             showAlways>
             {

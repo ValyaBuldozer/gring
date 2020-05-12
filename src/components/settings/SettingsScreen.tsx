@@ -5,6 +5,7 @@ import { List, ListItem, ListItemSecondaryAction, ListSubheader, MenuItem, Selec
 import Locale, { LOCALES } from '../../util/types/Locale';
 import ListItemText from '@material-ui/core/ListItemText';
 import { observer } from 'mobx-react-lite';
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({}));
 
@@ -15,6 +16,7 @@ const localeLabels: Record<Locale, string> = {
 
 function SettingsScreen() {
 	const { settings } = useStore();
+	const localeString = useLocaleString();
 
 	const localeOnChange = (e: React.ChangeEvent<{ value: unknown }>) => {
 		settings.setLocale(e.target.value as Locale);
@@ -22,9 +24,9 @@ function SettingsScreen() {
 	};
 
 	return (
-		<List subheader={<ListSubheader>Настройки</ListSubheader>}>
+		<List subheader={<ListSubheader>{localeString.SETTINGS}</ListSubheader>}>
 			<ListItem>
-				<ListItemText>Темная тема</ListItemText>
+				<ListItemText>{localeString.DARK_MODE}</ListItemText>
 				<ListItemSecondaryAction>
 					<Switch
 						edge='end'
@@ -34,7 +36,7 @@ function SettingsScreen() {
 				</ListItemSecondaryAction>
 			</ListItem>
 			<ListItem>
-				<ListItemText>Язык</ListItemText>
+				<ListItemText>{localeString.LANGUAGE}</ListItemText>
 				<ListItemSecondaryAction>
 					<Select
 						value={settings.locale}

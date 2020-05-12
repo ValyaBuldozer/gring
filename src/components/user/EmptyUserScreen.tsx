@@ -4,6 +4,7 @@ import AstronautIcon from "../icons/AstronautIcon";
 import { Button } from "@material-ui/core";
 import SignInDialog from "./SignInDialog";
 import SignOnDialog from "./SignOnDialog";
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -37,11 +38,12 @@ export default function EmptyUserScreen() {
     const [signInOpen, setSignInOpen] = React.useState(false);
     const [signOnOpen, setSignOnOpen] = React.useState(false);
     const classes = useStyles();
+    const localeString = useLocaleString();
 
     return (
         <div className={classes.root}>
             <div className={classes.title}>
-                Зарегистрируйтесь чтобы пользоваться всеми возможностями!
+                {localeString.REGISTER_PLACEHOLDER}
             </div>
             <AstronautIcon className={classes.logo}/>
             <div className={classes.controls}>
@@ -49,14 +51,14 @@ export default function EmptyUserScreen() {
                     variant="contained"
                     color="primary"
                     onClick={() => setSignOnOpen(true)}>
-                    Зарегестрироваться
+                    {localeString.SIGN_ON}
                 </Button>
                 <Button
                     variant="outlined"
                     color="primary"
                     className={classes.logIn}
                     onClick={() => setSignInOpen(true)}>
-                    Войти
+                    {localeString.SIGN_IN}
                 </Button>
             </div>
             <SignInDialog open={signInOpen} handleClose={() => setSignInOpen(false)}/>

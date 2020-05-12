@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Typography} from '@material-ui/core';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import NavBar from "./NavBar";
+import SplashScreen from './SplashScreen';
 
 const ObjectsScreen = React.lazy(() =>
 	import(/* webpackChunkName: "ObjectsScreen" */ './objects/ObjectsScreen')
@@ -67,7 +68,7 @@ export default function AppShell() {
 			<div className={classes.appShell}>
 				<Typography component='div'>
 					<div className={classes.panel}>
-						<React.Suspense fallback={'Loading'}>
+						<React.Suspense fallback={<SplashScreen/>}>
 							<Switch>
 								<Route exact path='/routes' component={RoutesScreen}/>
 								<Route exact path='/routes/:id' component={RoutesDetailScreen}/>

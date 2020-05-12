@@ -15,6 +15,7 @@ import EntitiesList, { SkeletonEntitiesList } from "../EntitiesList";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -93,6 +94,7 @@ function UserScreen() {
 	const { user: userStore, settings: settingsStore } = useStore();
 	const [signOutConfirmOpen, setSignOutConfirmOpen] = React.useState(false);
 	const classes = useStyles();
+	const localeString = useLocaleString();
 
 	if (!userStore.isInitialized) {
 		// TODO: implement with skeleton screen
@@ -139,7 +141,7 @@ function UserScreen() {
 			</div>
 			<Divider/>
 			<div className={cn(classes.sectionTitle, classes.section)}>
-				Избранное
+				{localeString.FAVORITES}
 			</div>
 			<div className={cn(classes.section)}>
 				{
@@ -152,27 +154,20 @@ function UserScreen() {
 			</div>
 			<Link to='/favorites'>
 				<div className={cn(classes.sectionTitle, classes.section, classes.favoritesListButton)}>
-					Показать все
+					{localeString.SHOW_ALL}
 				</div>
 			</Link>
 			<Divider/>
 			<div className={cn(classes.menuItem, classes.section)}>
 				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
-					Мои отзывы
+					{localeString.MY_REVIEWS}
 				</div>
 				<ChevronRightIcon/>
 			</div>
 			<Divider/>
 			<div className={cn(classes.menuItem, classes.section)}>
 				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
-					Мои оценки
-				</div>
-				<ChevronRightIcon/>
-			</div>
-			<Divider/>
-			<div className={cn(classes.menuItem, classes.section)}>
-				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
-					Посещенные места
+					{localeString.VISITED_PLACES}
 				</div>
 				<ChevronRightIcon/>
 			</div>
@@ -181,7 +176,7 @@ function UserScreen() {
 
 			<ConfirmationDialog
 				open={signOutConfirmOpen}
-				title="Вы действительно хотите выйти?"
+				title={localeString.CONFIRM_EXIT}
 				onClose={onSignOutClose}/>
 		</div>
 	)

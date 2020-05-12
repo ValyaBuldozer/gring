@@ -4,8 +4,12 @@ import Button from "@material-ui/core/Button";
 import SortIcon from "@material-ui/icons/Sort";
 import SelectDialog from "./util/dialogs/SelectDialog";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useLocaleString, { useCurrentLocale } from '../hooks/useLocaleString';
+import Locale from '../util/types/Locale';
 
-const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {
+type Labels = {[K in keyof typeof SortBy]: string};
+
+const RU_SORT_LABELS: Labels = {
 	[SortBy.DEFAULT]: 'По умолчанию',
 	[SortBy.NAME]: 'По имени',
 	[SortBy.TIME]: 'По времени в пути',
@@ -14,6 +18,17 @@ const SORT_LABELS: {[K in keyof typeof SortBy]: string} = {
 	[SortBy.RATING_AVG]: 'По средней оценке',
 	[SortBy.OBJECTS_COUNT]: 'По количеству объектов',
 	[SortBy.ROUTE_DISTANCE]: 'По протяженности'
+} as const;
+
+const EN_SORT_LABELS: Labels = {
+	[SortBy.DEFAULT]: 'By default',
+	[SortBy.NAME]: 'By name',
+	[SortBy.TIME]: 'By time',
+	[SortBy.DISTANCE]: 'By distance',
+	[SortBy.RATING_COUNT]: 'By rating count',
+	[SortBy.RATING_AVG]: 'By average rating',
+	[SortBy.OBJECTS_COUNT]: 'By objects count',
+	[SortBy.ROUTE_DISTANCE]: 'By route distance'
 } as const;
 
 const useStyles = makeStyles(theme => ({
@@ -50,12 +65,15 @@ export default function SearchBar(props: Props) {
 		onSearchStringChange,
 		onSortByChange,
 		className = '',
-		sortByOptions = Object.keys(SORT_LABELS) as SortBy[]
+		sortByOptions = Object.keys(RU_SORT_LABELS) as SortBy[]
 	} = props;
 
 	const [sortIsOpen, setSortOpen] = React.useState(false);
-
+	const currentLocale = useCurrentLocale();
+	const localeString = useLocaleString();
 	const classes = useStyles();
+
+	const labels = currentLocale == Locale.EN ? EN_SORT_LABELS : RU_SORT_LABELS;
 
 	const sortDialogOnClose = (variant: SortBy) => {
 		onSortByChange(variant);
@@ -67,7 +85,7 @@ export default function SearchBar(props: Props) {
 			<input
 				className={classes.input}
 				type="search"
-				placeholder="Поиск..."
+				placeholder={`${localeString.SEARCH}...`}
 				value={searchString ?? ''}
 				onChange={({target}) => onSearchStringChange(target.value)}/>
 			<Button style={{minWidth: 0}}
@@ -75,9 +93,9 @@ export default function SearchBar(props: Props) {
 				<SortIcon/>
 			</Button>
 			<SelectDialog
-				variants={sortByOptions.map((opt: SortBy) => [opt, SORT_LABELS[opt]])}
+				variants={sortByOptions.map((opt: SortBy) => [opt, labels[opt]])}
 				selectedVariant={sortBy}
-				title={'Сортировка'}
+				title={localeString.SORT}
 				open={sortIsOpen}
 				onClose={sortDialogOnClose}/>
 		</div>

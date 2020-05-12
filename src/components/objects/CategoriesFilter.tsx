@@ -3,6 +3,7 @@ import useStore from '../../stores/useStore';
 import {observer} from 'mobx-react-lite';
 import {Box} from '@material-ui/core';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useLocaleString from '../../hooks/useLocaleString';
 
 const useStyles = makeStyles(theme => ({
     categoryList: {
@@ -44,14 +45,14 @@ const useStyles = makeStyles(theme => ({
 const CategoriesFilter = observer(() => {
     const { objects: store } = useStore();
     const classes = useStyles();
-    
+    const localeString = useLocaleString();
 
     return (
         <div className={classes.categoryList}>
             <Box 
                 className={`${classes.category} ${store.selectedCategory == null ? classes.selectedCategory : null}`}
                 onClick={() => store.selectCategory(null)}>
-                Все
+                {localeString.ALL}
             </Box>
             {
                 (store.categories ?? []).map(category => (

@@ -10,6 +10,7 @@ import useStore from "../../stores/useStore";
 import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import { Skeleton } from "@material-ui/lab";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useLocaleString from '../../hooks/useLocaleString';
 
 interface State {
 	showDescription: boolean;
@@ -73,6 +74,7 @@ function ObjectDetailScreen({ history }: Props) {
 	const [showDescription, setShowDescription] = React.useState(false);
 
 	const classes = useStyles({ showDescription } as State);
+	const localeString = useLocaleString();
 
 	React.useEffect(() => {
 		store.fetchDetailEntity(parseInt(id ?? ''))
@@ -108,18 +110,18 @@ function ObjectDetailScreen({ history }: Props) {
 						fontWeight="bolder"
 						textAlign='center'
 						onClick={() => setShowDescription(!showDescription)}>
-						Показать полностью
+						{localeString.SHOW_ALL}
 					</Box>
 				) : null
 			}
 			<Box className={classes.title} fontWeight='bolder'>
-				Маршруты
+				{localeString.ROUTES}
 			</Box>
 			<div className={classes.routes}>
 				<ObjectRoutesList objectId={object.id}/>
 			</div>
 			<Box className={classes.title} fontWeight='bolder'>
-				Отзывы
+				{localeString.REVIEWS}
 			</Box>
 			<ReviewList entityId={object.id} limit={2}/>
 		</DetailScreenWrapper>
