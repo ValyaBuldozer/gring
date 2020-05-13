@@ -31,7 +31,9 @@ const RuLocaleStings: LocaleString = {
 	OBJECTS: 'объектов',
 	SETTINGS: 'Настройки',
 	LANGUAGE: 'Язык',
-	DARK_MODE: 'Темная тема'
+	DARK_MODE: 'Темная тема',
+	NOT_IMPLEMENTED_MESSAGE: 'Это прототип приложения. Данная функциональность будет доступна скоро!',
+	NOT_IMPLEMENTED: 'Не релизовано.'
 };
 
 export default RuLocaleStings;

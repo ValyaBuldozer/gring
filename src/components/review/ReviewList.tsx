@@ -57,6 +57,10 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 			.then(reviews => setReviews(reviews));
 	}, []);
 
+	const addReview = () => {
+		alert(localeString.NOT_IMPLEMENTED_MESSAGE);
+	};
+
 	if (reviews == null) {
 		return (
 			<div className={classes.root}>
@@ -75,6 +79,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 				<div className={classes.controls}>
 					<Button
 						className={classes.btn}
+						onClick={addReview}
 						variant="contained"
 						size='small'
 						color="primary"
@@ -105,6 +110,7 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 				</Link>
 				<Button
 					className={classes.btn}
+					onClick={addReview}
 					variant="contained"
 					size='small'
 					color="primary"

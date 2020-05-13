@@ -28,7 +28,9 @@ type CONSTANTS = 'PLACES' |
 	'OBJECTS' |
 	'SETTINGS' |
 	'DARK_MODE' |
-	'LANGUAGE';
+	'LANGUAGE' |
+	'NOT_IMPLEMENTED' |
+	'NOT_IMPLEMENTED_MESSAGE';
 
 
 type LocaleString = {

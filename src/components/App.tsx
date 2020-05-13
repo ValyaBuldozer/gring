@@ -7,7 +7,7 @@ import ThemeWrapper from "./ThemeWrapper";
 
 const useStyles = makeStyles({
 	appRoot: {
-		height: '100vh',
+		height: '100%',
 		width: '100vw',
 		boxSizing: 'border-box',
 		'& div': {

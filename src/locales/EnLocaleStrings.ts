@@ -31,7 +31,9 @@ const EnLocaleStings: LocaleString = {
 	MINUTES: 'min',
 	DARK_MODE: 'Dark mode',
 	LANGUAGE: 'Language',
-	SETTINGS: 'Settings'
+	SETTINGS: 'Settings',
+	NOT_IMPLEMENTED: 'Not implemented',
+	NOT_IMPLEMENTED_MESSAGE: 'This an alpha version of application. This functionality will be available soon!'
 };
 
 export default EnLocaleStings;
