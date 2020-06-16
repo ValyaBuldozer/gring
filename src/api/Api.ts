@@ -41,6 +41,10 @@ export default class Api {
 		return await this.get('reviews', this.formatSearchParams({ object, limit })) ?? [];
 	}
 
+	async fetchUserReviews(): Promise<Review[]> {
+		return await this.get('user/reviews') ?? [];
+	}
+
 	async fetchUser(): Promise<User | null> {
 		const res = await fetch(`${PREFIX}/user`);
 
@@ -55,7 +59,7 @@ export default class Api {
 	}
 
 	async fetchUserFavorites(): Promise<Entity[]> {
-		return await this.get('user/favorite') ?? [];
+		return await this.get('user/favorites') ?? [];
 	}
 
 	async auth(username: string, password: string): Promise<Response> {
@@ -63,7 +67,7 @@ export default class Api {
 	}
 
 	async register(username: string, password: string, email: string): Promise<Response> {
-		return this.put('user/registration', { username, password, email });
+		return this.put('user', { username, password, email });
 	}
 
 	async refreshToken(): Promise<Response> {
@@ -72,6 +76,20 @@ export default class Api {
 
 	async signOut(): Promise<Response> {
 		return this.delete('auth');
+	}
+
+	async addReview(entityId: number, rating: number, text: string | null): Promise<Response> {
+		return this.put(`reviews/${entityId}`, {
+			rating,
+			text
+		});
+	}
+
+	async updateReview(entityId: number, rating: number, text: string | null): Promise<Response> {
+		return this.post(`reviews/${entityId}`, {
+			rating,
+			text
+		});
 	}
 
 	private async get<T>(url: string, searchParams: Record<string, string> = {}): Promise<T | null> {

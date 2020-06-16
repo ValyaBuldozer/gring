@@ -2,6 +2,7 @@ import { action, computed, observable } from "mobx";
 import User from "../types/User";
 import Entity from "../types/Entity";
 import Api from '../api/Api';
+import Review from '../types/Review';
 
 
 export default class UserStore {
@@ -14,6 +15,9 @@ export default class UserStore {
 
     @observable
     private favoritesList: Entity[] | null = null;
+
+    @observable
+    reviewsList: Review[] | null = null;
 
     @observable
     private initialized: boolean = false;
@@ -38,6 +42,28 @@ export default class UserStore {
         return this.initialized;
     }
 
+    @action
+    addReview(entityId: number, text: string | null, rating: number) {
+        if (!this.reviewsList || !this.isAuthorized) {
+            return;
+        }
+
+        const prevReview = this.reviewsList.find(r => r.entity == entityId);
+
+        if (prevReview) {
+            prevReview.text = text;
+            prevReview.rating = rating;
+        } else {
+            this.reviewsList.push({
+                user: this.currentUser!,
+                text,
+                rating,
+                entity: entityId,
+                time: new Date().toISOString()
+            });
+        }
+    }
+
     async fetchUser() {
         this.currentUser = await this.api.fetchUser();
     }
@@ -48,6 +74,14 @@ export default class UserStore {
         }
 
         this.favoritesList = await this.api.fetchUserFavorites();
+    }
+
+    async fetchUserReviews() {
+        if (this.user == null) {
+            return;
+        }
+
+        this.reviewsList = await this.api.fetchUserReviews();
     }
 
     async signIn(username: string, password: string): Promise<string | null> {
@@ -115,6 +149,7 @@ export default class UserStore {
         await this.fetchUser();
 
         if (this.isAuthorized) {
+            await this.fetchUserReviews();
             await this.fetchFavorites();
             await this.refreshToken();
         }

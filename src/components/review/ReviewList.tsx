@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Review from '../../types/Review';
-import ReviewCard, {ReviewCardSkeleton} from './ReviewCard';
-import {getFetchPath} from '../../util/fetch';
-import {Button} from '@material-ui/core';
-import {Link} from "react-router-dom";
+import ReviewCard, { ReviewCardSkeleton } from './ReviewCard';
+import { Button } from '@material-ui/core';
+import { Link, useHistory } from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useStore from '../../stores/useStore';
 import useLocaleString from '../../hooks/useLocaleString';
+import { observer } from 'mobx-react-lite';
+import AddReviewDialog from './AddReviewDialog';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -44,13 +45,16 @@ interface Props {
 	limit?: number | null;
 }
 
-export default function ReviewList({ entityId, limit = null }: Props) {
-
+function ReviewList({ entityId, limit = null }: Props) {
 	const classes = useStyles();
-	const { api } = useStore();
+	const { api, user: userStore } = useStore();
 	const localeString = useLocaleString();
+	const history = useHistory();
 
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
+	const [addReviewIsOpen, setAddReviewIsOpen] = React.useState(false);
+
+	const userReview = userStore.reviewsList?.find(r => r.entity == entityId) ?? null;
 
 	React.useEffect(() => {
 		api.fetchReviews(entityId, limit)
@@ -58,7 +62,13 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 	}, []);
 
 	const addReview = () => {
-		alert(localeString.NOT_IMPLEMENTED_MESSAGE);
+		if (!userStore.isAuthorized) {
+			// redirecting unauthorized users to user page
+			history.push('/user');
+			return;
+		}
+
+		setAddReviewIsOpen(true);
 	};
 
 	if (reviews == null) {
@@ -115,9 +125,16 @@ export default function ReviewList({ entityId, limit = null }: Props) {
 					size='small'
 					color="primary"
 					style={{ color: '#FFF' }}>
-					{localeString.ADD_REVIEW}
+					{userReview ? localeString.UPDATE_REVIEW : localeString.ADD_REVIEW}
 				</Button>
 			</div>
+			<AddReviewDialog
+				prevReview={userReview}
+				isOpen={addReviewIsOpen}
+				onClose={() => setAddReviewIsOpen(false)}
+				entityId={entityId}/>
 		</div>
 	)
 }
+
+export default observer(ReviewList);

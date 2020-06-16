@@ -33,7 +33,16 @@ const RuLocaleStings: LocaleString = {
 	LANGUAGE: 'Язык',
 	DARK_MODE: 'Темная тема',
 	NOT_IMPLEMENTED_MESSAGE: 'Это прототип приложения. Данная функциональность будет доступна скоро!',
-	NOT_IMPLEMENTED: 'Не релизовано.'
+	NOT_IMPLEMENTED: 'Не релизовано.',
+	REVIEW_TEXT_PLACEHOLDER: 'Напишите свое мнение...',
+	ADD: 'Добавить',
+	UPDATE: 'Изменить',
+	CANCEL: 'Отмена',
+	EMPTY_RATING_ERROR: 'Выберите оценку',
+	DEFAULT_ERROR_MESSAGE: 'Что-то пошло не так...',
+	ADD_REVIEW_SUCCESS_MESSAGE: 'Спасибо за ваш отзыв!',
+	UPDATE_REVIEW_SUCCESS_MESSAGE: 'Отзыв успешно обновлен.',
+	UPDATE_REVIEW: 'Изменить отзыв'
 };
 
 export default RuLocaleStings;

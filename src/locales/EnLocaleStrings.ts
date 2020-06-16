@@ -33,7 +33,16 @@ const EnLocaleStings: LocaleString = {
 	LANGUAGE: 'Language',
 	SETTINGS: 'Settings',
 	NOT_IMPLEMENTED: 'Not implemented',
-	NOT_IMPLEMENTED_MESSAGE: 'This an alpha version of application. This functionality will be available soon!'
+	NOT_IMPLEMENTED_MESSAGE: 'This an alpha version of application. This functionality will be available soon!',
+	REVIEW_TEXT_PLACEHOLDER: 'Add your opinion here...',
+	ADD: 'Add',
+	UPDATE: 'Update',
+	CANCEL: 'Cancel',
+	EMPTY_RATING_ERROR: 'Empty rating',
+	DEFAULT_ERROR_MESSAGE: 'Something went wrong...',
+	UPDATE_REVIEW_SUCCESS_MESSAGE: 'Review updated',
+	ADD_REVIEW_SUCCESS_MESSAGE: 'Thanks for your review!',
+	UPDATE_REVIEW: 'Update review'
 };
 
 export default EnLocaleStings;
