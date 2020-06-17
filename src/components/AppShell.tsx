@@ -23,6 +23,9 @@ const ReviewsDetailScreen = React.lazy(() =>
 const UserReviewsScreen = React.lazy(() =>
 	import(/* webpackChunkName: "UserReviewsScreen" */ './review/UserReviewsListScreen')
 );
+const VisitedPlacesScreen = React.lazy(() =>
+	import(/* webpackChunkName: "VisitedPlacesScreen" */ './user/VisitedPlacesScreen')
+);
 const MapScreen = React.lazy(() =>
 	import(/* webpackChunkName: "MapScreen" */ './map/MapScreen')
 );
@@ -80,6 +83,7 @@ export default function AppShell() {
 								<Route exact path='/reviews/:id' component={ReviewsDetailScreen}/>
 								<Route exact path='/map' component={MapScreen}/>
 								<Route exact path='/user/reviews' component={UserReviewsScreen}/>
+								<Route exact path='/user/visited' component={VisitedPlacesScreen}/>
 								<Route exact path='/user' component={UserScreen}/>
 								<Route exact path='/favorites' component={FavoritesScreen}/>
 								<Route exact path='/settings' component={SettingsScreen}/>

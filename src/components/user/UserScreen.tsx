@@ -167,15 +167,15 @@ function UserScreen() {
 				</div>
 			</Link>
 			<Divider/>
-			<div className={cn(classes.menuItem, classes.section)}>
-				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
-					{localeString.VISITED_PLACES}
+			<Link to='/user/visited'>
+				<div className={cn(classes.menuItem, classes.section)}>
+					<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
+						{localeString.VISITED_PLACES}
+					</div>
+					<ChevronRightIcon/>
 				</div>
-				<ChevronRightIcon/>
-			</div>
+			</Link>
 			<Divider/>
-
-
 			<ConfirmationDialog
 				open={signOutConfirmOpen}
 				title={localeString.CONFIRM_EXIT}

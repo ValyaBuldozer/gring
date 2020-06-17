@@ -7,8 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { observer } from 'mobx-react-lite';
 import useLocaleString from '../../hooks/useLocaleString';
 
-const useStyles = makeStyles(theme => ({}));
-
 const localeLabels: Record<Locale, string> = {
 	[Locale.RU]: 'Русский',
 	[Locale.EN]: 'English'
@@ -29,6 +27,7 @@ function SettingsScreen() {
 				<ListItemText>{localeString.DARK_MODE}</ListItemText>
 				<ListItemSecondaryAction>
 					<Switch
+						color='primary'
 						edge='end'
 						onChange={() => settings.switchTheme()}
 						checked={settings.theme == 'dark'}

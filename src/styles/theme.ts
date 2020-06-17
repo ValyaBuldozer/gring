@@ -7,8 +7,9 @@ const theme: ThemeOptions = {
 			light: '#FF6600'
 		},
 		secondary: {
-			main: '#76ff03',
-			light: '#76ff03'
+			main: '#52b202',
+			light: '#52b202',
+			dark: '#76ff03'
 		}
 	}
 };
