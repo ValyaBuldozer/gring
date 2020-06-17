@@ -42,6 +42,7 @@ const EnLocaleStings: LocaleString = {
 	DEFAULT_ERROR_MESSAGE: 'Something went wrong...',
 	UPDATE_REVIEW_SUCCESS_MESSAGE: 'Review updated',
 	ADD_REVIEW_SUCCESS_MESSAGE: 'Thanks for your review!',
+	REMOVE_REVIEW_SUCCESS_MESSAGE: 'Review was removed',
 	UPDATE_REVIEW: 'Update review'
 };
 

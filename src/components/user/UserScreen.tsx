@@ -158,12 +158,14 @@ function UserScreen() {
 				</div>
 			</Link>
 			<Divider/>
-			<div className={cn(classes.menuItem, classes.section)}>
-				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
-					{localeString.MY_REVIEWS}
+			<Link to='/user/reviews'>
+				<div className={cn(classes.menuItem, classes.section)}>
+					<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>
+						{localeString.MY_REVIEWS}
+					</div>
+					<ChevronRightIcon/>
 				</div>
-				<ChevronRightIcon/>
-			</div>
+			</Link>
 			<Divider/>
 			<div className={cn(classes.menuItem, classes.section)}>
 				<div className={cn(classes.menuItemTitle, classes.sectionTitle)}>

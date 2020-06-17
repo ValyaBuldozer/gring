@@ -92,6 +92,10 @@ export default class Api {
 		});
 	}
 
+	async removeReview(entityId: number): Promise<Response> {
+		return this.delete(`reviews/${entityId}`);
+	}
+
 	private async get<T>(url: string, searchParams: Record<string, string> = {}): Promise<T | null> {
 		const params = new URLSearchParams({
 			locale: this.settings.locale,

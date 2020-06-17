@@ -13,6 +13,8 @@ import { observer } from 'mobx-react-lite';
 import { useSnackbar } from 'notistack';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Review from '../../types/Review';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
 	title: {
@@ -35,7 +37,7 @@ interface Props {
 	onClose: () => void;
 }
 
-function AddReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
+function ReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
 	const classes = useStyles();
 	const { api, user: userStore } = useStore();
 	const localeString = useLocaleString();
@@ -44,6 +46,16 @@ function AddReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
 	const [text, setText] = React.useState(prevReview?.text ?? '');
 	const [rating, setRating] = React.useState<number | null>(prevReview?.rating ?? null);
 	const [isLoading, setIsLoading] = React.useState(false);
+
+	React.useEffect(() => {
+		if (prevReview == null) {
+			setText('');
+			setRating(null);
+		} else {
+			setText(prevReview.text ?? '');
+			setRating(prevReview.rating);
+		}
+	}, [prevReview]);
 
 	const onSubmit = async () => {
 		if (isLoading) {
@@ -57,24 +69,36 @@ function AddReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
 
 		setIsLoading(true);
 		if (prevReview == null) {
-			const res = await api.addReview(entityId, rating, text);
+			const res = await userStore.addReview(entityId, text, rating);
 
-			if (res.ok) {
+			if (res) {
 				enqueueSnackbar(localeString.ADD_REVIEW_SUCCESS_MESSAGE, { variant: 'success' });
 			} else {
 				enqueueSnackbar(localeString.DEFAULT_ERROR_MESSAGE, { variant: 'error' });
 			}
 		} else {
-			const res = await api.updateReview(entityId, rating, text);
+			const res = await userStore.updateReview(entityId, text, rating);
 
-			if (res.ok) {
+			if (res) {
 				enqueueSnackbar(localeString.UPDATE_REVIEW_SUCCESS_MESSAGE, { variant: 'success' });
 			} else {
 				enqueueSnackbar(localeString.DEFAULT_ERROR_MESSAGE, { variant: 'error' });
 			}
 		}
 
-		userStore.addReview(entityId, text, rating);
+		setIsLoading(false);
+		onClose();
+	};
+
+	const onRemove = async () => {
+		setIsLoading(true);
+		const res = await userStore.removeReview(entityId);
+
+		if (res) {
+			enqueueSnackbar(localeString.REMOVE_REVIEW_SUCCESS_MESSAGE, { variant: 'success' });
+		} else {
+			enqueueSnackbar(localeString.DEFAULT_ERROR_MESSAGE, { variant: 'error' });
+		}
 		setIsLoading(false);
 		onClose();
 	};
@@ -106,6 +130,13 @@ function AddReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
 				}
 			</DialogContent>
 			<DialogActions>
+				{
+					prevReview ? (
+						<IconButton onClick={onRemove}>
+							<DeleteIcon/>
+						</IconButton>
+					) : null
+				}
 				<Button variant='outlined' color='primary' onClick={onClose}>
 					{localeString.CANCEL}
 				</Button>
@@ -117,4 +148,4 @@ function AddReviewDialog({ isOpen, onClose, entityId, prevReview }: Props) {
 	)
 }
 
-export default observer(AddReviewDialog);
+export default observer(ReviewDialog);

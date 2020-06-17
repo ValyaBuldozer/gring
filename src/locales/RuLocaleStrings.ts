@@ -42,6 +42,7 @@ const RuLocaleStings: LocaleString = {
 	DEFAULT_ERROR_MESSAGE: 'Что-то пошло не так...',
 	ADD_REVIEW_SUCCESS_MESSAGE: 'Спасибо за ваш отзыв!',
 	UPDATE_REVIEW_SUCCESS_MESSAGE: 'Отзыв успешно обновлен.',
+	'REMOVE_REVIEW_SUCCESS_MESSAGE': 'Отзыв удален.',
 	UPDATE_REVIEW: 'Изменить отзыв'
 };
 

@@ -7,7 +7,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import useStore from '../../stores/useStore';
 import useLocaleString from '../../hooks/useLocaleString';
 import { observer } from 'mobx-react-lite';
-import AddReviewDialog from './AddReviewDialog';
+import ReviewDialog from './ReviewDialog';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -128,7 +128,7 @@ function ReviewList({ entityId, limit = null }: Props) {
 					{userReview ? localeString.UPDATE_REVIEW : localeString.ADD_REVIEW}
 				</Button>
 			</div>
-			<AddReviewDialog
+			<ReviewDialog
 				prevReview={userReview}
 				isOpen={addReviewIsOpen}
 				onClose={() => setAddReviewIsOpen(false)}

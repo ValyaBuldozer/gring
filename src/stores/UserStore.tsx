@@ -43,17 +43,14 @@ export default class UserStore {
     }
 
     @action
-    addReview(entityId: number, text: string | null, rating: number) {
+    async addReview(entityId: number, text: string | null, rating: number): Promise<boolean> {
         if (!this.reviewsList || !this.isAuthorized) {
-            return;
+            return false;
         }
 
-        const prevReview = this.reviewsList.find(r => r.entity == entityId);
+        const res = await this.api.addReview(entityId, rating, text);
 
-        if (prevReview) {
-            prevReview.text = text;
-            prevReview.rating = rating;
-        } else {
+        if (res.ok) {
             this.reviewsList.push({
                 user: this.currentUser!,
                 text,
@@ -61,7 +58,53 @@ export default class UserStore {
                 entity: entityId,
                 time: new Date().toISOString()
             });
+
+            return true;
         }
+
+        console.error(res.statusText);
+        return false;
+    }
+
+    @action
+    async updateReview(entityId: number, text: string | null, rating: number): Promise<boolean> {
+        if (!this.reviewsList || !this.isAuthorized) {
+            return false;
+        }
+
+        const prevReview = this.reviewsList.find(r => r.entity == entityId);
+
+        if (!prevReview) {
+            throw new Error(`Can't find reviews for entity with id ${entityId}`)
+        }
+
+        const res = await this.api.updateReview(entityId, rating, text);
+
+        if (res.ok) {
+            prevReview.text = text;
+            prevReview.rating = rating;
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
+    }
+
+    @action
+    async removeReview(entityId: number): Promise<boolean> {
+        if (!this.reviewsList || !this.isAuthorized) {
+            return false;
+        }
+
+        const res = await this.api.removeReview(entityId);
+
+        if (res.ok) {
+            this.reviewsList = this.reviewsList.filter(r => r.entity !== entityId);
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
     }
 
     async fetchUser() {
