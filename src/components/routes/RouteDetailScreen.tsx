@@ -13,6 +13,7 @@ import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import SplashScreen from '../SplashScreen';
 import useLocaleString from '../../hooks/useLocaleString';
+import FavoritesEntityControl from '../FavoritesEntityControl';
 
 const useStyles = makeStyles(theme => ({
 	logo: {
@@ -87,6 +88,9 @@ function RouteDetailScreen({ history }: Props) {
 					<span>({route.rating.count})</span>
 				</div>
 				<RouteInfo route={route} className={classes.controls}/>
+				<div className={classes.controls}>
+					<FavoritesEntityControl entityId={route.id}/>
+				</div>
 				<Box>
 					{route.description}
 				</Box>

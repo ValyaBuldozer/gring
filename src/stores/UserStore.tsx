@@ -17,6 +17,9 @@ export default class UserStore {
     private favoritesList: Entity[] | null = null;
 
     @observable
+    visitedPlaces: Entity[] | null = null;
+
+    @observable
     reviewsList: Review[] | null = null;
 
     @observable
@@ -107,6 +110,74 @@ export default class UserStore {
         return false;
     }
 
+    @action
+    async addToFavorites(entityId: number): Promise<boolean> {
+        if (!this.favoritesList || !this.isAuthorized) {
+            return false;
+        }
+
+        const res = await this.api.addToFavorites(entityId);
+
+        if (res.ok) {
+            await this.fetchFavorites();
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
+    }
+
+    @action
+    async removeFromFavorites(entityId: number): Promise<boolean> {
+        if (!this.favoritesList || !this.isAuthorized) {
+            return false;
+        }
+
+        const res = await this.api.removeFromFavorites(entityId);
+
+        if (res.ok) {
+            this.favoritesList = this.favoritesList.filter(e => e.id !== entityId);
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
+    }
+
+    @action
+    async addToVisitedPlaces(entityId: number): Promise<boolean> {
+        if (!this.visitedPlaces || !this.isAuthorized) {
+            return false;
+        }
+
+        const res = await this.api.addToVisited(entityId);
+
+        if (res.ok) {
+            await this.fetchVisitedPlaces();
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
+    }
+
+    @action
+    async removeFromVisitedPlaces(entityId: number): Promise<boolean> {
+        if (!this.visitedPlaces || !this.isAuthorized) {
+            return false;
+        }
+
+        const res = await this.api.removeFromVisited(entityId);
+
+        if (res.ok) {
+            this.visitedPlaces = this.visitedPlaces.filter(e => e.id !== entityId);
+            return true;
+        }
+
+        console.error(res.statusText);
+        return false;
+    }
+
     async fetchUser() {
         this.currentUser = await this.api.fetchUser();
     }
@@ -117,6 +188,14 @@ export default class UserStore {
         }
 
         this.favoritesList = await this.api.fetchUserFavorites();
+    }
+
+    async fetchVisitedPlaces() {
+        if (this.user == null) {
+            return;
+        }
+
+        this.visitedPlaces = await this.api.fetchVisitedPlaces();
     }
 
     async fetchUserReviews() {
@@ -194,6 +273,7 @@ export default class UserStore {
         if (this.isAuthorized) {
             await this.fetchUserReviews();
             await this.fetchFavorites();
+            await this.fetchVisitedPlaces();
             await this.refreshToken();
         }
 

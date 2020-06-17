@@ -5,6 +5,10 @@ const theme: ThemeOptions = {
 		primary: {
 			main: '#FF6600',
 			light: '#FF6600'
+		},
+		secondary: {
+			main: '#76ff03',
+			light: '#76ff03'
 		}
 	}
 };

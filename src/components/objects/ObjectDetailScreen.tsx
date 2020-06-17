@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Obj from '../../types/Object';
-import { RouteComponentProps, useParams, withRouter } from 'react-router';
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router';
 import { Box, Theme } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import ObjectRoutesList from './ObjectRoutesList';
@@ -11,6 +11,8 @@ import DetailScreenWrapper from "../util/DetailScreenWrapper";
 import { Skeleton } from "@material-ui/lab";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useLocaleString from '../../hooks/useLocaleString';
+import FavoritesEntityControl from '../FavoritesEntityControl';
+import VisitedPlaceControl from '../VisitedPlaceControl';
 
 interface State {
 	showDescription: boolean;
@@ -58,17 +60,19 @@ const useStyles = makeStyles<Theme, State>(theme => ({
 	},
 	skeletonRoot: {
 		overflowY: 'hidden'
+	},
+	controls: {
+		height: 30,
+		width: '100%',
+		padding: '0 10px',
+		display: 'flex'
 	}
 }));
 
-interface Props extends RouteComponentProps {
-}
-
-
-function ObjectDetailScreen({ history }: Props) {
-
+function ObjectDetailScreen() {
 	const { id } = useParams();
 	const { objects: store } = useStore();
+	const history = useHistory();
 
 	const [object, setObject] = React.useState<Obj | null>(null);
 	const [showDescription, setShowDescription] = React.useState(false);
@@ -100,6 +104,10 @@ function ObjectDetailScreen({ history }: Props) {
 			<div className={classes.rating}>
 				<Rating value={object.rating.average} size='large'/>
 				<Box>({object.rating.count})</Box>
+			</div>
+			<div className={classes.controls}>
+				<FavoritesEntityControl entityId={object.id}/>
+				<VisitedPlaceControl entityId={object.id}/>
 			</div>
 			<Box className={classes.description}>
 				{object.description}
@@ -154,4 +162,4 @@ function ObjectDetailScreenSkeleton() {
 	)
 }
 
-export default withRouter(observer(ObjectDetailScreen));
+export default observer(ObjectDetailScreen);

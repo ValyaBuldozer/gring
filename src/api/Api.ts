@@ -58,8 +58,32 @@ export default class Api {
 		}
 	}
 
+	async fetchVisitedPlaces(): Promise<Entity[]> {
+		return await this.get('user/visited') ?? [];
+	}
+
 	async fetchUserFavorites(): Promise<Entity[]> {
 		return await this.get('user/favorites') ?? [];
+	}
+
+	async addToFavorites(entityId: number): Promise<Response> {
+		return await this.post('user/favorites', {
+			'entity_id': entityId
+		});
+	}
+
+	async removeFromFavorites(entityId: number): Promise<Response> {
+		return await this.delete(`user/favorites/${entityId}`);
+	}
+
+	async addToVisited(entityId: number): Promise<Response> {
+		return await this.post('user/visited', {
+			'place_id': entityId
+		});
+	}
+
+	async removeFromVisited(entityId: number): Promise<Response> {
+		return await this.delete(`user/visited/${entityId}`);
 	}
 
 	async auth(username: string, password: string): Promise<Response> {

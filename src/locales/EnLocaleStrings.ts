@@ -43,7 +43,11 @@ const EnLocaleStings: LocaleString = {
 	UPDATE_REVIEW_SUCCESS_MESSAGE: 'Review updated',
 	ADD_REVIEW_SUCCESS_MESSAGE: 'Thanks for your review!',
 	REMOVE_REVIEW_SUCCESS_MESSAGE: 'Review was removed',
-	UPDATE_REVIEW: 'Update review'
+	UPDATE_REVIEW: 'Update review',
+	FAVORITES_EXIST_MESSAGE: 'In favorites!',
+	FAVORITES_NOT_EXIST_MESSAGE: 'In favorites',
+	PLACE_VISITED_MESSAGE: 'Visited!',
+	PLACE_NOT_VISITED_MESSAGE: 'Visited'
 };
 
 export default EnLocaleStings;
