@@ -120,6 +120,20 @@ export default class Api {
 		return this.delete(`reviews/${entityId}`);
 	}
 
+	async getDistance(entityId: number, latitude: number, longitude: number): Promise<number | null> {
+		const res = await this.post(`places/distance/${entityId}`, {
+			latitude,
+			longitude
+		});
+
+		if (res.ok) {
+			return parseFloat(await res.text());
+		}
+
+		console.error(res.statusText);
+		return null;
+	}
+
 	private async get<T>(url: string, searchParams: Record<string, string> = {}): Promise<T | null> {
 		const params = new URLSearchParams({
 			locale: this.settings.locale,

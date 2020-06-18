@@ -18,7 +18,8 @@ export interface ObjectBase extends Entity{
     rating: {
         average: number;
         count: number;
-    }
+    },
+    distance?: number | null;
 }
 
 type Obj = Place | PublicPlace | HistoricalPerson;

@@ -3,6 +3,10 @@ import { ObjectBase } from '../../types/Object';
 import { Box, Paper } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { formatMeters } from '../../util/formatter';
+import useLocaleString from '../../hooks/useLocaleString';
+import { observer } from 'mobx-react-lite';
+import PlaceIcon from "@material-ui/icons/Place";
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,21 +24,31 @@ const useStyles = makeStyles(theme => ({
 	},
 	info: {
 		padding: 7,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'left',
-		justifyContent: 'flex-start'
+		display: 'grid',
+		gridTemplate: `
+			"name name" auto
+			"rating distance" auto / 1fr 85px
+		`
 	},
 	name: {
+		gridArea: 'name',
 		textTransform: 'uppercase',
 		color: theme.palette.text.primary
 	},
 	rating: {
+		gridArea: 'rating',
 		width: 'auto',
 		display: 'flex',
 		alignItems: 'center',
         fontSize: '12px',
         color: theme.palette.text.secondary
+	},
+	distance: {
+		gridArea: 'distance',
+		color: theme.palette.text.secondary,
+		display: 'flex',
+		justifyContent: 'space-around',
+		alignItems: 'center'
 	}
 }));
 
@@ -42,9 +56,9 @@ interface Props {
 	obj: ObjectBase;
 }
 
-export default function ObjectCard({ obj }: Props) {
-
-	const { name, rating, image } = obj;
+function ObjectCard({ obj }: Props) {
+	const localeString = useLocaleString();
+	const { name, rating, image, distance } = obj;
 
 	const classes = useStyles();
 
@@ -62,7 +76,17 @@ export default function ObjectCard({ obj }: Props) {
 					<Rating value={rating.average} size='small' readOnly precision={0.5}/>
 					<span>({rating.count})</span>
 				</div>
+				{
+					distance != null ? (
+						<div className={classes.distance}>
+							<PlaceIcon fontSize='small'/>
+							{formatMeters(distance)} {distance > 1000 ? localeString.KILOMETERS : localeString.METERS}
+						</div>
+					) : null
+				}
 			</div>
 		</Paper>
 	)
 }
+
+export default observer(ObjectCard);

@@ -5,11 +5,13 @@ import makeInspectable from 'mobx-devtools-mst';
 import UserStore from "./UserStore";
 import SettingsStore from "./SettingsStore";
 import Api from '../api/Api';
+import GeolocationStore from './GelocationStore';
 
 function createStores() {
     const settings = new SettingsStore();
     const api = new Api(settings);
-    const objects = new ObjectsStore(api);
+    const geolocation = new GeolocationStore();
+    const objects = new ObjectsStore(api, geolocation);
     const routes = new RoutesStore(api);
     const user = new UserStore(api);
 
@@ -18,7 +20,8 @@ function createStores() {
         routes,
         user,
         settings,
-        api
+        api,
+        geolocation
     }
 }
 

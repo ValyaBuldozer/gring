@@ -1,9 +1,10 @@
-import {action, computed, observable, runInAction} from 'mobx';
-import Obj, {ObjectBase} from '../types/Object';
+import { action, computed, observable, reaction } from 'mobx';
+import Obj, { ObjectBase, ObjectType } from '../types/Object';
 import Category from '../types/Category';
 import SortBy from "../util/types/SortBy";
 import BaseEntityStore from "./BaseEntityStore";
 import Api from '../api/Api';
+import GeolocationStore from './GelocationStore';
 
 const sortRules = new Map<SortBy, (a: ObjectBase, b: ObjectBase) => number>([
     [SortBy.DEFAULT, () => 0],
@@ -11,7 +12,21 @@ const sortRules = new Map<SortBy, (a: ObjectBase, b: ObjectBase) => number>([
     [SortBy.RATING_AVG, (a, b) => a.rating.average < b.rating.average ? 1 : -1],
     [SortBy.RATING_COUNT, (a, b) => a.rating.count < b.rating.count ? 1 : -1],
     // todo: implement using distance info
-    [SortBy.DISTANCE, () => 0]
+    [SortBy.DISTANCE, (a, b) => {
+        if (a.distance == null && b.distance == null) {
+            return 0;
+        }
+
+        if (a.distance == null) {
+            return 1;
+        }
+
+        if (b.distance == null) {
+            return -1;
+        }
+
+        return a.distance > b.distance ? 1 : -1;
+    }]
 ]);
 
 export default class ObjectsStore extends BaseEntityStore<Obj> {
@@ -19,7 +34,7 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
     @observable
     private objectsList: ObjectBase[] = [];
 
-    constructor(private api: Api) {
+    constructor(private api: Api, private geolocationStore: GeolocationStore) {
         super();
     }
 
@@ -45,9 +60,35 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
         return searchFiltered.sort(sortRules.get(this.sortBy));
     }
 
+    @computed
+    get placesIds() {
+        return this.list
+            .filter(o => o.type === 'place')
+            .map(o => o.id);
+    }
+
     @action
     selectCategory(category: Category | null) {
         this.selectedCategory = category;
+    }
+
+    @action
+    private async handleUserPositionChange(lat: number, lng: number) {
+        if (!this.geolocationStore.isEnabled) {
+            return;
+        }
+
+        const distances = await Promise.all(
+            this.objectsList.map(obj => obj.type === ObjectType.PLACE || obj.type === ObjectType.PUBLIC_PLACE ?
+                this.api.getDistance(obj.id, lat, lng) :
+                null
+            )
+        );
+
+        this.objectsList = this.objectsList.map((obj, idx) => ({
+            ...obj,
+            distance: distances[idx]
+        }));
     }
 
     @action
@@ -79,5 +120,11 @@ export default class ObjectsStore extends BaseEntityStore<Obj> {
     async init() {
         await this.fetchCategories();
         await this.fetchObjects();
+        reaction(
+            () => [this.geolocationStore.latitude, this.geolocationStore.longitude] as const,
+            ([lat, lng]) =>
+                this.handleUserPositionChange(lat, lng)
+        );
+        this.handleUserPositionChange(this.geolocationStore.latitude, this.geolocationStore.longitude);
     }
 }

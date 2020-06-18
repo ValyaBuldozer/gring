@@ -8,7 +8,7 @@ import SearchBar from "../SearchBar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const SORT_OPTIONS: SortBy[] = [
-    SortBy.DEFAULT, SortBy.NAME, SortBy.RATING_COUNT, SortBy.RATING_AVG
+    SortBy.DEFAULT, SortBy.NAME, SortBy.DISTANCE, SortBy.RATING_COUNT, SortBy.RATING_AVG
 ];
 
 const useStyles = makeStyles({
