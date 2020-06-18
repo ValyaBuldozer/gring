@@ -47,7 +47,9 @@ const EnLocaleStings: LocaleString = {
 	FAVORITES_EXIST_MESSAGE: 'In favorites!',
 	FAVORITES_NOT_EXIST_MESSAGE: 'In favorites',
 	PLACE_VISITED_MESSAGE: 'Visited!',
-	PLACE_NOT_VISITED_MESSAGE: 'Visited'
+	PLACE_NOT_VISITED_MESSAGE: 'Visited',
+	AUTHORIZE_REQUEST_MESSAGE: 'Authorization required',
+	OFFLINE_ERROR: 'No internet connection'
 };
 
 export default EnLocaleStings;

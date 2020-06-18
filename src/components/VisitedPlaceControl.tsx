@@ -7,6 +7,7 @@ import { CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { observer } from 'mobx-react-lite';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -30,6 +31,7 @@ interface Props {
 function VisitedPlaceControl({ entityId }: Props) {
 	const { user: userStore } = useStore();
 	const localeString = useLocaleString();
+	const { enqueueSnackbar } = useSnackbar();
 	const history = useHistory();
 	const [isLoading, setIsLoading] = React.useState(!userStore.isInitialized);
 
@@ -46,6 +48,7 @@ function VisitedPlaceControl({ entityId }: Props) {
 		}
 
 		if (!userStore.isAuthorized) {
+			enqueueSnackbar(localeString.AUTHORIZE_REQUEST_MESSAGE, { variant: 'default' });
 			history.push('/user');
 			return;
 		}

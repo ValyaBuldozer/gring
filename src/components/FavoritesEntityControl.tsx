@@ -7,6 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { useHistory } from 'react-router';
 import { CircularProgress } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,6 +30,7 @@ interface Props {
 
 function FavoritesEntityControl({ entityId }: Props) {
 	const { user: userStore } = useStore();
+	const { enqueueSnackbar } = useSnackbar();
 	const localeString = useLocaleString();
 	const history = useHistory();
 	const [isLoading, setIsLoading] = React.useState(!userStore.isInitialized);
@@ -42,6 +44,7 @@ function FavoritesEntityControl({ entityId }: Props) {
 
 	const onClick = async () => {
 		if (!userStore.isAuthorized) {
+			enqueueSnackbar(localeString.AUTHORIZE_REQUEST_MESSAGE, { variant: 'default' });
 			history.push('/user');
 			return;
 		}

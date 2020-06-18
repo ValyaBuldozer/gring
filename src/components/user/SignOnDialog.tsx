@@ -12,6 +12,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import useLocaleString from '../../hooks/useLocaleString';
 import SplashScreen from '../SplashScreen';
+import useNetwork from '../../hooks/useNetwork';
+import { useSnackbar } from 'notistack';
 
 const ERROR_DELAY = 3000;
 
@@ -47,6 +49,8 @@ function SignOnDialog({ open, handleClose }: Props) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
     const { user: store } = useStore();
+    const isOnline = useNetwork();
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
     const localeString = useLocaleString();
 
@@ -69,6 +73,11 @@ function SignOnDialog({ open, handleClose }: Props) {
     };
 
     const onSignOnClick = async () => {
+        if (!isOnline) {
+            enqueueSnackbar(localeString.OFFLINE_ERROR, { variant: 'error' });
+            return;
+        }
+
         if (isLoading) {
             return;
         }

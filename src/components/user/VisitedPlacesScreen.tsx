@@ -6,6 +6,7 @@ import DetailScreenWrapper from '../util/DetailScreenWrapper';
 import EntitiesList, { SkeletonEntitiesList } from '../EntitiesList';
 import { observer } from 'mobx-react-lite';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
 	list: {
@@ -22,6 +23,7 @@ function VisitedPlacesScreen() {
 	React.useEffect(() => {
 		if (store.isInitialized && !store.isAuthorized) {
 			history.push('/user');
+			return;
 		}
 	}, [store.isInitialized]);
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ObjectBase } from '../../types/Object';
+import { ObjectBase, ObjectType } from '../../types/Object';
 import { Box, Paper } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -7,6 +7,8 @@ import { formatMeters } from '../../util/formatter';
 import useLocaleString from '../../hooks/useLocaleString';
 import { observer } from 'mobx-react-lite';
 import PlaceIcon from "@material-ui/icons/Place";
+import useNetwork from '../../hooks/useNetwork';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +51,11 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'space-around',
 		alignItems: 'center'
+	},
+	distanceProgress: {
+		gridArea: 'distance',
+		justifySelf: 'center',
+		alignSelf: 'center'
 	}
 }));
 
@@ -58,9 +65,12 @@ interface Props {
 
 function ObjectCard({ obj }: Props) {
 	const localeString = useLocaleString();
-	const { name, rating, image, distance } = obj;
-
+	const isOnline = useNetwork();
 	const classes = useStyles();
+
+	const { name, rating, image, distance, type } = obj;
+	const isDistanceEnabled = isOnline && (type === ObjectType.PUBLIC_PLACE || type === ObjectType.PLACE);
+	const isDistanceLoading = isDistanceEnabled && distance == null;
 
 	return (
 		<Paper className={classes.card} elevation={5} style={{ borderRadius: 10 }}>
@@ -77,7 +87,13 @@ function ObjectCard({ obj }: Props) {
 					<span>({rating.count})</span>
 				</div>
 				{
-					distance != null ? (
+					isDistanceLoading ? (
+						<CircularProgress
+							size={14}
+							thickness={3}
+							color='primary'
+							className={classes.distanceProgress}/>
+					) : isDistanceEnabled && distance != null ? (
 						<div className={classes.distance}>
 							<PlaceIcon fontSize='small'/>
 							{formatMeters(distance)} {distance > 1000 ? localeString.KILOMETERS : localeString.METERS}

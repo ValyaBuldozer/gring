@@ -1,14 +1,9 @@
-import { action, autorun, computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 
 export default class GeolocationStore {
 	constructor() {
 		this.init();
-
-		autorun(() => {
-			console.log(this.latitude);
-			console.log(this.longitude);
-		})
 	}
 
 	@computed get isEnabled() {
@@ -34,7 +29,7 @@ export default class GeolocationStore {
 		navigator.geolocation.watchPosition(
 			this.onPositionChange,
 			e => console.error(e),
-			{ timeout: 5000, maximumAge: 60 }
+			{ timeout: 30000, maximumAge: 60 }
 		);
 	}
 }

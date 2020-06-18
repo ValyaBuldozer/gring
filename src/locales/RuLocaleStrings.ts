@@ -47,7 +47,9 @@ const RuLocaleStings: LocaleString = {
 	FAVORITES_EXIST_MESSAGE: 'В избранном!',
 	FAVORITES_NOT_EXIST_MESSAGE: 'В избранное',
 	PLACE_NOT_VISITED_MESSAGE: 'Я здесь был',
-	PLACE_VISITED_MESSAGE: 'Посещенно!'
+	PLACE_VISITED_MESSAGE: 'Посещенно!',
+	AUTHORIZE_REQUEST_MESSAGE: 'Необходима авторизация',
+	OFFLINE_ERROR: 'Нет интрент соедниения'
 };
 
 export default RuLocaleStings;

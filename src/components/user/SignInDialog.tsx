@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import useLocaleString from '../../hooks/useLocaleString';
 import SplashScreen from '../SplashScreen';
+import useNetwork from '../../hooks/useNetwork';
+import { useSnackbar } from 'notistack';
 
 const ERROR_DELAY = 3000;
 
@@ -42,6 +44,8 @@ function SignInDialog({ open, handleClose }: Props) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
     const { user: store } = useStore();
+    const isOnline = useNetwork();
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
     const localeString = useLocaleString();
 
@@ -63,6 +67,11 @@ function SignInDialog({ open, handleClose }: Props) {
     };
 
     const onSignInClick = async () => {
+        if (!isOnline) {
+            enqueueSnackbar(localeString.OFFLINE_ERROR, { variant: 'error' });
+            return;
+        }
+
         if (isLoading) {
             return;
         }

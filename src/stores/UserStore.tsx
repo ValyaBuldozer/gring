@@ -257,6 +257,7 @@ export default class UserStore {
 
         this.currentUser = null;
         this.favoritesList = null;
+        this.visitedPlaces = null;
     }
 
     async refreshToken() {
