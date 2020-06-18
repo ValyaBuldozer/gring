@@ -13,6 +13,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import useLocaleString from '../../hooks/useLocaleString';
 import FavoritesEntityControl from '../FavoritesEntityControl';
 import VisitedPlaceControl from '../VisitedPlaceControl';
+import AudioPlayer from '../AudioPlayer';
 
 interface State {
 	showDescription: boolean;
@@ -31,7 +32,7 @@ const useStyles = makeStyles<Theme, State>(theme => ({
 		color: theme.palette.text.primary
 	},
 	rating: {
-		padding: 5,
+		padding: '5px 10px',
 		width: '100%',
 		height: 50,
 		display: 'flex',
@@ -102,13 +103,18 @@ function ObjectDetailScreen() {
 				{object.name}
 			</Box>
 			<div className={classes.rating}>
-				<Rating value={object.rating.average} size='large'/>
+				<Rating value={object.rating.average} size='medium'/>
 				<Box>({object.rating.count})</Box>
 			</div>
 			<div className={classes.controls}>
 				<FavoritesEntityControl entityId={object.id}/>
 				<VisitedPlaceControl entityId={object.id}/>
 			</div>
+			{
+				object.audioguide ? (
+					<AudioPlayer src={object.audioguide}/>
+				) : null
+			}
 			<Box className={classes.description}>
 				{object.description}
 			</Box>
