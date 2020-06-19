@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {ObjectBase} from "../../types/Object";
-import {Avatar, Box} from "@material-ui/core";
+import { Avatar, Box } from "@material-ui/core";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Place from '../../types/Place';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -48,11 +48,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface Props {
-	obj: ObjectBase;
+	place: Place;
 	index: number;
 }
 
-export default function RouteObjectListCard({obj, index}: Props) {
+export default function RouteObjectListCard({ place, index }: Props) {
 	const classes = useStyles();
 
 	return (
@@ -61,12 +61,12 @@ export default function RouteObjectListCard({obj, index}: Props) {
 				{index.toString().padStart(2, '0')}
 			</div>
 			<Avatar
-				src={`/assets/${obj.image}`}
+				src={`/assets/${place.image}`}
 				className={classes.avatar}
-				style={{height: 50, width: 50}}/>
+				style={{ height: 50, width: 50 }}/>
 			<div className={classes.info}>
-				<Box className={classes.name}>{obj.name}</Box>
-				<Box>Address</Box>
+				<Box className={classes.name}>{place.name}</Box>
+				<Box>{place.address}</Box>
 			</div>
 			<div className={classes.arrow}>
 				<ChevronRightIcon/>

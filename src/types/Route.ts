@@ -1,5 +1,5 @@
-import Obj from "./Object";
 import Entity from "./Entity";
+import Place from './Place';
 
 export interface RouteBase extends Entity {
     placesCount: number;
@@ -13,7 +13,5 @@ export interface RouteBase extends Entity {
 
 export default interface Route extends RouteBase {
     description: string;
-    places: (Obj & {
-        description: string;
-    })[];
+    places: Place[];
 }

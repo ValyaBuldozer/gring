@@ -99,7 +99,7 @@ function RouteDetailScreen({ history }: Props) {
 				route.places.map((place, idx) => (
 					<Link to={`/objects/${place.id}`} key={place.id}>
 						<RouteObjectListCard
-							obj={place}
+							place={place}
 							index={idx + 1}/>
 					</Link>
 				))

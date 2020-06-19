@@ -20,8 +20,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './build/out/'),
         publicPath: '/',
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].bundle.js'
+        filename: '[name].[contenthash].bundle.js',
+        chunkFilename: '[name].[contenthash].bundle.js'
     },
     entry: {
         index: path.resolve("./src/index.tsx")
@@ -69,6 +69,7 @@ module.exports = {
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
             skipWaiting: true,
+            dontCacheBustURLsMatching: /\.js$/,
             maximumFileSizeToCacheInBytes: mode == 'development' ?
                 1024 * 1024 * 20 :
                 undefined,
@@ -88,11 +89,14 @@ module.exports = {
                 urlPattern: new RegExp('/assets'),
                 handler: 'CacheFirst'
             }, {
+                urlPattern: new RegExp('serivice-worker.js'),
+                handler: 'NetworkOnly'
+            }, {
                 urlPattern: /\.js$/,
-                handler: 'NetworkFirst'
+                handler: 'CacheFirst'
             }, {
                 urlPattern: new RegExp('index.html'),
-                handler: 'StaleWhileRevalidate'
+                handler: 'NetworkFirst'
             }],
             navigateFallback: '/index.html'
         })
