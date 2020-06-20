@@ -13,7 +13,6 @@ const useStyles = makeStyles({
 });
 
 function RoutesList() {
-
 	const {routes: store} = useStore();
 	const classes = useStyles();
 

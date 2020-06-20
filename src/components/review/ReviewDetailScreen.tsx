@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteComponentProps, useParams, withRouter } from "react-router";
+import { RouteComponentProps, useHistory, useParams, withRouter } from "react-router";
 import Review from "../../types/Review";
 import ReviewCard from "./ReviewCard";
 import DetailScreenWrapper from "../util/DetailScreenWrapper";
@@ -25,28 +25,24 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-interface Props extends RouteComponentProps {
-}
-
-function ReviewDetailScreen({ history }: Props) {
+function ReviewDetailScreen() {
 	const { id } = useParams();
+	const history = useHistory();
 	const { api } = useStore();
 	const localeString = useLocaleString();
 	const [reviews, setReviews] = React.useState<Review[] | null>(null);
 	const classes = useStyles();
 
 	React.useEffect(() => {
-		(async () => {
-			const res = await fetch(`/api/reviews?object=${id}`);
+		if (id == null) {
+			history.push('404');
+			return;
+		}
 
-			if (res.ok) {
-				setReviews(await res.json());
-			} else if (res.status == 404) {
-				history.push('/404');
-			} else {
-				throw new Error(`Can't fetch reviews list with id ${id}`);
-			}
-		})();
+		api.fetchReviews(parseInt(id))
+			.then(res => {
+				setReviews(res);
+			})
 	}, []);
 
 	if (reviews == null) {
@@ -70,4 +66,4 @@ function ReviewDetailScreen({ history }: Props) {
 	)
 }
 
-export default withRouter(ReviewDetailScreen);
+export default ReviewDetailScreen;

@@ -11,7 +11,6 @@ const sortRules = new Map<SortBy, (a: ObjectBase, b: ObjectBase) => number>([
     [SortBy.NAME, (a, b) => a.name.localeCompare(b.name)],
     [SortBy.RATING_AVG, (a, b) => a.rating.average < b.rating.average ? 1 : -1],
     [SortBy.RATING_COUNT, (a, b) => a.rating.count < b.rating.count ? 1 : -1],
-    // todo: implement using distance info
     [SortBy.DISTANCE, (a, b) => {
         if (a.distance == null && b.distance == null) {
             return 0;
