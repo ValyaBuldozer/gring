@@ -9,6 +9,7 @@ import { observer } from 'mobx-react-lite';
 import PlaceIcon from "@material-ui/icons/Place";
 import useNetwork from '../../hooks/useNetwork';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import useStore from '../../stores/useStore';
 
 
 const useStyles = makeStyles(theme => ({
@@ -64,12 +65,15 @@ interface Props {
 }
 
 function ObjectCard({ obj }: Props) {
+	const { geolocation } = useStore();
 	const localeString = useLocaleString();
 	const isOnline = useNetwork();
 	const classes = useStyles();
 
 	const { name, rating, image, distance, type } = obj;
-	const isDistanceEnabled = isOnline && (type === ObjectType.PUBLIC_PLACE || type === ObjectType.PLACE);
+	const isDistanceEnabled = isOnline &&
+		geolocation.isEnabled &&
+		(type === ObjectType.PUBLIC_PLACE || type === ObjectType.PLACE);
 	const isDistanceLoading = isDistanceEnabled && distance == null;
 
 	return (

@@ -80,54 +80,56 @@ function ReviewList({ entityId, limit = null }: Props) {
 		)
 	}
 
-	if (reviews.length < 1) {
-		return (
-			<div className={classes.root}>
-				<div className={classes.placeholder}>
-					{localeString.NO_REVIEWS_PLACEHOLDER}
-				</div>
-				<div className={classes.controls}>
-					<Button
-						className={classes.btn}
-						onClick={addReview}
-						variant="contained"
-						size='small'
-						color="primary"
-						style={{ color: '#FFF' }}>
-						{localeString.ADD_REVIEW}
-					</Button>
-				</div>
-			</div>
-		)
-	}
-
 	return (
 		<div className={classes.root}>
 			{
-				reviews.slice(0, limit ?? 0).map((review, index) => (
-					<ReviewCard className={classes.item} review={review} key={index}/>
-				))
+				reviews.length < 1 ? (
+					<>
+						<div className={classes.placeholder}>
+							{localeString.NO_REVIEWS_PLACEHOLDER}
+						</div>
+						<div className={classes.controls}>
+							<Button
+								className={classes.btn}
+								onClick={addReview}
+								variant="contained"
+								size='small'
+								color="primary"
+								style={{ color: '#FFF' }}>
+								{localeString.ADD_REVIEW}
+							</Button>
+						</div>
+					</>
+				) : (
+					<>
+						{
+							reviews.slice(0, limit ?? 0).map((review, index) => (
+								<ReviewCard className={classes.item} review={review} key={index}/>
+							))
+						}
+						<div className={classes.controls}>
+							<Link to={`/reviews/${entityId}`}>
+								<Button
+									className={classes.btn}
+									variant="text"
+									size='small'
+									color="primary">
+									{localeString.SHOW_ALL}
+								</Button>
+							</Link>
+							<Button
+								className={classes.btn}
+								onClick={addReview}
+								variant="contained"
+								size='small'
+								color="primary"
+								style={{ color: '#FFF' }}>
+								{userReview ? localeString.UPDATE_REVIEW : localeString.ADD_REVIEW}
+							</Button>
+						</div>
+					</>
+				)
 			}
-			<div className={classes.controls}>
-				<Link to={`/reviews/${entityId}`}>
-					<Button
-						className={classes.btn}
-						variant="text"
-						size='small'
-						color="primary">
-						{localeString.SHOW_ALL}
-					</Button>
-				</Link>
-				<Button
-					className={classes.btn}
-					onClick={addReview}
-					variant="contained"
-					size='small'
-					color="primary"
-					style={{ color: '#FFF' }}>
-					{userReview ? localeString.UPDATE_REVIEW : localeString.ADD_REVIEW}
-				</Button>
-			</div>
 			<ReviewDialog
 				prevReview={userReview}
 				isOpen={addReviewIsOpen}

@@ -80,6 +80,9 @@ module.exports = {
                 urlPattern: new RegExp('/api/user'),
                 handler: 'NetworkOnly'
             }, {
+                urlPattern: new RegExp('/api/reviews'),
+                handler: 'NetworkFirst'
+            }, {
                 urlPattern: new RegExp('/api/places/distance'),
                 handler: "NetworkOnly"
             }, {
